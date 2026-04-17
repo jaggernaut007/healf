@@ -1,0 +1,17 @@
+llama-index
+llama-index-graph-stores-neo4j
+langchain-openai
+langgraph
+fastapi
+nemoguardrails
+deepeval
+instructor
+firecrawl-py
+slowapi
+uvicorn
+requests
+hypothesis
+pytest
+arize-phoenix
+pydantic
+openinference-instrumentation-langchain

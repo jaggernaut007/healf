@@ -1,0 +1,50 @@
+# AI Package Template - Full Context Bundle
+
+This file provides a single-entry overview for agent context loading.
+
+## Canonical Instruction Sources
+- [AGENTS.md](AGENTS.md)
+- [CLAUDE.md](CLAUDE.md)
+- [.github/copilot-instructions.md](.github/copilot-instructions.md)
+
+## Copilot Architecture
+- [.github/instructions/python.instructions.md](.github/instructions/python.instructions.md)
+- [.github/instructions/web.instructions.md](.github/instructions/web.instructions.md)
+- [.github/instructions/testing.instructions.md](.github/instructions/testing.instructions.md)
+- [.github/prompts/pr-ready.prompt.md](.github/prompts/pr-ready.prompt.md)
+- [.github/prompts/new-connector.prompt.md](.github/prompts/new-connector.prompt.md)
+- [.github/agents/planner.agent.md](.github/agents/planner.agent.md)
+- [.github/agents/code-reviewer.agent.md](.github/agents/code-reviewer.agent.md)
+
+## Antigravity Workflow Assets
+- [.agents/workflows/planner.md](.agents/workflows/planner.md)
+- [.agents/workflows/implementer.md](.agents/workflows/implementer.md)
+- [.agents/workflows/review-cycle.md](.agents/workflows/review-cycle.md)
+
+## Claude Agents and Skills
+- [.claude/agents/planner.agent.md](.claude/agents/planner.agent.md)
+- [.claude/agents/implementer.agent.md](.claude/agents/implementer.agent.md)
+- [.claude/agents/research-assistant.agent.md](.claude/agents/research-assistant.agent.md)
+- [.claude/agents/reviewer.agent.md](.claude/agents/reviewer.agent.md)
+- [.claude/agents/security-auditor.agent.md](.claude/agents/security-auditor.agent.md)
+- [.claude/agents/test-writer.agent.md](.claude/agents/test-writer.agent.md)
+- [.claude/agents/docs-writer.agent.md](.claude/agents/docs-writer.agent.md)
+- [.claude/skills/session-handoff/SKILL.md](.claude/skills/session-handoff/SKILL.md)
+- [.claude/skills/ship-it/SKILL.md](.claude/skills/ship-it/SKILL.md)
+- [.claude/skills/triple-agent-audit/SKILL.md](.claude/skills/triple-agent-audit/SKILL.md)
+- [.claude/skills/ui-scaffolder/SKILL.md](.claude/skills/ui-scaffolder/SKILL.md)
+
+## Operations and Verification
+- [.claude/mcp.json](.claude/mcp.json)
+- [.claude/hooks.json](.claude/hooks.json)
+- [scripts/init.sh](scripts/init.sh)
+- [feature_list.json](feature_list.json)
+- [PROGRESS.md](PROGRESS.md)
+
+## Documentation
+- [README.md](README.md)
+- [docs/QUICK-REFERENCE.md](docs/QUICK-REFERENCE.md)
+- [docs/MASTER-CHECKLIST.md](docs/MASTER-CHECKLIST.md)
+- [docs/adr/template.md](docs/adr/template.md)
+- [docs/research/README.md](docs/research/README.md)
+- [docs/research/RESEARCH-TEMPLATE.md](docs/research/RESEARCH-TEMPLATE.md)

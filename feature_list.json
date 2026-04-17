@@ -1,0 +1,28 @@
+{
+  "features": [
+    {
+      "id": "phase-0",
+      "title": "Phase 0: Project Scaffolding & Environment Setup",
+      "status": "completed",
+      "dependencies": []
+    },
+    {
+      "id": "phase-0-research",
+      "title": "Phase 0.1: Initial Architectural Docs (ADR & Research)",
+      "status": "in-progress",
+      "dependencies": ["phase-0"]
+    },
+    {
+      "id": "phase-1",
+      "title": "Phase 1: Component 1 — Product Enrichment Pipeline",
+      "status": "in-progress",
+      "dependencies": ["phase-0"]
+    },
+    {
+      "id": "phase-2",
+      "title": "Phase 2: Component 2 — Knowledge Graph Construction",
+      "status": "in-progress",
+      "dependencies": ["phase-1"]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "sku": "43556099227887",
+    "canonical_name": "Magnesium (glycinate)",
+    "active_ingredients": [
+      "Magnesium glycinate"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  },
+  {
+    "sku": "43602292605167",
+    "canonical_name": "Metagenics Magnesium Glycinate",
+    "active_ingredients": [
+      "Magnesium (bisglycinate)"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Supports normal energy-yielding metabolism",
+      "Supports normal function of nervous system and muscles",
+      "Helps maintain healthy bones"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications",
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  },
+  {
+    "sku": "43556099227887",
+    "canonical_name": "Magnesium (glycinate)",
+    "active_ingredients": [
+      "Magnesium Glycinate"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  }
+]

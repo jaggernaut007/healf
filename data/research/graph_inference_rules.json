@@ -1,0 +1,65 @@
+[
+  {
+    "ingredient_terms": ["magnesium"],
+    "mechanism_name": "GABA signaling support",
+    "symptom_name": "Sleep",
+    "source_pmid": "23853635",
+    "corpus_terms": ["magnesium", "sleep"]
+  },
+  {
+    "ingredient_terms": ["ashwagandha"],
+    "mechanism_name": "Cortisol reduction",
+    "symptom_name": "Stress",
+    "source_pmid": "23439798",
+    "corpus_terms": ["ashwagandha", "cortisol", "stress"]
+  },
+  {
+    "ingredient_terms": ["quebracho", "tannin"],
+    "mechanism_name": "Methane reduction",
+    "symptom_name": "Bloating",
+    "source_pmid": "17468433",
+    "corpus_terms": ["quebracho", "methane"]
+  },
+  {
+    "ingredient_terms": ["l-theanine", "theanine"],
+    "mechanism_name": "Selective attention support",
+    "symptom_name": "Focus",
+    "source_pmid": "20079786",
+    "corpus_terms": ["l-theanine", "caffeine", "task switching", "attention"]
+  },
+  {
+    "ingredient_terms": ["caffeine"],
+    "mechanism_name": "Selective attention support",
+    "symptom_name": "Focus",
+    "source_pmid": "20079786",
+    "corpus_terms": ["l-theanine", "caffeine", "task switching", "attention"]
+  },
+  {
+    "ingredient_terms": ["citicoline", "cdp-choline", "cdp choline", "choline", "choline bitartrate"],
+    "mechanism_name": "Cholinergic membrane support",
+    "symptom_name": "Cognitive performance",
+    "source_pmid": "15846601",
+    "corpus_terms": ["cdp-choline", "citicoline", "choline", "memory", "behaviour"]
+  },
+  {
+    "ingredient_terms": ["l-tyrosine", "tyrosine"],
+    "mechanism_name": "Catecholamine precursor support",
+    "symptom_name": "Cognitive stress resilience",
+    "source_pmid": "26126245",
+    "corpus_terms": ["tyrosine", "stress", "cognitive", "catecholamine"]
+  },
+  {
+    "ingredient_terms": ["bacopa", "bacopa monnieri"],
+    "mechanism_name": "Memory and attentional control support",
+    "symptom_name": "Brain fog",
+    "source_pmid": "18683852",
+    "corpus_terms": ["bacopa", "memory", "stroop", "recall"]
+  },
+  {
+    "ingredient_terms": ["rhodiola", "rhodiola rosea"],
+    "mechanism_name": "Stress-adaptation and fatigue modulation",
+    "symptom_name": "Stress-related fatigue",
+    "source_pmid": "19016404",
+    "corpus_terms": ["rhodiola", "fatigue", "attention", "cortisol"]
+  }
+]

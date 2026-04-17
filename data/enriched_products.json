@@ -1,0 +1,184 @@
+[
+  {
+    "sku": "prod-01",
+    "canonical_name": "Magnesium (glycinate)",
+    "active_ingredients": [
+      "Magnesium glycinate"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  },
+  {
+    "sku": "prod-02",
+    "canonical_name": "Metagenics Magnesium Glycinate",
+    "active_ingredients": [
+      "Magnesium (bisglycinate)"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Supports normal energy-yielding metabolism",
+      "Supports normal function of nervous system and muscles",
+      "Helps maintain healthy bones"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications",
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  },
+  {
+    "sku": "prod-03-dup1",
+    "canonical_name": "Magnesium (glycinate)",
+    "active_ingredients": [
+      "Magnesium Glycinate"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  },
+  {
+    "sku": "prod-04",
+    "canonical_name": "Bare Biology Ready and Rested Magnesium Glycinate",
+    "active_ingredients": [
+      "Magnesium Bisglycinate Chelate Buffered"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Reduces tiredness and fatigue",
+      "Supports normal muscle and nervous system function",
+      "Maintains normal bones and teeth"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications",
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  },
+  {
+    "sku": "prod-05",
+    "canonical_name": "Organic KSM-66\u00ae Ashwagandha",
+    "active_ingredients": [
+      "Organic KSM-66\u00ae Ashwagandha",
+      "BioPerine\u00ae"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "pregnant",
+      "breastfeeding",
+      "medical condition",
+      "taking any medications"
+    ]
+  },
+  {
+    "sku": "prod-06",
+    "canonical_name": "Momentous L-Theanine",
+    "active_ingredients": [
+      "L-Theanine"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "Pregnant",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications"
+    ]
+  },
+  {
+    "sku": "prod-07",
+    "canonical_name": "Pure Encapsulations Rhodiola Rosea",
+    "active_ingredients": [
+      "Rhodiola (Rhodiola rosea) Extract"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Adaptogen",
+      "Reduces perceived effort",
+      "Increases power output and endurance"
+    ],
+    "contraindications": [
+      "Not suitable for those taking adrenergic-blocking or anti-arrhythmic medications"
+    ]
+  },
+  {
+    "sku": "prod-08",
+    "canonical_name": "Designs For Health L-Tyrosine",
+    "active_ingredients": [
+      "L-Tyrosine",
+      "Vitamin C"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Involved in neurotransmitter pathways",
+      "Supports immune system",
+      "Reduces tiredness and fatigue"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications"
+    ]
+  },
+  {
+    "sku": "prod-09",
+    "canonical_name": "Bacopa Monnieri Extract",
+    "active_ingredients": [
+      "Bacopa Monnieri Leaf Extract"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "Pregnant",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications"
+    ]
+  },
+  {
+    "sku": "prod-10",
+    "canonical_name": "Choline (bitartrate)",
+    "active_ingredients": [
+      "Choline Bitartrate"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Supports normal liver function",
+      "Supports lipid metabolism",
+      "Supports homocysteine metabolism"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical condition",
+      "Taking medications"
+    ]
+  },
+  {
+    "sku": "prod-11",
+    "canonical_name": "Pure Encapsulations Magnesium Glycinate",
+    "active_ingredients": [
+      "Magnesium Glycinate"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [
+      "May cause nausea",
+      "Do not take at night"
+    ]
+  }
+]

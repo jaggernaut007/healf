@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "description": "Version-specific library docs retrieval (Tier 1 in retrieval pattern)"
+    },
+    "nexus-mcp": {
+      "command": "npx",
+      "args": ["-y", "nexus-mcp", "index", "./"],
+      "description": "Hybrid code intelligence: semantic search, call graphs, impact analysis"
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "description": "Structured reasoning for complex problem-solving"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-playwright"],
+      "description": "Browser automation for E2E testing and UI verification"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "description": "Live browser debugging with Chrome DevTools"
+    },
+    "memstate-ai": {
+      "command": "npx",
+      "args": ["-y", "@memstate/mcp"],
+      "description": "Versioned project memory for cross-session architectural context"
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "description": "Lightweight web content fetching and conversion to Markdown"
+    }
+  }
+}
