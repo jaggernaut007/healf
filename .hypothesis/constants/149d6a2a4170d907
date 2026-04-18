@@ -1,4 +1,0 @@
-# file: /Users/shreyasjagannath/dev/healf/.venv/bin/pytest
-# hypothesis_version: 6.152.1
-
-['-script.pyw', '.exe', '__main__']

@@ -1,4 +1,0 @@
-# file: /Users/shreyasjagannath/dev/healf/src/graph_builder.py
-# hypothesis_version: 6.152.1
-
-['*.md', '*.txt', '--preflight', '--preview-limit', '--research-dir', 'EMBEDDING_MODEL', 'NEO4J_DATABASE', 'NEO4J_PASSWORD', 'NEO4J_URI', 'NEO4J_USERNAME', 'OPENAI_API_KEY', '__main__', 'data/research', 'neo4j', 'r', 'store_true', 'utf-8']
