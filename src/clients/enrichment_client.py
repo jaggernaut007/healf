@@ -5,6 +5,7 @@ from typing import Optional, Dict, Any
 from src.models.product import EnrichedProduct
 
 # Attempting to load Firecrawl, which will be added to requirements if we decide to wrap it
+from cachetools import cached, TTLCache
 try:
     from firecrawl import FirecrawlApp
 except ImportError:
@@ -101,6 +102,11 @@ class EnrichmentClient:
                 max_tokens=2048,
                 temperature=0.0
             )
+
+            if hasattr(product, "model_dump"):
+                product = EnrichedProduct.model_validate(product.model_dump())
+            else:
+                product = EnrichedProduct.model_validate(product)
             
             # Override the SKU with the URL-derived value (deterministic and unique)
             product.sku = sku
@@ -108,6 +114,7 @@ class EnrichmentClient:
         except Exception as e:
             raise RuntimeError(f"LLM data extraction failed: {str(e)}")
 
+    @cached(cache=TTLCache(maxsize=100, ttl=3600))
     def fetch_nih_dsld_data(self, product_name: str) -> Dict[str, Any]:
         """
         Fetches grounding data from the NIH Dietary Supplement Label Database via their public REST API.

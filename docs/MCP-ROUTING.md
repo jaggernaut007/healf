@@ -4,13 +4,13 @@ This repository uses role-specific MCP routing to reduce context waste and impro
 
 ## Routing Matrix
 
-- planner: nexus-mcp, sequential-thinking
-- implementer: nexus-mcp, context7
+- planner: nexus-mcp, sequential-thinking, memstate-ai
+- implementer: nexus-mcp, context7, playwright, chrome-devtools, memstate-ai
 - research-assistant: context7, fetch, sequential-thinking, nexus-mcp
-- test-writer: context7
-- code-reviewer: nexus-mcp, context7
+- test-writer: context7, playwright
+- code-reviewer: nexus-mcp, context7, memstate-ai
 - security-auditor: nexus-mcp
-- docs-writer: nexus-mcp, context7
+- docs-writer: nexus-mcp, context7, fetch
 
 ## Mandatory Sequence
 

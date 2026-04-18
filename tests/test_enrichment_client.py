@@ -95,6 +95,21 @@ def test_extract_product_data_mock_llm():
     assert "Do not test" in product.contraindications
 
 
+def test_extract_product_data_rejects_invalid_schema() -> None:
+    mock_llm_client = MagicMock()
+    # Missing required canonical fields for EnrichedProduct.
+    mock_llm_client.chat.completions.create.return_value = {"sku": "bad"}
+
+    client = EnrichmentClient(api_key="fake-key")
+
+    with pytest.raises(RuntimeError, match="LLM data extraction failed"):
+        client.extract_product_data(
+            "# invalid",
+            url="https://healf.com/products/invalid",
+            instructor_client=mock_llm_client,
+        )
+
+
 def test_fetch_nih_dsld_data_does_not_fabricate_warnings() -> None:
     mock_response = MagicMock()
     mock_response.json.return_value = [0, ["rxterm-match"]]
