@@ -72,6 +72,14 @@ class GraphPreflightResult(BaseModel):
     triples_preview: list[GraphTriple]
 
 
+class OpenAIEmbeddingItem(BaseModel):
+    embedding: list[float]
+
+
+class OpenAIEmbeddingResponse(BaseModel):
+    data: list[OpenAIEmbeddingItem]
+
+
 class GraphBuilder:
     def __init__(
         self,
@@ -255,7 +263,11 @@ class GraphBuilder:
 
         def _embed(text: str) -> list[float]:
             response = client.embeddings.create(model=self.config.embedding_model, input=text)
-            return response.data[0].embedding
+            payload = response.model_dump() if hasattr(response, "model_dump") else response
+            parsed = OpenAIEmbeddingResponse.model_validate(payload)
+            if not parsed.data:
+                raise RuntimeError("Embedding API returned no vectors")
+            return parsed.data[0].embedding
 
         return _embed
 
