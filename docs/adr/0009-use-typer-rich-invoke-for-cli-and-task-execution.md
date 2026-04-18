@@ -1,7 +1,7 @@
 # 9. Use Typer + Rich + Invoke for CLI and Task Execution
 
 ## Status
-Proposed
+Accepted
 
 ## Context
 Phase 4 requires a user-facing CLI and internal task execution workflow for enrichment runs, graph preflight/build, and orchestration flows. Existing shell scripts are functional but do not provide typed argument validation, rich terminal UX, or composable task namespaces.
