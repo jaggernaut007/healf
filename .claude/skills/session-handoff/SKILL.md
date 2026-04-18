@@ -10,6 +10,12 @@ description: >
 
 This skill ensures continuity between agent sessions by managing cross-session state.
 
+## Spec Conformance Gate
+
+- Read `SPEC.md` during both start-session and end-session modes.
+- Ensure next steps map to active phase acceptance criteria in `SPEC.md`.
+- If current work diverges from `SPEC.md`, record a blocked item and require spec update.
+
 ## Two Modes: End Session & Start Session
 
 ### End Session Mode

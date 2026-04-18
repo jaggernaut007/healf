@@ -9,20 +9,38 @@
     {
       "id": "phase-0-research",
       "title": "Phase 0.1: Initial Architectural Docs (ADR & Research)",
-      "status": "in-progress",
+      "status": "completed",
       "dependencies": ["phase-0"]
     },
     {
       "id": "phase-1",
       "title": "Phase 1: Component 1 — Product Enrichment Pipeline",
-      "status": "in-progress",
+      "status": "completed",
       "dependencies": ["phase-0"]
     },
     {
       "id": "phase-2",
       "title": "Phase 2: Component 2 — Knowledge Graph Construction",
-      "status": "in-progress",
+      "status": "completed",
       "dependencies": ["phase-1"]
+    },
+    {
+      "id": "phase-3",
+      "title": "Phase 3: Agentic Orchestration (5-Agent KG-RAG Migration)",
+      "status": "in-progress",
+      "dependencies": ["phase-2"]
+    },
+    {
+      "id": "phase-4",
+      "title": "Phase 4: CLI and UX",
+      "status": "in-progress",
+      "dependencies": ["phase-3"]
+    },
+    {
+      "id": "governance-spec-enforcement",
+      "title": "Governance: Copilot SPEC enforcement rollout",
+      "status": "completed",
+      "dependencies": ["phase-0-research"]
     }
   ]
 }

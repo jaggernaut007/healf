@@ -1,0 +1,4 @@
+# file: /Users/shreyasjagannath/dev/healf/src/clients/enrichment_client.py
+# hypothesis_version: 6.152.1
+
+[0.0, 2048, '/', 'Do not take at night', 'FIRECRAWL_API_KEY', 'Failed', 'May cause nausea', 'NIH_DSLD', 'Success', 'content', 'dsld_matches', 'error', 'formats', 'gpt-4o', 'grounding_status', 'magnesium', 'markdown', 'maxList', 'query', 'role', 'scrape', 'scrape_url', 'source', 'system', 'terms', 'unknown', 'user', 'warnings']

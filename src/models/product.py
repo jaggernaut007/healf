@@ -7,4 +7,4 @@ class EnrichedProduct(BaseModel):
     active_ingredients: List[str]
     target_biomarkers: List[str]
     mechanisms_of_action: List[str]
-    contraindications: List[str]  # Sourced strictly from NIH DSLD
+    contraindications: List[str]  # Sourced from NIH RxTerms grounding

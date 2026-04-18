@@ -131,15 +131,14 @@ class GraphBuilder:
 
         for product in products:
             for ingredient in product.active_ingredients:
-                triple = self._infer_triple_for_ingredient(
+                ingredient_triples = self._infer_triples_for_ingredient(
                     product=product,
                     ingredient=ingredient,
                     full_corpus=full_corpus,
                     pmid_corpus_map=pmid_corpus_map,
                     rules=rules,
                 )
-                if triple:
-                    triples.append(triple)
+                triples.extend(ingredient_triples)
 
         return triples
 
@@ -287,15 +286,16 @@ class GraphBuilder:
         }
         return sorted(all_ingredients - matched)
 
-    def _infer_triple_for_ingredient(
+    def _infer_triples_for_ingredient(
         self,
         product: EnrichedProduct,
         ingredient: str,
         full_corpus: str,
         pmid_corpus_map: dict[str, str],
         rules: Sequence[GraphInferenceRule],
-    ) -> GraphTriple | None:
+    ) -> list[GraphTriple]:
         normalized = ingredient.lower()
+        matches: list[GraphTriple] = []
 
         for rule in rules:
             if not any(term.lower() in normalized for term in rule.ingredient_terms):
@@ -312,16 +312,18 @@ class GraphBuilder:
             ):
                 continue
 
-            return GraphTriple(
-                product_sku=product.sku,
-                product_name=product.canonical_name,
-                ingredient_name=ingredient,
-                mechanism_name=rule.mechanism_name,
-                symptom_name=rule.symptom_name,
-                source_pmid=rule.source_pmid,
+            matches.append(
+                GraphTriple(
+                    product_sku=product.sku,
+                    product_name=product.canonical_name,
+                    ingredient_name=ingredient,
+                    mechanism_name=rule.mechanism_name,
+                    symptom_name=rule.symptom_name,
+                    source_pmid=rule.source_pmid,
+                )
             )
 
-        return None
+        return matches
 
 
 def run_graph_build(

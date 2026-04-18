@@ -16,7 +16,7 @@ Lightweight agentic coding package for startups, small teams, and solo developer
 - [Model Routing](docs/MODEL-ROUTING.md)
 - [Auto-Memory Practices](docs/AUTO-MEMORY.md)
 - [Full Context Bundle](llms-full.txt)
-- [Architecture Decision Records](docs/adr/template.md)
+- [Architecture Decision Records](docs/adr/)
 - [Research Notes Guide](docs/research/README.md)
 - [Research Template](docs/research/RESEARCH-TEMPLATE.md)
 - [Research Index](docs/research/INDEX.md)

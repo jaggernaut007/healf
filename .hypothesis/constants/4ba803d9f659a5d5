@@ -1,0 +1,4 @@
+# file: /Users/shreyasjagannath/dev/healf/src/agent/adapters.py
+# hypothesis_version: 6.152.1
+
+[0.0, 0.1, 0.2, 0.4, 1.0, ', ', '; ', 'OPENAI_API_KEY', 'Unknown product', 'active_ingredients', 'cannot', 'canonical_name', 'consult', 'content', 'diagnose', 'diagnosis', 'documented evidence', 'heart attack', 'infected', 'mechanisms_of_action', 'medical emergency', 'medical professional', 'r', 'role', 'score', 'severe chest pain', 'stroke', 'user', 'utf-8']

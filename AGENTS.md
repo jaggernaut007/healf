@@ -4,6 +4,13 @@ Role: Output ultra-dense text. Sacrifice grammar for token efficiency. Preserve 
 ## Project Overview
 AI Package Template — A production-ready agentic development framework for IDE coding agents.
 
+## Spec-Driven Grounding (Mandatory)
+1. Read `SPEC.md` before planning, implementation, testing, review, or release actions.
+2. Map every task to a phase and acceptance criteria in `SPEC.md` before changing files.
+3. If a request conflicts with `SPEC.md` or has no acceptance criteria, work is blocked until `SPEC.md` is updated.
+4. Never mark tasks complete without tool-verified evidence mapped to `SPEC.md` acceptance criteria.
+5. Any architecture, dependency, or API contract change requires updated ADR/research artifacts before implementation.
+
 ## Tech Stack
 - Python (FastAPI, LlamaIndex, LangGraph)
 - uv (Python Package Manager - ALWAYS use `uv` instead of `pip` or `python -m venv`)
@@ -14,6 +21,13 @@ AI Package Template — A production-ready agentic development framework for IDE
 # Run `./scripts/init.sh` to initialize and verify environment
 # Run `uv pip install -r requirements.txt` to install dependencies
 # Run `PYTHONPATH=. pytest tests/` to manually test
+
+## Search Tool Standard (Mandatory)
+1. Default to `rg` for repository search operations.
+2. Use `rg --files` for file discovery and `rg -n` for content search.
+3. Keep ignore behavior enabled by default (`.gitignore`, `.ignore`, `.rgignore`).
+4. If `rg` is unavailable, fall back to `find . -type f` and `grep -RIn --exclude-dir=.git`, and log one line: `rg unavailable, using grep/find fallback`.
+5. Do not default to `grep`/`find` when `rg` is available.
 
 ## Code Standards
 - Write concise, professional comments (not verbose explanations)

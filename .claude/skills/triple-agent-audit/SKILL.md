@@ -9,6 +9,11 @@ description: >
 
 Run three distinct passes after implementation.
 
+## Spec Conformance Gate
+
+- All three waves must validate against `SPEC.md` acceptance criteria.
+- Any wave finding that indicates out-of-spec behavior is a BLOCK until `SPEC.md` or implementation is corrected.
+
 ## Wave 3: Tester
 - Validate happy path, edge cases, and resilience failures.
 - Verify test commands and read actual output.

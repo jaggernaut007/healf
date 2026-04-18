@@ -1,7 +1,7 @@
 # Enrichment Pipeline Specification
 
 ## 1. Overview
-The Enrichment Pipeline is responsible for taking raw e-commerce product URLs, extracting their medical/supplemental data, grounding this data against verified government databases (NIH DSLD), and returning a strictly typed JSON output suitable for ingestion into the Knowledge Graph and Chatbot modules.
+The Enrichment Pipeline is responsible for taking raw e-commerce product URLs, extracting their medical/supplemental data, grounding this data against verified government endpoints (NIH RxTerms), and returning a strictly typed JSON output suitable for ingestion into the Knowledge Graph and Chatbot modules.
 
 ## 2. Inputs
 - Target: `data/raw_product_urls.json`
@@ -13,10 +13,10 @@ The Enrichment Pipeline is responsible for taking raw e-commerce product URLs, e
 - Action: Scrape raw HTML/JS into clean markdown to bypass bot protections and capture unstructured product context.
 - Output: Raw Markdown string.
 
-### 3.2. Medical Grounding (NIH DSLD)
-- Tool: `requests` package targeting the NIH Dietary Supplement Label Database API.
+### 3.2. Medical Grounding (NIH RxTerms)
+- Tool: `requests` package targeting the NIH RxTerms API.
 - Action: Query the API using active ingredients extracted from the product.
-- Output: A list of medically verified contraindications.
+- Output: Grounding matches and source-backed safety context.
 
 ### 3.3 Structuring (Instructor + OpenAI)
 - Tool: `instructor` patched OpenAI client.

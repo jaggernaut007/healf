@@ -1,0 +1,27 @@
+# Healf wellness safety phrase policy.
+# Adapter parser reads only lines that start with:
+#   # healf_block_phrase: <phrase>
+
+# healf_block_phrase: diagnose
+# healf_block_phrase: diagnosis
+# healf_block_phrase: severe chest pain
+# healf_block_phrase: heart attack
+# healf_block_phrase: stroke
+# healf_block_phrase: medical emergency
+# healf_block_phrase: infected
+
+define user express medical diagnosis
+	"diagnose me"
+	"can you diagnose"
+	"does this look infected"
+	"i have severe chest pain"
+	"am i having a heart attack"
+	"am i having a stroke"
+	"this is a medical emergency"
+
+define bot refuse medical diagnosis
+	"I am a wellness assistant, not a doctor. Please consult a medical professional."
+
+define flow medical_intent_block
+	user express medical diagnosis
+	bot refuse medical diagnosis

@@ -375,6 +375,109 @@ def test_preflight_reports_diagnostics(tmp_path: Path) -> None:
     assert len(result.triples_preview) == 1
 
 
+def test_infer_triples_allows_multiple_rules_per_ingredient(tmp_path: Path) -> None:
+    builder = make_builder()
+    products = [
+        EnrichedProduct(
+            sku="SKU-1",
+            canonical_name="Focus Stack",
+            active_ingredients=["L-Theanine with Caffeine"],
+            target_biomarkers=[],
+            mechanisms_of_action=[],
+            contraindications=[],
+        )
+    ]
+    research_documents = [
+        ("20079786.md", "l-theanine caffeine task switching attention"),
+    ]
+    rules = [
+        graph_builder_module.GraphInferenceRule(
+            ingredient_terms=["theanine"],
+            mechanism_name="Selective attention support",
+            symptom_name="Focus",
+            source_pmid="20079786",
+            corpus_terms=["theanine", "attention"],
+        ),
+        graph_builder_module.GraphInferenceRule(
+            ingredient_terms=["caffeine"],
+            mechanism_name="Alertness support",
+            symptom_name="Focus",
+            source_pmid="20079786",
+            corpus_terms=["caffeine", "attention"],
+        ),
+    ]
+
+    triples = builder.infer_triples(products, research_documents, inference_rules=rules)
+
+    assert len(triples) == 2
+    assert {triple.mechanism_name for triple in triples} == {
+        "Selective attention support",
+        "Alertness support",
+    }
+
+
+def test_load_committed_inference_rules_and_infer_triple() -> None:
+    builder = make_builder()
+    products = [
+        EnrichedProduct(
+            sku="SKU-1",
+            canonical_name="Magnesium Glycinate",
+            active_ingredients=["Magnesium Glycinate"],
+            target_biomarkers=[],
+            mechanisms_of_action=[],
+            contraindications=[],
+        )
+    ]
+    research_documents = [
+        ("23853635.md", "magnesium supplementation improves sleep"),
+    ]
+
+    rules = builder.load_inference_rules(Path("data/research/graph_inference_rules.json"))
+    triples = builder.infer_triples(products, research_documents, inference_rules=rules)
+
+    assert rules
+    assert triples
+    assert triples[0].source_pmid == "23853635"
+
+
+def test_infer_triples_is_deterministic_for_repeated_runs() -> None:
+    builder = make_builder()
+    products = [
+        EnrichedProduct(
+            sku="SKU-1",
+            canonical_name="Focus Stack",
+            active_ingredients=["L-Theanine with Caffeine"],
+            target_biomarkers=[],
+            mechanisms_of_action=[],
+            contraindications=[],
+        )
+    ]
+    research_documents = [
+        ("20079786.md", "l-theanine caffeine task switching attention"),
+    ]
+    rules = [
+        graph_builder_module.GraphInferenceRule(
+            ingredient_terms=["theanine"],
+            mechanism_name="Selective attention support",
+            symptom_name="Focus",
+            source_pmid="20079786",
+            corpus_terms=["theanine", "attention"],
+        ),
+        graph_builder_module.GraphInferenceRule(
+            ingredient_terms=["caffeine"],
+            mechanism_name="Alertness support",
+            symptom_name="Focus",
+            source_pmid="20079786",
+            corpus_terms=["caffeine", "attention"],
+        ),
+    ]
+
+    first = builder.infer_triples(products, research_documents, inference_rules=rules)
+    second = builder.infer_triples(products, research_documents, inference_rules=rules)
+
+    assert [triple.model_dump() for triple in first] == [triple.model_dump() for triple in second]
+
+
 def test_main_preflight_returns_zero(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
     def fake_preflight(self: GraphBuilder, preview_limit: int = 5):
         return graph_builder_module.GraphPreflightResult(

@@ -1,5 +1,7 @@
 Here is the definitive **Architectural Decision Record (ADR)** for your Healf take-home task. This is exactly what you should use as a cheat sheet during your live 60-minute technical debrief. It proves that every choice you made was deliberate, balancing the 12-hour constraint with a Series B production vision.
 
+Status note (2026-04-17): Items referencing Component 3 orchestration and runtime guardrails/evaluation are target decisions for upcoming implementation phases and should not be interpreted as already shipped code.
+
 ### 1. Decisions We Took (The "Series B" Flexes)
 
 * **GraphRAG natively inside Neo4j (over separate databases):** We decided to store vector embeddings directly on the `Mechanism` and `Product` nodes inside Neo4j. This allows us to use semantic search to enter the graph, and strict directional relationships (edges) to traverse it, preventing "semantic dilution."
@@ -15,7 +17,7 @@ Here is the definitive **Architectural Decision Record (ADR)** for your Healf ta
 
 * **We went against multi-agent debate swarms (e.g., AutoGen, CrewAI):** "Agent debate" introduces high latency, massive token costs, and unpredictability. In health-tech, we need deterministic workflows, which is why we chose LangGraph's predictable, graph-based routing instead.
 * **We went against standard Vector RAG (e.g., Pinecone/Milvus):** Standard RAG pulls text chunks based on "similarity," which is dangerous in healthcare (e.g., a drug that *treats* a disease is semantically similar to a drug that *causes* it). We opted for a strict Knowledge Graph to enforce logical boundaries.
-* **We went against OpenFDA for Grounding:** OpenFDA is built for pharmaceutical drugs. Because Healf's catalog is wellness and supplement-heavy, we pivoted to the **NIH Dietary Supplement Label Database (DSLD)**, which is legally and scientifically relevant to the products Healf actually sells.
+* **We went against OpenFDA for Grounding:** OpenFDA is built for pharmaceutical drugs. Because Healf's catalog is wellness and supplement-heavy, the current implementation uses the **NIH RxTerms** public endpoint for grounding matches and safety context.
 * **We went against Jina Reader and Shopify `.json` scraping:** Jina proved too slow (nearly 8 seconds of latency), and Shopify native endpoints are often bot-protected. We pivoted to **Firecrawl** because of its speed, JS-rendering capabilities, and enterprise SOC 2 compliance.
 
 ---

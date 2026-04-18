@@ -34,12 +34,17 @@ def run_enrichment_pipeline():
         logger.error("No input URLs to process. Exiting.")
         return
 
-    # Check for keys, but do not fail hard if they don't exist for test builds
+    # Fail fast when credentials are missing so runs cannot silently degrade.
     fc_api_key = os.getenv("FIRECRAWL_API_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
 
     if not fc_api_key or not openai_key:
-        logger.warning("Missing API keys (FIRECRAWL_API_KEY or OPENAI_API_KEY). Ensure they are exported if doing a live run.")
+        missing = []
+        if not fc_api_key:
+            missing.append("FIRECRAWL_API_KEY")
+        if not openai_key:
+            missing.append("OPENAI_API_KEY")
+        raise RuntimeError(f"Missing required API keys: {', '.join(missing)}")
     
     client = EnrichmentClient(api_key=fc_api_key)
     
@@ -48,6 +53,7 @@ def run_enrichment_pipeline():
     patch_client = instructor.from_openai(oai_client)
 
     enriched_results = []
+    failed_urls = []
     for url in urls:
         logger.info(f"Processing URL: {url}")
         
@@ -56,11 +62,11 @@ def run_enrichment_pipeline():
             logger.info("   -> Scraping markup via Firecrawl...")
             markdown = client.fetch_product_page(url)
 
-            # 2. Map and Extract Schema 
+            # 2. Map and Extract Schema (pass URL for deterministic SKU extraction)
             logger.info("   -> Extracting structured data via LLM...")
-            product = client.extract_product_data(markdown, instructor_client=patch_client)
+            product = client.extract_product_data(markdown, url=url, instructor_client=patch_client)
 
-            # 3. Grounding against NIH DSLD 
+            # 3. Grounding against NIH RxTerms 
             logger.info(f"   -> Grounding active ingredients for {product.canonical_name}...")
             # For each active ingredient, verify safety gaps
             for ingredient in product.active_ingredients:
@@ -77,12 +83,18 @@ def run_enrichment_pipeline():
 
         except Exception as e:
             logger.error(f"Failed processing {url} - {str(e)}")
+            failed_urls.append(url)
+
+    if failed_urls:
+        raise RuntimeError(
+            f"Enrichment failed for {len(failed_urls)} URL(s): {', '.join(failed_urls)}"
+        )
 
     # 4. Save Final State
     if enriched_results:
         save_output_products(output_file, enriched_results)
     else:
-        logger.warning("No products were successfully extracted.")
+        raise RuntimeError("No products were successfully extracted.")
 
 if __name__ == "__main__":
     run_enrichment_pipeline()

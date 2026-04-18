@@ -11,6 +11,12 @@ description: >
 
 The ship-it skill orchestrates a rigid release workflow to ensure quality before deployment.
 
+## Spec Conformance Gate
+
+- Read `SPEC.md` before release actions.
+- Verify completed work satisfies active phase/wave acceptance criteria.
+- If scope deviates from `SPEC.md`, block release until spec and docs are updated.
+
 ## Core Principle
 **Never mark a feature complete in PROGRESS.md without having seen a test pass via tool call.**
 

@@ -1,94 +1,84 @@
-***
+# System Architecture: Healf Health Intelligence Engine
 
-# System Architecture: Healf Health-Intelligence Engine
+Status: 2026-04-18
 
-## Core Philosophy
-This architecture was designed entirely around the mandate that health-tech AI must be **reliable, grounded, and measurable**. As Healf transitions into a diagnostics-led platform (Healf Zone), standard probabilistic RAG systems are insufficient and medically risky. 
+## Scope and Status Boundary
+This document defines the target architecture for Phase 3 and explicitly separates implemented baseline behavior from in-progress migration work.
 
-I rejected standard RAG in favor of a stateful LangGraph agent swarm backed by a Neo4j ontology. This ensures that every recommendation is *grounded* in strict graph traversal, *reliable* through Pydantic data contracts and NeMo safety routing, and objectively *measurable* via CI/CD evaluation integration.
+Implemented baseline today:
+- LangGraph orchestration with safety -> retrieval -> generation -> evaluation.
+- Policy-based safety hardening via phrase-first checks and optional NeMo rails.
+- Optional Phoenix/OpenInference observability activation.
+- Optional DeepEval-based quality gate scoring with deterministic fallback.
 
----
+Target architecture now approved for implementation:
+- Prompt rewrite preprocessing plus a five-agent orchestration cycle:
+  - Intake Router
+  - Domain Specialist
+  - Graph Retriever
+  - Pharmacovigilance Critic
+  - Payload Generator
+- Bounded retry loop between Critic and Specialist.
+- Graph-grounded conversational output constrained to retrieved evidence.
 
-## 1. System Design & Orchestration (Component 3)
+## Architectural Principles
+1. Safety-first execution: high-risk medical intent is blocked before specialist or generation nodes run.
+2. Evidence-first generation: responses must be grounded in retrieved graph/product evidence.
+3. Typed contracts over free text: node interfaces use strict structured outputs.
+4. Bounded autonomy: retry loops are capped and fail closed on persistent errors.
+5. Observable trajectories: node transitions and rejection reasons are traceable.
 
-The core orchestrator is not a linear pipeline, but a **stateful multi-agent swarm** built with LangGraph. 
+## End-to-End Flow (Target)
+1. Safety node evaluates the raw user query and can terminate as blocked.
+2. Prompt Rewrite normalizes the query for retrieval planning while preserving intent.
+3. Intake Router chooses domain lane and risk route.
+4. Domain Specialist drafts a structured, read-only graph query plan.
+5. Graph Retriever executes validated query plans and normalizes evidence chunks.
+6. Pharmacovigilance Critic evaluates candidate recommendation against profile constraints.
+7. Critic pass routes to Payload Generator; critic fail routes back to Specialist with validation errors (bounded retry).
+8. Evaluator gate validates output quality before final response is returned.
 
-**The Context Rot Problem:** Standard chatbots suffer from "context rot" as conversations grow, passing giant transcripts to the LLM and causing hallucination. 
-**The Solution:** I implemented an "Isolate and Distill" architecture using Python `TypedDict` with `operator.add` reducers. The LangGraph state separates immutable facts (biomarkers, known conditions) from the transient chat history.
+## State Contract (Target)
+State must preserve both raw and transformed data:
+- chat_history (append-only)
+- user_profile (overwritable structured facts)
+- rewritten_query (single normalized query)
+- routing_intent (domain/risk classification)
+- graph_query_plan (validated read-only plan)
+- retrieved_evidence (appendable evidence paths/chunks)
+- candidate_payload (overwritable draft)
+- validation_errors (append-only critic findings)
+- evaluation_result and terminal status
 
-**The Routing Flow:**
-1. **Node A (Context Extractor):** Reads the chat and updates immutable facts in the `user_biomarkers` state.
-2. **Node B (Clinical Inferencer):** Infers latent deficiencies (e.g., *Endurance Athlete + Twitching = Magnesium Gaps*) based on the isolated facts.
-3. **Node C (Graph Retriever):** Uses inferred gaps to traverse the Neo4j Knowledge Graph.
-4. **Node D (Payload Generator):** Drafts the final response and forces it into a `UIReadyPayload` JSON schema. 
+## Graph Retrieval and Query Safety
+The graph layer remains deterministic even when planned by LLM:
+- LLM can propose plans but never executes direct arbitrary Cypher.
+- Query boundary enforces read-only allowlist rules.
+- Query boundary enforces parameterization, timeout, and row caps.
+- Evidence objects are normalized into a shared schema before reranking/generation.
 
-**UI/Frontend Empathy:** The backend does not return raw Markdown strings. It returns a strict JSON object containing `reply_text`, `citations`, and `recommended_products`. This allows the frontend team to natively render 'Source' badges and clickable 'Add to Cart' UI cards directly in the chat interface.
+## Pharmacovigilance Critic Responsibilities
+The critic is the final safety net before output:
+- Validates contraindications against profile facts (allergies, medications, known conditions).
+- Emits structured validation errors when conflicts are found.
+- Requests one bounded retry from Specialist with error context.
+- Fails closed when retries are exhausted.
 
----
+## Conversational Output Strategy
+KG-RAG improves trust and specificity; user-friendliness is delivered by the Payload Generator:
+- Response tone is conversational and direct.
+- Claims are limited to supported evidence.
+- Unknowns are stated explicitly when evidence is insufficient.
+- Output includes machine-readable citations/recommendations for UI rendering.
 
-## 2. Knowledge Graph Schema & Vectorization (Component 2)
+## Evaluation and Observability
+- Evaluation gate remains mandatory before final response release.
+- Observability traces include node path, retry count, and critic outcomes.
+- Test suite must cover control flow, fail-closed paths, and retry behavior.
 
-I explicitly avoided introducing a standalone Vector DB (like Pinecone). Introducing disjointed databases creates synchronization issues. Instead, I built a hybrid **GraphRAG** system utilizing Neo4j AuraDB.
-
-**The Schema Pattern:**
-We use clinically directional edges:
-`(Symptom) <-[:ALLEVIATES]- (Mechanism) <-[:TRIGGERS]- (Ingredient) <-[:CONTAINS]- (Product)`
-
-**Vector Integration:**
-Text embeddings are stored directly as properties on the `Mechanism` and `Product` nodes inside Neo4j. 
-* *Inference Strategy:* We use semantic vector search to find the correct entry node (e.g., vector-matching the user's query to a specific `Mechanism`), and then switch to **deterministic graph traversal** to find the connected ingredients and safe SKUs. This prevents the "semantic dilution" that plagues standard Vector DBs.
-
-**PubMed Corpus Intake:**
-The knowledge graph corpus is built from scraper-backed PubMed abstract captures saved under `data/research/`. Each abstract file stays tied to a PMID so the extraction step can cite the exact evidence source used for each relationship.
-
----
-
-## 3. Product Enrichment & Canonicalization (Component 1)
-
-This pipeline extracts raw product data and standardizes it into reasoning-ready JSON.
-
-**The Tech Stack:**
-* **Firecrawl:** Used over traditional scrapers for its speed, JS-rendering, and SOC 2 compliance.
-* **NIH DSLD API:** Rather than using OpenFDA (which is tuned for pharmaceutical drugs), I grounded the enrichment step using the NIH Dietary Supplement Label Database. Because Healf's catalog is wellness-heavy, this ensures our extracted contraindications are accurate for food-grade supplements.
-* **Instructor (Pydantic):** Forces the LLM to output structured data.
-
-**Scraper-First Product Intake:**
-Product descriptions, ingredient lists, and visible claims should come from scraper output, not hand-entered catalog notes. The scrape is the primary raw input; the enrichment model only standardizes and grounds what the scraper captured.
-
-**Idempotent Ingestion & Deduplication:**
-To prevent database deadlocks and node duplication when e-commerce data updates asynchronously, the Cypher extraction pipeline utilizes parameterized `MERGE` operations. The LLM is instructed to map all ingredients to a `canonical_name` (e.g., merging "Mag. Glycinate" and "Magnesium Bisglycinate" into one node).
-
----
-
-## 4. Safety Model & Medical Guardrails
-
-"You are a helpful wellness assistant" is not a security boundary. I implemented a **Safety Cascade**:
-
-1. **The Semantic Firewall (NeMo Guardrails):** Sitting at the API gateway level before LangGraph is even invoked. If a user asks a high-risk medical question (e.g., "diagnose my chest pain"), NeMo identifies the intent via fast embeddings and deterministically returns a hardcoded disclaimer.
-2. **Closed-Book Grounding:** The LangGraph Response Agent operates on a strict "I don't know" policy. If the Neo4j graph returns an empty traversal path, the agent is programmatically forbidden from answering using its parametric memory.
-
----
-
-## 5. Evaluation Framework & Observability
-
-You cannot improve what you cannot measure. 
-* **Observability (Arize Phoenix):** Phoenix traces every LangGraph node transition and Cypher query locally, ensuring deep visibility into the swarm's logic without leaking Healf Zone health data to a third-party cloud provider.
-* **CI/CD Quality Gates (DeepEval):** I integrated `deepeval` natively into `pytest`. We score `Faithfulness` (Did it cite the Neo4j graph?) and `AnswerRelevance`. In production, this script blocks pull requests if a prompt tweak causes the `Faithfulness` metric to drop below 95%.
-
----
-
-## 6. Scoping: What I Did Not Build
-
-Given the time constraints, I made strict, pragmatic scoping decisions to focus on core AI infrastructure:
-* **No Frontend:** I did not build a React/Streamlit app. The final deliverable is the API payload ready for frontend consumption.
-* **No Live Webhooks:** In production, Component 1 would trigger via a Shopify webhook when the curation team adds a SKU. Here, I mocked the webhook payload via local JSON reading.
-* **No Highly-Transactional Graph Data:** I did not map individual user sessions as nodes in Neo4j. Mixing volatile user chat state with immutable medical facts destroys database caching strategies. User state lives strictly in LangGraph memory.
-
----
-
-## 7. Founding Engineer Decisions (First 14 Days)
-
-If starting on Day 1 at Healf, here are the AI infrastructure decisions I would make that are hardest to reverse:
-
-1. **Enforcing "Mix and Batch" Graph Ingestion:** As we scale, naive `MERGE` queries during concurrent product updates will cause Neo4j write-lock deadlocks. I would immediately implement a Celery/Redis queue to partition incoming webhook data by Node ID, eliminating lock contention.
-2. **Treating Evals as Code:** Establishing the DeepEval CI/CD pipeline on week one. If we wait until we have 10,000 users to start evaluating hallucination rates, we are already liable. AI evaluations must be blocking quality gates, not just dashboard metrics.
+## Failure Modes and Degradation
+1. Safety block: return refusal with no downstream execution.
+2. Graph query validation failure: return failed with explicit error reason.
+3. Critic retry exhaustion: fail closed with validation context.
+4. Low evaluation score: suppress final response and return failed status.
+5. Empty evidence: return transparent uncertainty response.

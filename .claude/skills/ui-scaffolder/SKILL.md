@@ -10,6 +10,11 @@ description: >
 ## Purpose
 Generate maintainable UI aligned with existing component and style conventions.
 
+## Spec Conformance Gate
+- Read `SPEC.md` before scaffolding UI.
+- Ensure UI/API payload assumptions match active phase acceptance criteria.
+- Block scaffolding if requested behavior changes contracts not present in `SPEC.md`.
+
 ## Workflow
 1. Read existing UI patterns and shared components first.
 2. Propose component tree and data flow before coding.

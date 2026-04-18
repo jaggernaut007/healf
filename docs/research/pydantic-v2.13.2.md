@@ -27,7 +27,7 @@ class EnrichedProduct(BaseModel):
     model_config = ConfigDict(strict=True)  # Enforce type strictness
     
     sku: str = Field(..., min_length=1)
-    canonical_name: str = Field(..., description="Ingredient name from NIH DSLD")
+    canonical_name: str = Field(..., description="Ingredient name from NIH RxTerms")
     active_ingredients: List[str]
     target_biomarkers: List[str] = Field(default_factory=list)
     mechanisms_of_action: List[str]

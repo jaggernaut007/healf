@@ -2,16 +2,13 @@
 
 **Role:** Founding AI Engineer (Sr. Staff)
 
-<aside>
-📌
-
-**Time expectation:** 8–12 hours across a week
-
-**Submission deadline:** 7 days from receipt
-
-**Questions?** Email [manilyn@healf.com](mailto:manilyn@healf.com)
-
-</aside>
+> Note
+>
+> **Time expectation:** 8–12 hours across a week
+>
+> **Submission deadline:** 7 days from receipt
+>
+> **Questions?** Email [manilyn@healf.com](mailto:manilyn@healf.com)
 
 ---
 
@@ -117,9 +114,6 @@ Target: 700–1200 words. Prose or structured bullets, your call.
 
 **Evaluation process:** Three people review independently: one AI infrastructure engineer, one product-minded engineer, and a product manager. We then run a 60-minute technical debrief. Expect to be asked to extend the system live — add a new knowledge source, change the safety policy, or handle a retrieval failure you did not anticipate.
 
-<aside>
-🎙️
-
-**On the Loom:** Do not over-polish. We want a peer-level conversation, not a demo. The debrief is specifically designed to separate engineers who understand what they built from those who assembled a pipeline. Come ready to discuss your eval design, your context assembly decisions, and the one thing you would change if you had another week.
-
-</aside>
+> On the Loom
+>
+> **On the Loom:** Do not over-polish. We want a peer-level conversation, not a demo. The debrief is specifically designed to separate engineers who understand what they built from those who assembled a pipeline. Come ready to discuss your eval design, your context assembly decisions, and the one thing you would change if you had another week.

@@ -1,67 +1,57 @@
-# AI Package (v7 Lite)
+# Healf Health Intelligence Engine
 
-A lean, production-ready starter for agentic coding workflows in small teams.
+This repository implements a spec-driven health-tech assistant composed of:
+1. Product enrichment pipeline
+2. Knowledge graph builder
+3. Agentic orchestration layer
 
-## What This Package Includes
+Current orchestration baseline is implemented and tested, and the approved next migration is a 5-agent KG-RAG conversational topology.
 
-- `AGENTS.md`: cross-tool instruction source of truth
-- `CLAUDE.md`: tool-specific behavior via `@import AGENTS.md`
-- `.github/copilot-instructions.md`: symlink to `AGENTS.md`
-- `.github/instructions/`: Copilot path-scoped instruction files
-- `.github/prompts/`: Copilot reusable one-shot workflows
-- `.github/agents/`: Copilot specialized personas
-- `.claude/rules/`: path-scoped standards
-- `.claude/agents/`: planner, implementer, reviewer, research-assistant, test-writer, docs-writer
-- `.claude/skills/`: `session-handoff`, `ship-it`, `triple-agent-audit`, `ui-scaffolder`
-- `.claude/hooks.json` and `.claude/hooks/`: formatting and pre-commit safeguards
-- `.claude/mcp.json`: MCP server baseline
-- `.agents/workflows/`: Antigravity-compatible workflow docs for planner/implementer/review cycle
-- `docs/`: checklist, quick reference, ADR and research templates
-- `docs/`: checklist, quick reference, ADR/research templates, and strict policy docs
-- `scripts/init.sh`: startup health checks with auto-detected commands
+## Current Status
+- Phase 1: Complete
+- Phase 2: Complete
+- Phase 3: In progress (baseline complete, 5-agent migration planned)
+- Phase 4: In progress
 
-## Lite Compliance Goals
+## Architecture Snapshot
+Baseline flow currently running:
+- safety -> retrieval -> generation -> evaluation
 
-This package is optimized for startup/small-team velocity:
+Approved target flow for Phase 3 migration:
+- safety -> prompt rewrite -> intake router -> domain specialist -> graph retriever -> critic
+- critic pass -> payload generator -> evaluation -> finalize
+- critic fail -> specialist retry (bounded)
 
-- Keep always-on instructions small (`AGENTS.md` < 100 lines)
-- Prefer practical validation over enterprise approval bureaucracy
-- Use planner for tasks with 2+ steps
-- Use three-tier retrieval for external libraries: MCP docs -> research notes -> web
-- Require tool-verified test outcomes before marking work complete
-- Use artifact-driven execution (plan/research docs first, implementation second)
+## Safety and Quality Controls
+- NeMo and policy phrase safety checks before generation
+- Evaluation gate before final response
+- Optional observability instrumentation
+- Deterministic fallback behavior for unavailable external integrations
 
-## Quick Start
+## Local Setup
+1. Activate environment
+- source .venv/bin/activate
 
-1. Update project summary and stack in `AGENTS.md`.
-2. Confirm `scripts/init.sh` auto-detection matches your stack.
-3. Run:
-   ```bash
-   chmod +x scripts/init.sh .claude/hooks/*.sh
-   ./scripts/init.sh
-   ```
-4. Start work using Wave Protocol:
-   implement -> test-writer -> reviewer -> fix -> docs-writer -> commit
+2. Install dependencies (if needed)
+- uv pip install -r requirements.txt
 
-## Keep It Lean
+3. Run tests
+- PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest tests/ -q
 
-Remove or archive generated summaries and one-off analysis artifacts once decisions are captured in:
+## Required Environment Variables
+- OPENAI_API_KEY
+- NEO4J_URI
+- NEO4J_USERNAME
+- NEO4J_PASSWORD
+- FIRECRAWL_API_KEY
 
-- `PROGRESS.md` for tactical status
-- `feature_list.json` for machine-readable state
-- `docs/adr/` for architecture decisions
-- `docs/research/` for external dependency decisions
+## Key Paths
+- Enrichment: src/enrichment.py
+- Graph builder: src/graph_builder.py
+- Orchestrator: src/agent/orchestrator.py
+- Adapters: src/agent/adapters.py
+- Phase 3 plan: docs/pm-docs/plan_3.md
+- Architecture doc: docs/pm-docs/architecture.md
 
-## Strict Compliance Docs
-
-- `docs/MCP-ROUTING.md`
-- `docs/SECURITY-CONFIG.md`
-- `docs/TESTING-STRATEGY.md`
-- `docs/SPEC-DRIVEN.md`
-- `docs/TASK-TEMPLATE.md`
-- `docs/CODE-HEALTH.md`
-- `docs/OBSERVABILITY.md`
-- `docs/REVIEW-SETUP.md`
-- `docs/MODEL-ROUTING.md`
-- `docs/AUTO-MEMORY.md`
-- `CONTRIBUTING.md`
+## Submission Note
+A root-level ARCHITECTURE.md is required by the task brief and should mirror the approved architecture narrative with clear implemented-versus-target boundaries.

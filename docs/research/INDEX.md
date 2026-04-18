@@ -35,6 +35,9 @@ Use this index to avoid rediscovering dependency and API decisions.
 - pytest testing framework, v9.0.3, 2026-04-17, Current, docs/research/pytest-v9.0.3.md
 - Hypothesis property testing, v6.152.1, 2026-04-17, Current, docs/research/hypothesis-v6.152.1.md
 
+### Phase 3-4 Planning Research (v2026-04-17)
+- `ripgrep-cli-v15.1.0.md` - Repository-default search tool policy, verification, fallback, and supply-chain notes.
+
 ## Template
 
 Use docs/research/RESEARCH-TEMPLATE.md for all new notes.

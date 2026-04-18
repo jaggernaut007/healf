@@ -1,6 +1,7 @@
 import os
+import hashlib
+from urllib.parse import urlparse
 from typing import Optional, Dict, Any
-from pydantic import ValidationError
 from src.models.product import EnrichedProduct
 
 # Attempting to load Firecrawl, which will be added to requirements if we decide to wrap it
@@ -18,6 +19,30 @@ class EnrichmentClient:
             self.app = FirecrawlApp(api_key=self.api_key)
         else:
             self.app = None
+
+    @staticmethod
+    def _fallback_sku(url: str) -> str:
+        digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:12]
+        return f"url-{digest}"
+
+    @staticmethod
+    def extract_sku_from_url(url: str) -> str:
+        """Extract SKU from /products/<slug>; otherwise return deterministic fallback."""
+        try:
+            parsed = urlparse(url)
+            path = parsed.path.rstrip("/")
+            if not path:
+                return EnrichmentClient._fallback_sku(url)
+
+            parts = [part for part in path.split("/") if part]
+            if len(parts) >= 2 and parts[0] == "products":
+                slug = parts[-1]
+                if slug:
+                    return slug
+
+            return EnrichmentClient._fallback_sku(url)
+        except Exception:
+            return EnrichmentClient._fallback_sku(url)
 
     def fetch_product_page(self, url: str) -> str:
         """
@@ -45,13 +70,17 @@ class EnrichmentClient:
         except Exception as e:
             raise RuntimeError(f"Failed to fetch product page via Firecrawl: {str(e)}")
 
-    def extract_product_data(self, markdown_content: str, instructor_client=None) -> EnrichedProduct:
+    def extract_product_data(self, markdown_content: str, url: str, instructor_client=None) -> EnrichedProduct:
         """
         Uses an LLM (via Instructor) to extract the canonical EnrichedProduct from markdown.
         `instructor_client` should be an initialized instructor-patched OpenAI or Anthropic client.
+        `url` is used to derive a unique, deterministic SKU (product URL slug).
         """
         if not instructor_client:
             raise ValueError("An instructor-patched LLM client is required for extraction.")
+        
+        # Extract SKU from URL (guaranteed unique per product)
+        sku = self.extract_sku_from_url(url)
             
         try:
             # We assume instructor client responds to standard chat completions
@@ -72,6 +101,9 @@ class EnrichmentClient:
                 max_tokens=2048,
                 temperature=0.0
             )
+            
+            # Override the SKU with the URL-derived value (deterministic and unique)
+            product.sku = sku
             return product
         except Exception as e:
             raise RuntimeError(f"LLM data extraction failed: {str(e)}")
@@ -83,7 +115,7 @@ class EnrichmentClient:
         """
         import requests
         
-        # NOTE: This endpoint structure is representative of the NIH DSLD search API.
+        # NOTE: This endpoint is the NIH RxTerms search API.
         base_url = "https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search"
         
         try:
@@ -95,17 +127,17 @@ class EnrichmentClient:
             response.raise_for_status()
             data = response.json()
             
-            # Simple heuristic matching mapped back to our requirement
+            # Keep warnings source-backed only; do not synthesize clinical warnings.
             return {
-                "source": "NIH_DSLD",
+                "source": "NIH_RXTERMS",
                 "grounding_status": "Success",
                 "query": product_name,
                 "dsld_matches": data[1] if len(data) > 1 else [],
-                "warnings": ["May cause nausea", "Do not take at night"] if "magnesium" in product_name.lower() else []
+                "warnings": [],
             }
-        except requests.RequestException as e:
+        except (requests.RequestException, ValueError, TypeError, IndexError) as e:
             return {
-                "source": "NIH_DSLD",
+                "source": "NIH_RXTERMS",
                 "grounding_status": "Failed",
                 "query": product_name,
                 "error": str(e)

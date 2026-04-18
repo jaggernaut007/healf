@@ -14,7 +14,7 @@
 
 ## The Correct Approach
 
-Use `requests` for synchronous HTTP calls to external APIs (NIH DSLD, etc.). For async contexts, consider `httpx` or `aiohttp`, but use `requests` within thread executors if needed.
+Use `requests` for synchronous HTTP calls to external APIs (NIH RxTerms, etc.). For async contexts, consider `httpx` or `aiohttp`, but use `requests` within thread executors if needed.
 
 ```python
 import requests
@@ -36,10 +36,10 @@ def create_session():
 
 session = create_session()
 
-# Example: NIH DSLD API call
+# Example: NIH RxTerms API call
 response = session.get(
-    "https://dsld.od.nih.gov/dsld/api/v1/products",
-    params={"ingredient": "magnesium"},
+    "https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search",
+    params={"terms": "magnesium", "maxList": 5},
     timeout=10
 )
 response.raise_for_status()
@@ -48,7 +48,7 @@ data = response.json()
 
 ## Files This Affects
 
-- `src/clients/enrichment_client.py` — NIH DSLD API calls
+- `src/clients/enrichment_client.py` — NIH RxTerms API calls
 - `src/enrichment.py` — Product page fetching (fallback if Firecrawl unavailable)
 - Tests: `tests/test_enrichment_client.py` — API mock/fixture tests
 
@@ -82,5 +82,5 @@ data = response.json()
 - Create a reusable session factory with retry logic for all external API calls.
 - Always catch `requests.RequestException` for network errors.
 - Log request/response details for debugging (but avoid logging sensitive headers like Authorization).
-- For NIH DSLD calls, parse JSON responses and validate against expected schema before storing.
+- For NIH RxTerms calls, parse JSON responses and validate against expected schema before storing.
 - If async is needed in future, migrate to `httpx` with minimal changes.
