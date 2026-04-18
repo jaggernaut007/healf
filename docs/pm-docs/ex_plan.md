@@ -1,3 +1,6 @@
+> Archived note: This file is legacy planning context and is not the canonical execution contract.
+> Use SPEC.md, docs/pm-docs/architecture.md, and docs/pm-docs/plan_4.md as the authoritative sources.
+
 ## The Founding Engineer Execution Plan
 
 ### Phase 0: Environment & Cloud Setup (Timebox: 1 Hour)

@@ -23,8 +23,8 @@ You execute implementation tasks one at a time from a plan. You write production
 
 ## Tools Available
 - Full write access: Edit, Create, Bash
-- Code intelligence: nexus-mcp for codebase search
-- Testing: Run tests via Bash
+- Code intelligence: nexus-mcp, memstate-ai
+- Testing: Run tests via Bash, playwright, chrome-devtools
 - MCP servers for documentation
 
 ## Your Workflow

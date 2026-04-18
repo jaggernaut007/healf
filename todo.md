@@ -30,7 +30,7 @@
 - [x] Add preflight validation
 - [x] Add comprehensive graph builder tests
 
-## 📋 Phase 3: Agentic Orchestration (TODO)
+## ✅ Phase 3: Agentic Orchestration (COMPLETE)
 - [x] Create specs for all phases
 - [x] Research LangGraph + NeMo orchestration patterns
 - [x] Implement LangGraph orchestration workflow
@@ -38,15 +38,15 @@
 - [x] Add Phoenix observability instrumentation
 - [x] Add DeepEval quality gates for LLM outputs
 - [x] Add orchestration integration tests (happy path and failure routing)
-- [ ] Add prompt rewrite preprocessing node with typed output contract
-- [ ] Implement Intake Router agent for domain and risk routing
-- [ ] Implement Domain Specialist agent for graph query planning
-- [ ] Implement read-only graph query validator/executor boundary
-- [ ] Implement Graph Retriever integration with Neo4j evidence normalization
-- [ ] Implement Pharmacovigilance Critic with bounded retry loop
-- [ ] Implement conversational Payload Generator with strict evidence grounding
-- [ ] Add full 5-agent integration tests (pass/fail/retry paths)
-- [ ] Add configured-environment integration tests for DeepEval and Phoenix paths
+- [x] Add prompt rewrite preprocessing node with typed output contract
+- [x] Implement Intake Router agent for domain and risk routing
+- [x] Implement Domain Specialist agent for graph query planning
+- [x] Implement read-only graph query validator/executor boundary
+- [x] Implement Graph Retriever integration with Neo4j evidence normalization
+- [x] Implement Pharmacovigilance Critic with bounded retry loop
+- [x] Implement conversational Payload Generator with strict evidence grounding
+- [x] Add full 5-agent integration tests (pass/fail/retry paths)
+- [x] Add configured-environment integration tests for DeepEval and Phoenix paths
 
 ## ✅ Governance: Copilot Spec Enforcement (COMPLETE)
 - [x] Create canonical `SPEC.md` as repository source of truth
@@ -56,19 +56,28 @@
 - [x] Add spec gates to all `.agents/workflows/*`
 - [x] Add spec conformance gates to `.claude/skills/*/SKILL.md`
 
-## 🎨 Phase 4: CLI & UX (TODO)
+## ✅ Phase 4: CLI & UX (COMPLETE)
 - [x] Research Rich CLI patterns
 - [x] Research Typer CLI framework
 - [x] Research Invoke task runner
 - [x] Document CLI/task-runner architecture decision in ADR
-- [ ] Create rich CLI interface with rich formatting
-- [ ] Add task runner implementation (`invoke.py` or `tasks.py`)
-- [ ] Add more test cases for graph builder and enrichment client
-- [ ] Add integration tests end-to-end
+- [x] Create rich CLI interface with rich formatting
+- [x] Add task runner implementation (`tasks.py`)
+- [x] Add CLI integration tests and task runner tests
+- [x] Run end-to-end smoke verification
 
 ## ✅ Legacy Todo Sync
 - [x] Previous research checklist fully completed and reconciled into active plan
 - [x] Previous plan items merged into Phase 3 and Phase 4 sections
+
+## ✅ Phase 5: Compliance and Industrial Hardening (COMPLETE)
+- [x] Research Industrial MCP Stack (nexus-mcp, memstate-ai, context7, playwright)
+- [x] Implement MCP configuration and routing matrix
+- [x] Implement `pre-flight-check` Industrial Meta-Tool skill
+- [x] Perform Triple Agent Audit of Phase 4 CLI/UX (Evidence in `docs/audits/`)
+- [x] Scaffold `evals/` suite with orchestration datasets
+- [x] Implement TTL L1 Caching in enrichment pipeline
+- [x] Perform Triple Agent Audit of Phase 5 (Evidence in `docs/audits/phase-5-audit.md`)
 
 ## My Notes (DO NOT EDIT THIS SECTION)
 - evaluations

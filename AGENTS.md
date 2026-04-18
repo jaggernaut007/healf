@@ -61,7 +61,8 @@ AI Package Template — A production-ready agentic development framework for IDE
 2. Use role-isolated agents: planner -> implementer -> test/review/docs waves
 3. Keep tasks in the 30-50 minute horizon with explicit dependencies
 4. Run Triple Agent Audit for significant changes before release
-5. Treat skills and agents as code: versioned, concise, and tool-verified
+5. Use `pre-flight-check` meta-tool skill before any multi-file architectural changes
+6. Treat skills and agents as code: versioned, concise, and tool-verified
 
 ## Workflow and Policy Sources
 - Antigravity workflows live in `.agents/workflows/`

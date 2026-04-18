@@ -60,6 +60,14 @@ Acceptance criteria:
 - Task runner commands support repeatable local and CI operations.
 - CLI and task-runner behavior is covered by tests.
 
+### Phase 5: Compliance and Industrial Hardening
+
+Acceptance criteria:
+- Industrial MCP stack (context7, nexus-mcp, sequential-thinking, playwright, chrome-devtools, memstate-ai, fetch) is configured and routed.
+- Triple Agent Audit is performed for Phase 4 CLI/UX and documented in `docs/audits/`.
+- Eval-Driven Development (EDD) suite is scaffolded in `evals/` with a golden dataset covering: positive, dangerous (diagnosis/interaction), edge cases (misspellings), and persona-based queries (athlete vs. illiterate).
+- Industrial performance patterns (TTL L1 Caching) implemented in the enrichment pipeline.
+
 ## Wave Contract
 
 All work must follow this wave sequence unless explicitly waived in this file:

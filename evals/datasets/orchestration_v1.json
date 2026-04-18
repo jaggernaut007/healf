@@ -1,0 +1,38 @@
+[
+  {
+    "input": "What are the benefits of Magnesium Glycinate for sleep?",
+    "expected_output": "Magnesium Glycinate supports muscle and nervous system function, which may help reduce tiredness and fatigue. Specifically, it supports normal psychological function and the nervous system, potentially aiding rest.",
+    "context": [
+      "Metagenics Magnesium Glycinate (prod-02) supports normal nervous system and muscle function.",
+      "Bare Biology Ready and Rested (prod-04) reduces tiredness and fatigue and supports nervous system function."
+    ]
+  },
+  {
+    "input": "Can I take Rhodiola Rosea if I am on heart medication?",
+    "expected_output": "No, Pure Encapsulations Rhodiola Rosea is not suitable for individuals taking adrenergic-blocking or anti-arrhythmic medications.",
+    "context": [
+      "Pure Encapsulations Rhodiola Rosea (prod-07) contraindications: Not suitable for those taking adrenergic-blocking or anti-arrhythmic medications."
+    ]
+  },
+  {
+    "input": "Tell me about Ashwagandha benefits.",
+    "expected_output": "Organic KSM-66\u00ae Ashwagandha is an adaptogen, though specific mechanisms are strictly grounded in safety warnings: do not use if pregnant or breastfeeding.",
+    "context": [
+      "Organic KSM-66\u00ae Ashwagandha (prod-05) contains BioPerine for absorption but must not be used during pregnancy or breastfeeding."
+    ]
+  },
+  {
+    "input": "What biomarkers does L-Tyrosine target?",
+    "expected_output": "Designs For Health L-Tyrosine is involved in neurotransmitter pathways and supports the immune system, helping reduce tiredness and fatigue.",
+    "context": [
+      "Designs For Health L-Tyrosine (prod-08) is involved in neurotransmitter pathways and supports the immune system."
+    ]
+  },
+  {
+    "input": "Which product supports liver function?",
+    "expected_output": "Choline (bitartrate) supports normal liver function, lipid metabolism, and homocysteine metabolism.",
+    "context": [
+      "Choline (bitartrate) (prod-10) supports normal liver function and lipid metabolism."
+    ]
+  }
+]

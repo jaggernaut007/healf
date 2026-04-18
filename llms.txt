@@ -1,6 +1,6 @@
-# AI Package Template
+# Healf Health Intelligence Engine
 
-Lightweight agentic coding package for startups, small teams, and solo developers.
+Spec-driven agentic health intelligence repository focused on enrichment, graph reasoning, and safe orchestration.
 
 ## Documentation Roots
 - [Quick Reference](docs/QUICK-REFERENCE.md)

@@ -3,15 +3,9 @@
 Status: 2026-04-18
 
 ## Scope and Status Boundary
-This document defines the target architecture for Phase 3 and explicitly separates implemented baseline behavior from in-progress migration work.
+This document defines the implemented architecture for Phase 3 and the pending execution scope for Phase 4.
 
-Implemented baseline today:
-- LangGraph orchestration with safety -> retrieval -> generation -> evaluation.
-- Policy-based safety hardening via phrase-first checks and optional NeMo rails.
-- Optional Phoenix/OpenInference observability activation.
-- Optional DeepEval-based quality gate scoring with deterministic fallback.
-
-Target architecture now approved for implementation:
+Implemented architecture:
 - Prompt rewrite preprocessing plus a five-agent orchestration cycle:
   - Intake Router
   - Domain Specialist
@@ -20,6 +14,17 @@ Target architecture now approved for implementation:
   - Payload Generator
 - Bounded retry loop between Critic and Specialist.
 - Graph-grounded conversational output constrained to retrieved evidence.
+- Fail-closed safety behavior when NeMo guardrails are unavailable or execution fails.
+- Dynamic NeMo safety decision contract parsing with explicit fields:
+  - allowed
+  - reason
+  - reason_code
+  - risk_level
+- Unparseable NeMo decisions are treated as high-risk and fail closed.
+
+Phase 4 pending architecture scope:
+- CLI/task-runner operator surfaces for enrichment, graph build, and orchestration tasks.
+- API ingress controls and operator ergonomics for repeatable local/CI usage.
 
 ## Architectural Principles
 1. Safety-first execution: high-risk medical intent is blocked before specialist or generation nodes run.
@@ -28,7 +33,7 @@ Target architecture now approved for implementation:
 4. Bounded autonomy: retry loops are capped and fail closed on persistent errors.
 5. Observable trajectories: node transitions and rejection reasons are traceable.
 
-## End-to-End Flow (Target)
+## End-to-End Flow (Implemented)
 1. Safety node evaluates the raw user query and can terminate as blocked.
 2. Prompt Rewrite normalizes the query for retrieval planning while preserving intent.
 3. Intake Router chooses domain lane and risk route.
@@ -38,7 +43,7 @@ Target architecture now approved for implementation:
 7. Critic pass routes to Payload Generator; critic fail routes back to Specialist with validation errors (bounded retry).
 8. Evaluator gate validates output quality before final response is returned.
 
-## State Contract (Target)
+## State Contract (Implemented)
 State must preserve both raw and transformed data:
 - chat_history (append-only)
 - user_profile (overwritable structured facts)
@@ -50,12 +55,20 @@ State must preserve both raw and transformed data:
 - validation_errors (append-only critic findings)
 - evaluation_result and terminal status
 
+All agent node outputs are runtime-validated with Pydantic models before state updates.
+
 ## Graph Retrieval and Query Safety
 The graph layer remains deterministic even when planned by LLM:
 - LLM can propose plans but never executes direct arbitrary Cypher.
 - Query boundary enforces read-only allowlist rules.
 - Query boundary enforces parameterization, timeout, and row caps.
 - Evidence objects are normalized into a shared schema before reranking/generation.
+
+## LLM Output Validation
+- Instructor extraction outputs are re-validated with Pydantic before use.
+- NeMo safety responses are parsed through a structured decision contract schema.
+- Embeddings API responses are validated against a Pydantic response schema before vector usage.
+- Any schema violation fails the current run instead of silently degrading.
 
 ## Pharmacovigilance Critic Responsibilities
 The critic is the final safety net before output:

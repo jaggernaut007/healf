@@ -5,25 +5,28 @@ This repository implements a spec-driven health-tech assistant composed of:
 2. Knowledge graph builder
 3. Agentic orchestration layer
 
-Current orchestration baseline is implemented and tested, and the approved next migration is a 5-agent KG-RAG conversational topology.
+Current orchestration implements the 5-agent KG-RAG conversational topology and is tested in the repository suite.
 
 ## Current Status
 - Phase 1: Complete
 - Phase 2: Complete
-- Phase 3: In progress (baseline complete, 5-agent migration planned)
+- Phase 3: Complete
 - Phase 4: In progress
 
 ## Architecture Snapshot
-Baseline flow currently running:
-- safety -> retrieval -> generation -> evaluation
-
-Approved target flow for Phase 3 migration:
+Active flow:
 - safety -> prompt rewrite -> intake router -> domain specialist -> graph retriever -> critic
 - critic pass -> payload generator -> evaluation -> finalize
 - critic fail -> specialist retry (bounded)
 
+Phase 4 pending scope:
+- CLI/task-runner operator surface and associated tests
+
 ## Safety and Quality Controls
-- NeMo and policy phrase safety checks before generation
+- NeMo and policy phrase safety checks before specialist/retrieval/generation
+- Dynamic structured safety decisions from NeMo (`allowed`, `reason`, `reason_code`, `risk_level`)
+- Fail-closed behavior for unavailable, failed, or unparseable NeMo safety decisions
+- Runtime schema validation for agent-node outputs and LLM-call boundaries
 - Evaluation gate before final response
 - Optional observability instrumentation
 - Deterministic fallback behavior for unavailable external integrations
@@ -54,4 +57,4 @@ Approved target flow for Phase 3 migration:
 - Architecture doc: docs/pm-docs/architecture.md
 
 ## Submission Note
-A root-level ARCHITECTURE.md is required by the task brief and should mirror the approved architecture narrative with clear implemented-versus-target boundaries.
+The architecture narrative is maintained at docs/pm-docs/architecture.md and should clearly separate implemented behavior from pending scope.

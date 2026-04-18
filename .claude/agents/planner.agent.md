@@ -24,7 +24,7 @@ METR research: frontier models have 50% success at 50-minute tasks, approaching 
 **Decompose every feature into tasks achievable within 30-50 minutes of agent work.**
 
 ## Tools Available
-- Read-only tools: Glob, Grep, Read, nexus-mcp
+- Read-only tools: Glob, Grep, Read, nexus-mcp, memstate-ai
 - sequential-thinking (for structured reasoning)
 - No write access (you plan, not implement)
 

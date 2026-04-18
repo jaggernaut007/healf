@@ -27,13 +27,13 @@
     {
       "id": "phase-3",
       "title": "Phase 3: Agentic Orchestration (5-Agent KG-RAG Migration)",
-      "status": "in-progress",
+      "status": "completed",
       "dependencies": ["phase-2"]
     },
     {
       "id": "phase-4",
       "title": "Phase 4: CLI and UX",
-      "status": "in-progress",
+      "status": "completed",
       "dependencies": ["phase-3"]
     },
     {
@@ -41,6 +41,12 @@
       "title": "Governance: Copilot SPEC enforcement rollout",
       "status": "completed",
       "dependencies": ["phase-0-research"]
+    },
+    {
+      "id": "phase-5",
+      "title": "Phase 5: Compliance and Industrial Hardening",
+      "status": "completed",
+      "dependencies": ["phase-4"]
     }
   ]
 }
