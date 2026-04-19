@@ -4,3 +4,4 @@ __pycache__/
 .hypothesis/
 .coverage
 .coverage.*
+.env

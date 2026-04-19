@@ -3,7 +3,7 @@ llama-index-graph-stores-neo4j
 langchain-openai
 langgraph
 fastapi
-nemoguardrails
+
 deepeval
 instructor
 firecrawl-py
@@ -19,3 +19,4 @@ typer
 rich
 invoke
 cachetools==7.0.5
+python-dotenv

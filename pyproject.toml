@@ -1,0 +1,44 @@
+[project]
+name = "healf"
+version = "0.1.0"
+description = "Healf Health Intelligence Engine"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-index",
+    "llama-index-graph-stores-neo4j",
+    "langchain-openai",
+    "langgraph",
+    "fastapi",
+    "nemoguardrails",
+    "deepeval",
+    "instructor",
+    "firecrawl-py",
+    "slowapi",
+    "uvicorn",
+    "requests",
+    "hypothesis",
+    "pytest",
+    "arize-phoenix",
+    "pydantic",
+    "openinference-instrumentation-langchain",
+    "typer",
+    "rich",
+    "invoke",
+    "cachetools==7.0.5",
+    "python-dotenv",
+]
+
+[project.scripts]
+healf = "src.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-v --disable-pytest-warnings"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
