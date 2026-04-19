@@ -1,7 +1,7 @@
 # 5. Use NeMo Guardrails as a Pre-Execution Safety Gateway
 
 ## Status
-Accepted
+Superseded by ADR-0011
 
 ## Context
 This system handles wellness and medical-adjacent user prompts. Safety policy must be enforced before any model orchestration to prevent diagnosis-like responses, unsafe medical guidance, or policy bypass attempts.

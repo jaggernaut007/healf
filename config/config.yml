@@ -1,9 +1,0 @@
-models:
-  - type: main
-    engine: openai
-    model: gpt-5.4-mini
-
-rails:
-  input:
-    flows:
-      - medical_intent_block

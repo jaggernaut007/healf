@@ -8,7 +8,9 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 - Phase 1: Complete.
 - Phase 2: Complete with post-audit hardening.
 - Phase 3: Complete.
-- Phase 4: Complete (Typer CLI, Rich formatting, Invoke task runner, and integration tests).
+- Phase 4: Complete.
+- Phase 5: Complete.
+- Phase 6 (Consultative Discovery): Complete.
 
 ## Verified Working
 - Core framework research notes in `docs/research/INDEX.md` were re-verified against Context7 sources on 2026-04-18 and status stamps were refreshed.
@@ -37,7 +39,7 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 - Pharmacovigilance critic supports bounded retry and fail-closed outcomes with structured validation findings.
 - Payload generator emits conversational responses constrained to retrieved evidence citations and transparent uncertainty for no-evidence scenarios.
 - All agent node outputs are runtime-validated via Pydantic before state mutation.
-- All LLM call boundaries (Instructor extraction, NeMo safety decisions, embeddings API responses) are schema-validated before downstream use.
+- All LLM call boundaries (Instructor extraction, Coordinator Node safety decisions, embeddings API responses) are schema-validated before downstream use.
 
 ## Test Evidence
 - Latest run: `70 passed` via `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest tests/ -q`.
@@ -52,8 +54,7 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
   - Orchestration full Phase 3 node-order happy path.
   - Safety block behavior that short-circuits downstream nodes.
 - Adapter-level rewrite/router/specialist/retrieval-boundary/critic/payload/evaluation deterministic behavior.
-- Config-driven safety phrase parsing, case-insensitive blocking, and phrase-first precedence over NeMo path.
-- Guardrails config presence and configured-path adapter behavior checks.
+- Config-driven safety phrase parsing and case-insensitive blocking are applied before the Coordinator Node path.
 - Critic retry-success flow and bounded retry fail-closed flow.
 
 - Phase 4 CLI entrypoint provides `enrichment`, `graph`, and `orchestration` subcommands with `rich` terminal formatting.
@@ -68,6 +69,7 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 - Industrial MCP configuration implemented and routed via `docs/MCP-ROUTING.md`.
 - Agent personas updated with advanced memory and testing tools in `.claude/agents/`.
 - Triple Agent Audit performed and documented in `docs/audits/phase-5-audit.md`.
+- **Full Project Triple Agent Audit (Phases 0-5) performed and documented in `docs/audits/full-project-audit.md`.**
 - TTL L1 Caching and Golden Dataset (10 cases) implemented.
 
 ## Test Evidence
@@ -75,10 +77,18 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 - Smoke test passes via `uv run invoke smoke`.
 - Init verification run passes via `./scripts/init.sh`.
 
+## Consultative Discovery [COMPLETE]
+- Standardized GPT-5.4 and GPT-5.4-mini across all orchestration nodes and enrichment pipelines.
+- Implemented **Discovery Node** in LangGraph to handle ambiguous user intent with multi-turn clarification.
+- Refactored CLI into a **Stateful REPL** supporting persistent chat history and multi-turn discovery.
+- Added **Logging Suppression** for clean, user-facing conversational sessions.
+- Enhanced retrieval ranker with multi-word term splitting and inclusive ingredient matching.
+- Hardened Pydantic models with default values for fail-safe LLM output parsing.
+
 ## Remaining Pending Items
 1. Final production deployment configuration.
 2. API ingress rate-limiting implementation (if exposing as public API).
 
 ## Next Steps
-1. Finalize documentation and repository release state.
+1. Finalize production deployment configuration.
 2. Prepare for Phase 5 or production transition if requested.

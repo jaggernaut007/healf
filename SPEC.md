@@ -44,7 +44,7 @@ Acceptance criteria:
 Acceptance criteria:
 - Orchestration workflow coordinates a five-agent path: intake router, domain specialist, graph retriever, pharmacovigilance critic, and payload generator.
 - Prompt rewriting runs before intake routing and preserves original user intent semantics.
-- Guardrails are applied before specialist, retrieval, and generation execution.
+- Dynamic Cognitive Classification (Strategy 1: Coordinator Node) is applied as the first node in orchestration via structured outputs (IntentClassification schema).
 - Graph retrieval runs through validated read-only query plans and deterministic execution boundaries.
 - Critic loop supports bounded retry behavior and fail-closed escalation when safety or data constraints are violated.
 - Payload output is conversational, grounded strictly in retrieved evidence, and degrades gracefully when evidence is insufficient.

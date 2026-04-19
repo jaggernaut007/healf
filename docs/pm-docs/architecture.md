@@ -66,7 +66,7 @@ The graph layer remains deterministic even when planned by LLM:
 
 ## LLM Output Validation
 - Instructor extraction outputs are re-validated with Pydantic before use.
-- NeMo safety responses are parsed through a structured decision contract schema.
+- Safety responses are parsed through the IntentClassification schema.
 - Embeddings API responses are validated against a Pydantic response schema before vector usage.
 - Any schema violation fails the current run instead of silently degrading.
 

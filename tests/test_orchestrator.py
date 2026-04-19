@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Any, Callable
 
 from src.agent.orchestrator import AgentOrchestrator, OrchestrationConfig
 from src.models.orchestration import (
@@ -12,15 +13,19 @@ from src.models.orchestration import (
     RewrittenQuery,
     RoutingIntent,
     SafetyDecision,
+    DiscoveryDecision,
+    IntentClassification,
 )
+
 
 
 def test_orchestrator_happy_path_runs_all_steps_in_order() -> None:
     calls: list[str] = []
 
-    def safety_check(query: str) -> SafetyDecision:
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
         calls.append("safety")
-        return SafetyDecision(allowed=True)
+        return IntentClassification(is_clinical_diagnosis_request=False, primary_domain="general", requires_discovery=False, reasoning="test allow")
+
 
     def rewrite(query: str) -> RewrittenQuery:
         calls.append("rewrite")
@@ -49,7 +54,7 @@ def test_orchestrator_happy_path_runs_all_steps_in_order() -> None:
         retry_count: int,
     ) -> CriticDecision:
         calls.append("critic")
-        return CriticDecision(passed=True)
+        return CriticDecision(passed=True, findings=[])
 
     def payload(query: str, chunks: list[RetrievalChunk]) -> PayloadDraft:
         calls.append("payload")
@@ -87,7 +92,6 @@ def test_orchestrator_happy_path_runs_all_steps_in_order() -> None:
         "observability",
         "safety",
         "rewrite",
-        "route",
         "specialist",
         "retrieve",
         "critic",
@@ -99,9 +103,10 @@ def test_orchestrator_happy_path_runs_all_steps_in_order() -> None:
 def test_orchestrator_blocks_when_safety_denies_query() -> None:
     calls: list[str] = []
 
-    def safety_check(query: str) -> SafetyDecision:
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
         calls.append("safety")
-        return SafetyDecision(allowed=False, reason="medical diagnosis request")
+        return IntentClassification(is_clinical_diagnosis_request=True, primary_domain="general", requires_discovery=False, reasoning="test block")
+
 
     def rewrite(query: str) -> RewrittenQuery:
         calls.append("rewrite")
@@ -130,7 +135,7 @@ def test_orchestrator_blocks_when_safety_denies_query() -> None:
         retry_count: int,
     ) -> CriticDecision:
         calls.append("critic")
-        return CriticDecision(passed=True)
+        return CriticDecision(passed=True, findings=[])
 
     def payload(query: str, chunks: list[RetrievalChunk]) -> PayloadDraft:
         calls.append("payload")
@@ -161,8 +166,8 @@ def test_orchestrator_blocks_when_safety_denies_query() -> None:
 
 
 def test_orchestrator_returns_failed_when_retrieval_raises() -> None:
-    def safety_check(query: str) -> SafetyDecision:
-        return SafetyDecision(allowed=True)
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
+        return IntentClassification(is_clinical_diagnosis_request=False, primary_domain="general", requires_discovery=False, reasoning="test allow")
 
     def rewrite(query: str) -> RewrittenQuery:
         return RewrittenQuery(normalized_text=query)
@@ -186,7 +191,7 @@ def test_orchestrator_returns_failed_when_retrieval_raises() -> None:
         chunks: list[RetrievalChunk],
         retry_count: int,
     ) -> CriticDecision:
-        return CriticDecision(passed=True)
+        return CriticDecision(passed=True, findings=[])
 
     def payload(query: str, chunks: list[RetrievalChunk]) -> PayloadDraft:
         return PayloadDraft(response_text="not used")
@@ -215,9 +220,10 @@ def test_orchestrator_returns_failed_when_retrieval_raises() -> None:
 def test_orchestrator_fails_closed_when_critic_exhausts_retries() -> None:
     calls: list[str] = []
 
-    def safety_check(query: str) -> SafetyDecision:
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
         calls.append("safety")
-        return SafetyDecision(allowed=True)
+        return IntentClassification(is_clinical_diagnosis_request=False, primary_domain="general", requires_discovery=False, reasoning="test allow")
+
 
     def rewrite(query: str) -> RewrittenQuery:
         calls.append("rewrite")
@@ -281,7 +287,6 @@ def test_orchestrator_fails_closed_when_critic_exhausts_retries() -> None:
     assert calls == [
         "safety",
         "rewrite",
-        "route",
         "specialist",
         "retrieve",
         "critic:0",
@@ -292,8 +297,9 @@ def test_orchestrator_fails_closed_when_critic_exhausts_retries() -> None:
 
 
 def test_orchestrator_fails_when_evaluation_gate_rejects_response() -> None:
-    def safety_check(query: str) -> SafetyDecision:
-        return SafetyDecision(allowed=True)
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
+        return IntentClassification(is_clinical_diagnosis_request=False, primary_domain="general", requires_discovery=False, reasoning="test allow")
+
 
     def rewrite(query: str) -> RewrittenQuery:
         return RewrittenQuery(normalized_text=query)
@@ -317,7 +323,7 @@ def test_orchestrator_fails_when_evaluation_gate_rejects_response() -> None:
         chunks: list[RetrievalChunk],
         retry_count: int,
     ) -> CriticDecision:
-        return CriticDecision(passed=True)
+        return CriticDecision(passed=True, findings=[])
 
     def payload(query: str, chunks: list[RetrievalChunk]) -> PayloadDraft:
         return PayloadDraft(response_text="draft", citations=["PMID:1"])
@@ -347,8 +353,9 @@ def test_orchestrator_fails_when_evaluation_gate_rejects_response() -> None:
 
 
 def test_orchestrator_fails_when_observability_activation_raises() -> None:
-    def safety_check(query: str) -> SafetyDecision:
-        return SafetyDecision(allowed=True)
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
+        return IntentClassification(is_clinical_diagnosis_request=False, primary_domain="general", requires_discovery=False, reasoning="test allow")
+
 
     def rewrite(query: str) -> RewrittenQuery:
         return RewrittenQuery(normalized_text=query)
@@ -372,7 +379,7 @@ def test_orchestrator_fails_when_observability_activation_raises() -> None:
         chunks: list[RetrievalChunk],
         retry_count: int,
     ) -> CriticDecision:
-        return CriticDecision(passed=True)
+        return CriticDecision(passed=True, findings=[])
 
     def payload(query: str, chunks: list[RetrievalChunk]) -> PayloadDraft:
         return PayloadDraft(response_text="draft")
@@ -405,9 +412,10 @@ def test_orchestrator_fails_when_observability_activation_raises() -> None:
 def test_orchestrator_retries_once_then_succeeds() -> None:
     calls: list[str] = []
 
-    def safety_check(query: str) -> SafetyDecision:
+    def safety_check(query: str, profile: dict[str, Any] = None) -> IntentClassification:
         calls.append("safety")
-        return SafetyDecision(allowed=True)
+        return IntentClassification(is_clinical_diagnosis_request=False, primary_domain="general", requires_discovery=False, reasoning="test allow")
+
 
     def rewrite(query: str) -> RewrittenQuery:
         calls.append("rewrite")
@@ -442,7 +450,7 @@ def test_orchestrator_retries_once_then_succeeds() -> None:
                 findings=[CriticFinding(code="ALLERGY_RECHECK", message="retry")],
                 retryable=True,
             )
-        return CriticDecision(passed=True)
+        return CriticDecision(passed=True, findings=[])
 
     def payload(query: str, chunks: list[RetrievalChunk]) -> PayloadDraft:
         calls.append("payload")
@@ -474,7 +482,6 @@ def test_orchestrator_retries_once_then_succeeds() -> None:
     assert calls == [
         "safety",
         "rewrite",
-        "route",
         "specialist",
         "retrieve",
         "critic:0",
@@ -488,7 +495,7 @@ def test_orchestrator_retries_once_then_succeeds() -> None:
 
 def test_orchestrator_fails_when_agent_output_violates_schema() -> None:
     def safety_check(query: str):
-        return {"allowed": True}
+        return {"is_clinical_diagnosis_request": False, "primary_domain": "general", "requires_discovery": False, "reasoning": "test"}
 
     def rewrite(query: str):
         return {"normalized_text": "sleep"}

@@ -14,17 +14,15 @@ Status: 2026-04-18
 - Validate every agent output and every LLM-call output with Pydantic schemas at runtime.
 
 ## Safety Decisions
-- Apply phrase-first blocking from config/wellness_guard.co.
-- Use NeMo guardrails as semantic safety control when available.
-- Fail closed when NeMo guardrails are unavailable.
-- Fail closed when NeMo execution errors occur.
-- Parse dynamic structured NeMo safety decisions when provided.
+- Apply phrase-first heuristic blocking.
+- Use Coordinator Node via IntentClassification as semantic safety control.
+- Fail closed when Coordinator Node execution errors occur.
 - Structured contract fields:
 	- allowed
 	- reason
 	- reason_code
 	- risk_level
-- If the NeMo response cannot be parsed as a safety contract, fail closed.
+- If the IntentClassification cannot be parsed, fail closed.
 - Require critic validation for high-risk contexts (medication, pregnancy, diagnosis, allergy) before payload output.
 
 ## Tracking Decisions
