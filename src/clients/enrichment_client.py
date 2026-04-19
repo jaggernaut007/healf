@@ -84,23 +84,28 @@ class EnrichmentClient:
         sku = self.extract_sku_from_url(url)
             
         try:
-            # We assume instructor client responds to standard chat completions
-            # and supports the response_model parameter
+            # Use gpt-5.4-mini for high-volume extraction tasks
             product = instructor_client.chat.completions.create(
-                model="gpt-4o",  # Can be configurable depending on the LLM backend
+                model=os.getenv("ENRICHMENT_MODEL", "gpt-5.4-mini"),
                 response_model=EnrichedProduct,
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an expert medical, supplement, and product-data intelligence extraction engine. Your task is to precisely map the provided messy markdown content from a retail/medical product web page into a strict canonical JSON structure. Only retain accurate, factual information presented in the source text. If a field is unknown, leave it empty or default as appropriate."
+                        "content": (
+                            "You are a precision data extraction engine. Extract product details from the markdown of a single product page. "
+                            "CRITICAL: Only extract the product that is the MAIN SUBJECT of the page. "
+                            "IGNORE 'Trending searches', 'Recommended products', or other sidebar/footer items. "
+                            "Do NOT hallucinate names like 'Pure Encapsulations Magnesium Glycinate' unless it is the PRIMARY product on the page. "
+                            "If you are unsure of the canonical name, use the largest H1 or title in the text."
+                        )
                     },
                     {
                         "role": "user",
-                        "content": f"Extract product details from the following markdown content:\n\n{markdown_content}"
+                        "content": f"Extract the PRIMARY product details from this page:\n\n{markdown_content}"
                     }
                 ],
                 max_tokens=2048,
-                temperature=0.0
+                temperature=0.0,
             )
 
             if hasattr(product, "model_dump"):

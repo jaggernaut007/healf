@@ -1,0 +1,42 @@
+[
+  {
+    "user_id": "user_001",
+    "name": "Sarah",
+    "goals": ["improve energy", "better sleep"],
+    "health_data": {
+      "biomarkers": {
+        "ferritin": "low",
+        "vitamin_d": "optimal"
+      },
+      "conditions": ["seasonal allergies"]
+    },
+    "past_orders": ["Magnesium Glycinate", "Vitamin C"],
+    "browsing_session": ["iron supplements", "sleep hygiene tips"]
+  },
+  {
+    "user_id": "user_002",
+    "name": "Mark",
+    "goals": ["muscle recovery", "joint health"],
+    "health_data": {
+      "biomarkers": {
+        "crp": "slightly elevated"
+      },
+      "conditions": ["knee inflammation"]
+    },
+    "past_orders": ["Whey Protein", "Creatine"],
+    "browsing_session": ["turmeric curcumin", "omega-3 fish oil"]
+  },
+  {
+    "user_id": "user_003",
+    "name": "Elena",
+    "goals": ["gut health", "reduce bloating"],
+    "health_data": {
+      "biomarkers": {
+        "b12": "low"
+      },
+      "conditions": ["IBS-C"]
+    },
+    "past_orders": ["Probiotic Daily", "Digestive Enzymes"],
+    "browsing_session": ["fiber supplements", "low FODMAP snacks"]
+  }
+]

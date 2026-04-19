@@ -1,54 +1,7 @@
 [
   {
-    "sku": "prod-01",
-    "canonical_name": "Magnesium (glycinate)",
-    "active_ingredients": [
-      "Magnesium glycinate"
-    ],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [
-      "May cause nausea",
-      "Do not take at night"
-    ]
-  },
-  {
-    "sku": "prod-02",
-    "canonical_name": "Metagenics Magnesium Glycinate",
-    "active_ingredients": [
-      "Magnesium (bisglycinate)"
-    ],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [
-      "Supports normal energy-yielding metabolism",
-      "Supports normal function of nervous system and muscles",
-      "Helps maintain healthy bones"
-    ],
-    "contraindications": [
-      "Pregnancy",
-      "Breastfeeding",
-      "Medical condition",
-      "Taking medications",
-      "May cause nausea",
-      "Do not take at night"
-    ]
-  },
-  {
-    "sku": "prod-03-dup1",
-    "canonical_name": "Magnesium (glycinate)",
-    "active_ingredients": [
-      "Magnesium Glycinate"
-    ],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [
-      "May cause nausea",
-      "Do not take at night"
-    ]
-  },
-  {
-    "sku": "prod-04",
-    "canonical_name": "Bare Biology Ready and Rested Magnesium Glycinate",
+    "sku": "bare-biology-ready-and-rested-magnesium-glycinate",
+    "canonical_name": "Ready and Rested Magnesium Glycinate",
     "active_ingredients": [
       "Magnesium Bisglycinate Chelate Buffered"
     ],
@@ -61,48 +14,53 @@
     "contraindications": [
       "Pregnancy",
       "Breastfeeding",
-      "Medical condition",
-      "Taking medications",
-      "May cause nausea",
-      "Do not take at night"
+      "Medical conditions",
+      "Taking medications"
     ]
   },
   {
-    "sku": "prod-05",
+    "sku": "love-life-supplements-organic-ksm-66-r-ashwagandha",
     "canonical_name": "Organic KSM-66\u00ae Ashwagandha",
     "active_ingredients": [
       "Organic KSM-66\u00ae Ashwagandha",
       "BioPerine\u00ae"
     ],
     "target_biomarkers": [],
-    "mechanisms_of_action": [],
+    "mechanisms_of_action": [
+      "Enhanced absorption with BioPerine\u00ae",
+      "Stress support",
+      "Wellbeing support"
+    ],
     "contraindications": [
-      "pregnant",
-      "breastfeeding",
-      "medical condition",
-      "taking any medications"
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical conditions",
+      "Taking medications"
     ]
   },
   {
-    "sku": "prod-06",
+    "sku": "momentous-l-theanine",
     "canonical_name": "Momentous L-Theanine",
     "active_ingredients": [
       "L-Theanine"
     ],
     "target_biomarkers": [],
-    "mechanisms_of_action": [],
+    "mechanisms_of_action": [
+      "Calming effect",
+      "Supports relaxation"
+    ],
     "contraindications": [
-      "Pregnant",
+      "Pregnancy",
       "Breastfeeding",
       "Medical condition",
       "Taking medications"
     ]
   },
   {
-    "sku": "prod-07",
-    "canonical_name": "Pure Encapsulations Rhodiola Rosea",
+    "sku": "pure-encapsulations-rhodiola-rosea",
+    "canonical_name": "Rhodiola Rosea",
     "active_ingredients": [
-      "Rhodiola (Rhodiola rosea) Extract"
+      "Rhodiola (Rhodiola rosea) Extract (Root)"
     ],
     "target_biomarkers": [],
     "mechanisms_of_action": [
@@ -115,11 +73,11 @@
     ]
   },
   {
-    "sku": "prod-08",
-    "canonical_name": "Designs For Health L-Tyrosine",
+    "sku": "designs-for-health-l-tyrosine",
+    "canonical_name": "L-Tyrosine",
     "active_ingredients": [
       "L-Tyrosine",
-      "Vitamin C"
+      "Vitamin C (as Ascorbic Acid)"
     ],
     "target_biomarkers": [],
     "mechanisms_of_action": [
@@ -128,21 +86,6 @@
       "Reduces tiredness and fatigue"
     ],
     "contraindications": [
-      "Pregnancy",
-      "Breastfeeding",
-      "Medical condition",
-      "Taking medications"
-    ]
-  },
-  {
-    "sku": "prod-09",
-    "canonical_name": "Bacopa Monnieri Extract",
-    "active_ingredients": [
-      "Bacopa Monnieri Leaf Extract"
-    ],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [
       "Pregnant",
       "Breastfeeding",
       "Medical condition",
@@ -150,35 +93,87 @@
     ]
   },
   {
-    "sku": "prod-10",
-    "canonical_name": "Choline (bitartrate)",
+    "sku": "double-wood-supplements-bacopa-monnieri-extract",
+    "canonical_name": "Bacopa Monnieri Extract",
     "active_ingredients": [
-      "Choline Bitartrate"
+      "Bacopa Monnieri Leaf Extract"
     ],
     "target_biomarkers": [],
     "mechanisms_of_action": [
+      "Standardised to 20% bacosides"
+    ],
+    "contraindications": [
+      "Pregnant or breastfeeding individuals",
+      "People with medical conditions",
+      "Individuals taking medications"
+    ]
+  },
+  {
+    "sku": "pure-encapsulations-choline-bitartrate",
+    "canonical_name": "Choline (bitartrate)",
+    "active_ingredients": [
+      "Choline (as Choline Bitartrate)"
+    ],
+    "target_biomarkers": [
+      "Liver function",
+      "Lipid metabolism",
+      "Homocysteine metabolism"
+    ],
+    "mechanisms_of_action": [
       "Supports normal liver function",
-      "Supports lipid metabolism",
-      "Supports homocysteine metabolism"
+      "Supports healthy lipid metabolism",
+      "Plays a role in homocysteine metabolism"
     ],
     "contraindications": [
       "Pregnancy",
       "Breastfeeding",
-      "Medical condition",
+      "Medical conditions",
       "Taking medications"
     ]
   },
   {
-    "sku": "prod-11",
-    "canonical_name": "Pure Encapsulations Magnesium Glycinate",
+    "sku": "anatome-daily-biotic-gut-support",
+    "canonical_name": "Daily Biotic + Gut Support",
     "active_ingredients": [
-      "Magnesium Glycinate"
+      "Inulin",
+      "Bifidobacterium longum",
+      "Bifidobacterium animalis subsp. lactis",
+      "Lactobacillus rhamnosus",
+      "Lactobacillus acidophilus",
+      "Lactobacillus reuteri",
+      "Lactobacillus plantarum",
+      "Bifidobacterium breve"
     ],
     "target_biomarkers": [],
-    "mechanisms_of_action": [],
+    "mechanisms_of_action": [
+      "Supports digestive balance",
+      "Provides soluble fiber",
+      "Contains live cultures"
+    ],
     "contraindications": [
-      "May cause nausea",
-      "Do not take at night"
+      "Consult healthcare professional if pregnant, breastfeeding, or with medical conditions"
+    ]
+  },
+  {
+    "sku": "healf-iron-complex",
+    "canonical_name": "Iron Complex + Vitamin C",
+    "active_ingredients": [
+      "Iron Bisglycinate",
+      "Vitamin C"
+    ],
+    "target_biomarkers": [
+      "Ferritin",
+      "Haemoglobin"
+    ],
+    "mechanisms_of_action": [
+      "Supports red blood cell formation",
+      "Reduces tiredness and fatigue",
+      "Corrects iron deficiency",
+      "Essential for energy metabolism"
+    ],
+    "contraindications": [
+      "Hemochromatosis",
+      "Iron overload"
     ]
   }
 ]

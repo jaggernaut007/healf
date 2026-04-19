@@ -9,6 +9,9 @@ from typing import Callable, Sequence
 
 from llama_index.graph_stores.neo4j import Neo4jPropertyGraphStore
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
 from pydantic import BaseModel, Field
 
 from src.models.product import EnrichedProduct

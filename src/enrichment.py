@@ -3,7 +3,10 @@ import logging
 import os
 import instructor
 from openai import OpenAI
+from dotenv import load_dotenv
 from src.clients.enrichment_client import EnrichmentClient
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("product-enricher")
@@ -61,6 +64,7 @@ def run_enrichment_pipeline():
             # 1. Fetch raw markdown
             logger.info("   -> Scraping markup via Firecrawl...")
             markdown = client.fetch_product_page(url)
+            logger.info(f"   -> Markdown fetched. Length: {len(markdown)}. Preview: {markdown[:50].strip()}...")
 
             # 2. Map and Extract Schema (pass URL for deterministic SKU extraction)
             logger.info("   -> Extracting structured data via LLM...")
