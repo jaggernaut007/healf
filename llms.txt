@@ -4,17 +4,12 @@ Spec-driven agentic health intelligence repository focused on enrichment, graph 
 
 ## Documentation Roots
 - [Quick Reference](docs/QUICK-REFERENCE.md)
-- [Master Checklist](docs/MASTER-CHECKLIST.md)
 - [MCP Routing](docs/MCP-ROUTING.md)
 - [Security Configuration](docs/SECURITY-CONFIG.md)
 - [Testing Strategy](docs/TESTING-STRATEGY.md)
 - [Spec-Driven Development](docs/SPEC-DRIVEN.md)
-- [Task Template](docs/TASK-TEMPLATE.md)
 - [Code Health](docs/CODE-HEALTH.md)
 - [Observability](docs/OBSERVABILITY.md)
-- [Review Setup](docs/REVIEW-SETUP.md)
-- [Model Routing](docs/MODEL-ROUTING.md)
-- [Auto-Memory Practices](docs/AUTO-MEMORY.md)
 - [Full Context Bundle](llms-full.txt)
 - [Architecture Decision Records](docs/adr/)
 - [Research Notes Guide](docs/research/README.md)
@@ -26,4 +21,3 @@ Spec-driven agentic health intelligence repository focused on enrichment, graph 
 ## Core Runtime Files
 - [Universal Rules](AGENTS.md)
 - [Claude-specific Rules](CLAUDE.md)
-- [Feature Status](feature_list.json)

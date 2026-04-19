@@ -4,7 +4,7 @@
 Accepted
 
 ## Context
-Standard Python packaging tools (`pip`, `venv`, `virtualenv`) often lead to slow dependency resolution, bloated virtual environments, and inconsistent states across developer machines. Initial attempts to pin dependencies for `langchain`, `arize-phoenix`, and `nemoguardrails` using standard `pip` resulted in complex dependency conflicts that delayed the setup phase. 
+Standard Python packaging tools (`pip`, `venv`, `virtualenv`) often lead to slow dependency resolution, bloated virtual environments, and inconsistent states across developer machines. Initial attempts to pin dependencies for `langchain` and `arize-phoenix` using standard `pip` resulted in complex dependency conflicts that delayed the setup phase.
 
 ## Decision
 We will exclusively use `uv` for all Python package management, virtual environment creation, and dependency resolution. All commands across the project (including `scripts/init.sh` and agentic workflows) must use `uv pip install` and `uv venv`.

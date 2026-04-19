@@ -155,3 +155,77 @@ class EnrichmentClient:
                 "query": product_name,
                 "error": str(e)
             }
+
+    def fetch_pubmed_research(self, ingredient: str, limit: int = 1) -> None:
+        """
+        Searches PubMed for research abstracts related to an ingredient and saves them as Markdown files.
+        Uses the NCBI Entrez Programming Utilities (E-utils).
+        """
+        import requests
+        import xml.etree.ElementTree as ET
+        from pathlib import Path
+
+        research_dir = Path("data/research")
+        research_dir.mkdir(parents=True, exist_ok=True)
+
+        # 1. Search for PMIDs
+        search_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+        try:
+            search_res = requests.get(
+                search_url,
+                params={
+                    "db": "pubmed",
+                    "term": f"{ingredient} supplementation",
+                    "retmax": limit,
+                    "retmode": "json"
+                },
+                timeout=10
+            )
+            search_res.raise_for_status()
+            id_list = search_res.json().get("esearchresult", {}).get("idlist", [])
+            
+            for pmid in id_list:
+                file_path = research_dir / f"{pmid}.md"
+                if file_path.exists():
+                    continue
+
+                # 2. Fetch Abstract for each PMID
+                fetch_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
+                fetch_res = requests.get(
+                    fetch_url,
+                    params={
+                        "db": "pubmed",
+                        "id": pmid,
+                        "rettype": "abstract",
+                        "retmode": "xml"
+                    },
+                    timeout=10
+                )
+                fetch_res.raise_for_status()
+                
+                # Parse XML to extract title and abstract
+                root = ET.fromstring(fetch_res.content)
+                article = root.find(".//PubmedArticle")
+                if article is None:
+                    continue
+
+                title = article.find(".//ArticleTitle")
+                title_text = title.text if title is not None else "No Title"
+                
+                abstract_parts = []
+                for abs_text in article.findall(".//AbstractText"):
+                    label = abs_text.get("Label", "")
+                    text = abs_text.text if abs_text.text else ""
+                    if label:
+                        abstract_parts.append(f"**{label}**: {text}")
+                    else:
+                        abstract_parts.append(text)
+                
+                abstract_text = "\n\n".join(abstract_parts) if abstract_parts else "No Abstract Found."
+
+                content = f"# PMID {pmid}\n\nTitle: {title_text}\n\nSummary:\n{abstract_text}\n"
+                file_path.write_text(content, encoding="utf-8")
+                print(f"   -> Fetched research for {ingredient}: PMID {pmid}")
+
+        except Exception as e:
+            print(f"   -> PubMed fetch failed for {ingredient}: {str(e)}")

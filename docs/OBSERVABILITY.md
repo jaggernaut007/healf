@@ -1,17 +1,30 @@
 # Agent Observability
 
-## Purpose
+Healf uses **Arize Phoenix** for comprehensive agent tracing and observability.
 
-Capture enough evidence to debug agent behavior and tool usage.
+## Tracing Coverage
 
-## Minimum Setup
+- **LangChain/LangGraph**: Full execution graph, including node transitions and state updates.
+- **OpenAI / Instructor**: All structured extractions and direct LLM completions.
+- **Tools**: Evidence retrieval and external API calls.
 
-- Keep terminal outputs for lint/test/security commands.
-- Keep structured progress updates in PROGRESS.
-- Preserve key decisions in ADRs and research notes.
+## Configuration
 
-## Recommended Enhancements
+Observability is controlled via environment variables in your `.env` file:
 
-- Hook-based tool call traces.
-- Optional API proxy logging for token/cost analysis.
-- Session summaries at handoff boundaries.
+- `HEALF_ENABLE_OBSERVABILITY`: Set to `true` to enable tracing. Defaults to `false`.
+- `PHOENIX_COLLECTOR_ENDPOINT`: The URL of your Phoenix server (default: `http://localhost:6006`).
+
+## Usage
+
+### 1. Start the Phoenix Server
+For persistent traces, run the server in a separate terminal:
+```bash
+uv run python -m phoenix.server.main serve
+```
+
+### 2. View Traces
+Run the agent (with `HEALF_ENABLE_OBSERVABILITY=true`) and visit [http://localhost:6006](http://localhost:6006) to inspect:
+- **Trace Spans**: Detailed timing and input/output for every LLM call.
+- **Evaluation Spans**: Quality gate scores and findings.
+- **Response Schemas**: Exact Pydantic models used by Instructor.

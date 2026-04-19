@@ -101,7 +101,7 @@ All work must follow this wave sequence unless explicitly waived in this file:
 - Test outputs from tool calls.
 - Lint outputs from tool calls.
 - File diffs matching requested acceptance criteria.
-- Updated docs (`PROGRESS.md`, `feature_list.json`, ADRs/research as needed).
+- Updated docs (`PROGRESS.md`, ADRs/research as needed).
 
 ## Change Control
 
@@ -109,4 +109,4 @@ When this spec changes, update:
 
 1. Relevant ADR in `docs/adr/`.
 2. Research note in `docs/research/` when dependencies or APIs change.
-3. Tracking artifacts: `todo.md`, `PROGRESS.md`, and `feature_list.json`.
+3. Tracking artifacts: `PROGRESS.md`.

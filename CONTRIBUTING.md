@@ -19,4 +19,4 @@
 
 - Tests and lint must pass via tool output.
 - Update docs when behavior changes.
-- Update PROGRESS and feature_list before handoff.
+- Update PROGRESS.md before handoff.

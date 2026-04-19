@@ -1,5 +1,4 @@
 from invoke import task
-import os
 
 @task(name="test")
 def run_tests(c):
@@ -18,12 +17,13 @@ def run_lint(c):
 
 @task(name="smoke")
 def run_smoke(c):
-    """Run a smoke test flow checking CLI availability and help."""
+    """Run a smoke test flow checking CLI availability and help via the healf script."""
     commands = [
-        "python -m src.cli --help",
-        "python -m src.cli enrich --help",
-        "python -m src.cli sync-graph --help",
-        "python -m src.cli chat --help"
+        "uv run healf --help",
+        "uv run healf run --help",
+        "uv run healf enrich --help",
+        "uv run healf sync-graph --help",
+        "uv run healf chat --help"
     ]
     for cmd in commands:
         c.run(cmd, in_stream=False)

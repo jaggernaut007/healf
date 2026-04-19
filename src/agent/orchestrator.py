@@ -29,9 +29,13 @@ nest_asyncio.apply()
 
 class OrchestrationConfig(BaseModel):
     evaluation_threshold: float = 0.7
-    enable_observability: bool = True
+    enable_observability: bool = Field(
+        default_factory=lambda: (
+            os.getenv("HEALF_ENABLE_OBSERVABILITY", "false").lower() == "true"
+        )
+    )
     max_critic_retries: int = 3
-    main_model: str = Field(default_factory=lambda: os.getenv("ORCHESTRATOR_MAIN_MODEL", "gpt-5.4-mini"))
+    main_model: str = Field(default_factory=lambda: os.getenv("ORCHESTRATOR_MAIN_MODEL", "gpt-5.4"))
     lite_model: str = Field(default_factory=lambda: os.getenv("ORCHESTRATOR_LITE_MODEL", "gpt-5.4-mini"))
 
 
@@ -88,12 +92,12 @@ class AgentOrchestrator:
     def build_default(
         cls,
         config: OrchestrationConfig | None = None,
-        guardrails_config_path: Path = Path("config/wellness_guard.co"),
-        products_path: Path = Path("data/enriched_products.json"),
-        research_path: Path = Path("data/research"),
-        rules_path: Path = Path("data/research/graph_inference_rules.json"),
+        neo4j_uri: str = os.getenv("NEO4J_URI", ""),
+        neo4j_username: str = os.getenv("NEO4J_USERNAME", ""),
+        neo4j_password: str = os.getenv("NEO4J_PASSWORD", ""),
+        neo4j_database: str = os.getenv("NEO4J_DATABASE", "neo4j"),
     ) -> "AgentOrchestrator":
-        from src.agent.adapters import (
+        from src.agent.nodes import (
             build_default_critic,
             build_default_evaluator,
             build_default_intake_router,
@@ -109,15 +113,32 @@ class AgentOrchestrator:
         config = config or OrchestrationConfig()
         return cls(
             config=config,
-            safety_check=build_default_safety_check(config_path=guardrails_config_path),
+            safety_check=build_default_safety_check(
+                model=config.main_model,
+                neo4j_uri=neo4j_uri, 
+                neo4j_username=neo4j_username, 
+                neo4j_password=neo4j_password, 
+                neo4j_database=neo4j_database
+            ),
             rewrite=build_default_prompt_rewriter(model=config.lite_model),
             route=build_default_intake_router(model=config.lite_model),
             specialize=build_default_specialist(model=config.lite_model),
-            retrieve=build_default_retriever(products_path=products_path, research_path=research_path, rules_path=rules_path),
-            critic=build_default_critic(model=config.lite_model),
+            retrieve=build_default_retriever(
+                neo4j_uri=neo4j_uri, 
+                neo4j_username=neo4j_username, 
+                neo4j_password=neo4j_password, 
+                neo4j_database=neo4j_database
+            ),
+            critic=build_default_critic(model=config.main_model),
             generate_payload=build_default_payload_generator(model=config.main_model),
             evaluate=build_default_evaluator(model=config.main_model),
-            discover=build_default_discovery(model=config.main_model),
+            discover=build_default_discovery(
+                model=config.main_model,
+                neo4j_uri=neo4j_uri, 
+                neo4j_username=neo4j_username, 
+                neo4j_password=neo4j_password, 
+                neo4j_database=neo4j_database
+            ),
             activate_observability=build_default_observability_activator(),
         )
 

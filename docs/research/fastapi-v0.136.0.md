@@ -46,7 +46,7 @@ class ChatResponse(BaseModel):
 @app.post("/api/chat")
 @limiter.limit("5/minute")
 async def chat(request: ChatRequest) -> ChatResponse:
-    # Evaluate guardrails first
+    # Check safety first
     if is_protected_intent(request.message):
         raise HTTPException(
             status_code=403,
@@ -105,4 +105,3 @@ async def health():
 - Combine with `slowapi` for rate limiting per route.
 - Use Pydantic models for all request/response contracts.
 - Pair with Uvicorn for production serving.
-- Integrate NeMo Guardrails before LangGraph invocation in each endpoint handler.

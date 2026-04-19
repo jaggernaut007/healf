@@ -15,6 +15,7 @@ pytest
 arize-phoenix
 pydantic
 openinference-instrumentation-langchain
+openinference-instrumentation-openai
 typer
 rich
 invoke

@@ -4,7 +4,7 @@
 Healf’s architecture consists of three decoupled components operating in a pipeline:
 *   **Component 1 (Enrichment Client):** Scrapes product URLs (using Firecrawl/Jina fallback), extracts a strict `EnrichedProduct` schema via Instructor (LLM), and grounds the data using the NIH RxTerms API.
 *   **Component 2 (Graph Builder):** Ingests the enriched product JSON and PubMed research markdown. It infers and writes `GraphTriple` elements into Neo4j using idempotent Cypher `MERGE` statements.
-*   **Component 3 (Agent Orchestrator):** A LangGraph state machine (`AgentOrchestrator`) controlling intent classification, prompt rewriting, graph traversal, a pharmacovigilance critic, payload generation, and final DeepEval quality gating.
+*   **Component 3 (Agent Orchestrator):** A LangGraph state machine (`AgentOrchestrator`) controlling intent classification, prompt rewriting, graph traversal, a pharmacovigilance critic, payload generation, and final heuristic quality gating.
 
 **Contracts & Failure Modes:** 
 Components interface via explicit JSON schemas and the Neo4j database. 
@@ -36,19 +36,33 @@ The Neo4j property graph encodes five primary entities:
 **Retrieval Strategy:** The context window receives evidence only through the `specialist` node, which generates read-only `GraphQueryPlan`s. If evidence is overwhelming, the `retriever` limits chunks to the top 3-5 via term-scoring algorithms. 
 
 ## 5. Evaluation Framework
-**Judges:** DeepEval metrics (`FaithfulnessMetric` and `AnswerRelevancyMetric`) run natively inside the LangGraph `evaluate` node.
-*   **Faithfulness** measures if the final drafted payload hallucinates claims not present in the Neo4j `RetrievalChunk`s.
-*   **Answer Relevance** measures if the payload actually addresses the user's intent.
+**Eval-Driven Development (EDD):** We adopt an EDD workflow for all agentic nodes. This means we use our evaluation results (from unit tests and DeepEval) to drive iterative improvements in fallback heuristics and LLM prompts. By reproducing failures (like missed allergy warnings) in dedicated tests, we ensure that every architectural hardening is grounded in empirical evidence rather than "prompt vibes".
 
-**Failure Modes & Trust:** LLM-as-a-judge can hallucinate false negatives, rejecting perfectly safe payloads. I trust the `AnswerRelevancyMetric` the *least* in production; users in conversational settings often pivot topics quickly, making strict relevance checks against initial routing queries excessively brittle.
+**Offline Metrics:** We use DeepEval (`FaithfulnessMetric` and `AnswerRelevancyMetric`) in our offline evaluation suite (`tests/evals/`) to measure regression against a "Golden Dataset" of 10-20 high-signal health queries.
+*   **Faithfulness:** Measures if the final payload hallucinates claims not present in the Neo4j `RetrievalChunk`s.
+*   **Answer Relevancy:** Measures how well the response addresses the user's intent.
+
+**Runtime Quality Gating:** The orchestrator uses a **Heuristic Quality Gate** inside the LangGraph `evaluate` node. This uses keyword density, evidence mapping (ensuring at least one citation), and length constraints to score the response before emission.
+
+**Failure Modes & Trust:** 
+- **LLM-as-a-Judge Failure:** DeepEval can be non-deterministic or suffer from the same parametric memory biases as the generator. If the context is semantically complex, the judge might approve a "plausible but wrong" answer.
+- **Heuristic Failure:** Heuristic gates can be too rigid, blocking high-quality but unconventional responses.
+- **Trust Ranking:** In production, I would trust the **FaithfulnessMetric** (LLM-as-a-Judge) **least**. Its high latency and "recursive hallucination" risk (where the judge hallucinate that the generator didn't hallucinate) make it unsuitable for real-time safety. I trust our **Fail-Closed Safety Model** (Safety Node + Critic) most, as it is grounded in deterministic checks and strict schema enforcement.
 
 ## 6. Safety Model
-The chatbot operates on a strict **Fail-Closed** philosophy. 
+The chatbot operates on a strict **Fail-Closed** philosophy.
 
-**Guardrails:** 
-1.  **Intent Classification (Intake):** The `safety` node blocks static regex strings (e.g., "heart attack"), blocks `.co` policy file overrides, and uses a Coordinator LLM to catch diagnostic intent (`is_clinical_diagnosis_request`).
-2.  **Pharmacovigilance Critic (Supervisor):** Before generation, the `critic` node analyzes the retrieved graph evidence against the `user_profile`. It explicitly flags `ALLERGY_RECHECK`, `MEDICATION_CAUTION`, and `PREGNANCY_CAUTION`. 
-3.  **Bounded Retries:** If flagged, the `critic` forces the specialist to retry with new constraints up to 3 times. If unresolved, the system explicitly drops the product recommendation and fails closed with an error. It does not provide a "weak warning" to consult a doctor alongside a product link; it refuses the link entirely.
+**Safety Controls & Coverage:**
+1.  **Intent Classification (Intake):** Uses a Coordinator LLM to catch diagnostic intent (`is_clinical_diagnosis_request`) and blocks literal blacklisted phrases (e.g., "cure", "heart attack").
+2.  **Pharmacovigilance Critic (Supervisor):** Analyzes retrieved graph evidence against the `user_profile` (allergies, medications, conditions). It explicitly flags `ALLERGY_RECHECK`, `MEDICATION_CAUTION`, and `PREGNANCY_CAUTION`.
+3.  **NIH Grounding:** The enrichment pipeline cross-references active ingredients with the NIH RxTerms API to fetch clinical contraindications, which are then encoded as hard edges in the graph.
+
+**What it catches:** Direct medical advice, known supplement-medication interactions (e.g., St. John's Wort + SSRIs), and allergic conflicts based on the user's profile.
+**What it misses:** 
+- **Subtle Diagnostic Intent:** Phrasings like "My skin is peeling, which cream?" might bypass the "clinical diagnosis" check if phrased as a product inquiry.
+- **Graph Gaps:** If an interaction is not in the Neo4j graph or the NIH database (e.g., a very new or obscure herbal supplement), the Critic will not flag it.
+- **Non-Linear Polypharmacy:** Complex interactions involving 3+ medications are difficult to resolve via single-turn retrieval and may be missed by the current Critic logic.
+
 
 ## 7. What I Did Not Build
 **Honest Scoping:** I did not build the frontend chat UI (React/Next.js), auth, or complex vector database replication (relying entirely on Neo4j for semantic/graph intersections).

@@ -40,8 +40,11 @@ uv run healf sync-graph --products-path custom/path/enriched.json
 Interact with the system using the stateful Consultative Discovery REPL. This mode supports multi-turn conversations and asks clarifying questions for ambiguous intents.
 
 ```bash
-# Start an interactive session
+# Start an interactive session (no user profile by default)
 uv run healf chat
+
+# Run for a specific user to test personalization
+uv run healf chat --user-id user_001
 
 # Run in silent mode for a clean chat experience (suppresses background logs)
 uv run healf chat -s
@@ -49,6 +52,16 @@ uv run healf chat -s
 
 - **Options**:
   - `--silent` / `-s`: Suppress background logs and developer warnings for a clean conversational experience.
+  - `--user-id` / `-u`: Simulate chat for a specific user ID from `data/user_profiles.json`.
+
+#### Mock User Profiles
+You can simulate different customer scenarios using the `--user-id` flag:
+
+| User ID | Name | Focus | Key Context |
+| :--- | :--- | :--- | :--- |
+| `user_001` | Sarah | Energy & Sleep | Low Ferritin, seasonal allergies. |
+| `user_002` | Mark | Recovery & Joints | Elevated CRP, knee inflammation. |
+| `user_003` | Elena | Gut Health | IBS-C, low B12. |
 
 
 ---

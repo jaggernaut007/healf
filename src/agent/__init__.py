@@ -1,6 +1,6 @@
 """Agentic orchestration package."""
 
-from src.agent.adapters import (
+from src.agent.nodes import (
 	build_default_evaluator,
 	build_default_generator,
 	build_default_observability_activator,

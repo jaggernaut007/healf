@@ -3,37 +3,24 @@ from __future__ import annotations
 import argparse
 import json
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Callable, Sequence
 
+from dotenv import load_dotenv
 from llama_index.graph_stores.neo4j import Neo4jPropertyGraphStore
 from openai import OpenAI
-from dotenv import load_dotenv
-
-load_dotenv()
 from pydantic import BaseModel, Field
 
+from src.models.graph import (
+    GraphBuildResult,
+    GraphInferenceRule,
+    GraphPreflightResult,
+    GraphTriple,
+)
 from src.models.product import EnrichedProduct
 
-
-class GraphTriple(BaseModel):
-    product_sku: str
-    product_name: str
-    ingredient_name: str
-    mechanism_name: str
-    symptom_name: str
-    source_pmid: str | None = None
-
-
-class GraphInferenceRule(BaseModel):
-    ingredient_terms: list[str]
-    mechanism_name: str
-    symptom_name: str
-    source_pmid: str | None = None
-    corpus_terms: list[str] = Field(default_factory=list)
-
-
+load_dotenv()
 class GraphBuilderConfig(BaseModel):
     neo4j_uri: str = Field(default_factory=lambda: os.getenv("NEO4J_URI", ""))
     neo4j_username: str = Field(default_factory=lambda: os.getenv("NEO4J_USERNAME", ""))
@@ -57,22 +44,6 @@ class GraphBuilderConfig(BaseModel):
         ]
         if missing:
             raise RuntimeError(f"Missing Neo4j configuration: {', '.join(missing)}")
-
-
-class GraphBuildResult(BaseModel):
-    products_loaded: int
-    research_documents_loaded: int
-    triples_written: int
-
-
-class GraphPreflightResult(BaseModel):
-    products_loaded: int
-    research_documents_loaded: int
-    rules_loaded: int
-    triples_inferred: int
-    missing_rule_pmids: list[str]
-    unmatched_ingredients: list[str]
-    triples_preview: list[GraphTriple]
 
 
 class OpenAIEmbeddingItem(BaseModel):
@@ -223,14 +194,25 @@ class GraphBuilder:
         if not triples:
             return
 
-        # Map SKUs to products for quick lookup of USPs and Usage
+        # Map SKUs to products for quick lookup
         product_map = {p.sku: p for p in products}
+        
+        # Build a map of PMIDs to full research content
+        research_docs = self.load_research_documents()
+        pmid_to_content = {Path(name).stem: content for name, content in research_docs}
+
+        self.setup_vector_indices()
 
         store = self._ensure_graph_store()
         with store.client.session(database=self.config.neo4j_database) as session:
             for triple in triples:
                 product_data = product_map.get(triple.product_sku)
                 research_data = research_summaries.get(triple.source_pmid, {}) if triple.source_pmid else {}
+                full_research_text = pmid_to_content.get(triple.source_pmid, "")
+                
+                # Generate a richer study context for embedding
+                study_text = f"{research_data.get('key_finding', '')} {research_data.get('study_type', '')}"
+                study_embedding = self._embed_text(study_text) if triple.source_pmid else None
 
                 session.run(
                     """
@@ -238,11 +220,13 @@ class GraphBuilder:
                     SET product.name = $product_name,
                         product.usp = $product_usp,
                         product.usage = $product_usage,
+                        product.contraindications = $contraindications,
                         product.embedding = coalesce($product_embedding, product.embedding)
                     MERGE (ingredient:Ingredient {name: $ingredient_name})
                     MERGE (mechanism:Mechanism {name: $mechanism_name})
                     SET mechanism.embedding = coalesce($mechanism_embedding, mechanism.embedding)
                     MERGE (symptom:Symptom {name: $symptom_name})
+                    SET symptom.embedding = coalesce($symptom_embedding, symptom.embedding)
                     MERGE (product)-[:CONTAINS]->(ingredient)
                     MERGE (ingredient)-[:TRIGGERS]->(mechanism)
                     MERGE (mechanism)-[:ALLEVIATES]->(symptom)
@@ -251,14 +235,18 @@ class GraphBuilder:
                         SET study.study_type = $study_type,
                             study.sample_size = $sample_size,
                             study.dosage_tested = $dosage_tested,
-                            study.key_finding = $key_finding
+                            study.key_finding = $key_finding,
+                            study.full_summary = $full_summary,
+                            study.embedding = coalesce($study_embedding, study.embedding)
                         MERGE (mechanism)-[:SUPPORTED_BY]->(study)
+                        MERGE (ingredient)-[:EVALUATED_IN]->(study)
                     )
                     """,
                     product_sku=triple.product_sku,
                     product_name=triple.product_name,
                     product_usp=getattr(product_data, "usp", ""),
                     product_usage=getattr(product_data, "usage_instructions", ""),
+                    contraindications=", ".join(getattr(product_data, "contraindications", [])),
                     ingredient_name=triple.ingredient_name,
                     mechanism_name=triple.mechanism_name,
                     symptom_name=triple.symptom_name,
@@ -267,9 +255,38 @@ class GraphBuilder:
                     sample_size=research_data.get("sample_size", ""),
                     dosage_tested=research_data.get("dosage_tested", ""),
                     key_finding=research_data.get("key_finding", ""),
+                    full_summary=full_research_text,
                     product_embedding=self._embed_text(f"{triple.product_name} {triple.ingredient_name}"),
                     mechanism_embedding=self._embed_text(triple.mechanism_name),
+                    symptom_embedding=self._embed_text(triple.symptom_name),
+                    study_embedding=study_embedding,
                 )
+
+    def setup_vector_indices(self) -> None:
+        """Create vector indices in Neo4j for semantic KG-RAG search."""
+        store = self._ensure_graph_store()
+        with store.client.session(database=self.config.neo4j_database) as session:
+            # Drop existing if needed or just CREATE IF NOT EXISTS (supported in Neo4j 5+)
+            session.run(
+                "CREATE VECTOR INDEX product_embeddings IF NOT EXISTS "
+                "FOR (n:Product) ON (n.embedding) "
+                "OPTIONS {indexConfig: {`vector.dimensions`: 1536, `vector.similarity_function`: 'cosine'}}"
+            )
+            session.run(
+                "CREATE VECTOR INDEX mechanism_embeddings IF NOT EXISTS "
+                "FOR (n:Mechanism) ON (n.embedding) "
+                "OPTIONS {indexConfig: {`vector.dimensions`: 1536, `vector.similarity_function`: 'cosine'}}"
+            )
+            session.run(
+                "CREATE VECTOR INDEX study_embeddings IF NOT EXISTS "
+                "FOR (n:Study) ON (n.embedding) "
+                "OPTIONS {indexConfig: {`vector.dimensions`: 1536, `vector.similarity_function`: 'cosine'}}"
+            )
+            session.run(
+                "CREATE VECTOR INDEX symptom_embeddings IF NOT EXISTS "
+                "FOR (n:Symptom) ON (n.embedding) "
+                "OPTIONS {indexConfig: {`vector.dimensions`: 1536, `vector.similarity_function`: 'cosine'}}"
+            )
 
     def _ensure_graph_store(self) -> Neo4jPropertyGraphStore:
         if self.graph_store is not None:

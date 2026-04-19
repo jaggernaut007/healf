@@ -15,7 +15,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 orchestrator = AgentOrchestrator.build_default()
 
 class ChatRequest(BaseModel):
-    user_id: str
+    user_id: str | None = None
     message: str
 
 @app.post("/chat")

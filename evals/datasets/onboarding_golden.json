@@ -1,0 +1,30 @@
+[
+  {
+    "test_name": "Warm Greeting & Persona Alignment",
+    "turns": [
+      {
+        "turn": 1,
+        "input": "Hi, I'm new here.",
+        "expected_behavior": "Acknowledge greeting, introduce self as Healf AI Coach (elite consultant), and list the 5 domains (Mind, Body, Fitness, Sleep, Nutrition) to prompt discovery.",
+        "eval_criteria": ["Tone is warm/premium", "Persona is established", "Steers to Healf domains"]
+      },
+      {
+        "turn": 2,
+        "input": "I'm mostly interested in fixing my sleep.",
+        "expected_behavior": "Validate sleep as a pillar of wellness, ask about specific sleep issues (latency vs. quality), and transition to product search (e.g., Magnesium or L-Theanine).",
+        "eval_criteria": ["Domain transition", "Consultative inquiry"]
+      }
+    ]
+  },
+  {
+    "test_name": "Generic Start to Mindful Performance",
+    "turns": [
+      {
+        "turn": 1,
+        "input": "Hello!",
+        "expected_behavior": "Warm response, establish high-performance consultant persona, and ask how we can optimize their Mind, Body, or Nutrition today.",
+        "eval_criteria": ["Persona alignment", "Active steering"]
+      }
+    ]
+  }
+]

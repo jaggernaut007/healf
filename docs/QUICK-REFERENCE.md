@@ -1,4 +1,4 @@
-# Quick Reference: AI Package Framework
+# Quick Reference: Healf Health Intelligence Engine
 
 ## Session Commands
 

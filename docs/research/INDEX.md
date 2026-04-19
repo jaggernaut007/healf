@@ -27,13 +27,13 @@ Use this index to avoid rediscovering dependency and API decisions.
 - Pydantic v2 schema validation, v2.13.2, 2026-04-18, Current (Context7 verified), docs/research/pydantic-v2.13.2.md
 - Instructor structured outputs, v1.15.1, 2026-04-18, Current (Context7 verified), docs/research/instructor-v1.15.1.md
 - Requests HTTP client, v2.33.1, 2026-04-18, Current (Context7 verified), docs/research/requests-v2.33.1.md
-- NeMo Guardrails safety gateway, v0.21.0, 2026-04-18, Current (Context7 verified), docs/research/nemo-guardrails.md
 - Firecrawl web scraping, v4.22.2, 2026-04-18, Current (Context7 verified), docs/research/firecrawl-api.md
 - DeepEval LLM evaluation, v3.9.7, 2026-04-18, Current (Context7 verified), docs/research/deepeval-v3.9.7.md
 - Arize Phoenix observability, v14.8.0, 2026-04-18, Current (Context7 verified, licensing caveat), docs/research/arize-phoenix-v14.8.0.md
 - OpenInference instrumentation, v0.1.62, 2026-04-18, Current (Context7 verified), docs/research/openinference-instrumentation-v0.1.62.md
 - pytest testing framework, v9.0.3, 2026-04-18, Current (Context7 verified), docs/research/pytest-v9.0.3.md
 - Hypothesis property testing, v6.152.1, 2026-04-18, Current (Context7 verified), docs/research/hypothesis-v6.152.1.md
+- cachetools TTL L1 caching, v7.0.5, 2026-04-19, Current, docs/research/cachetools-v7.0.5.md
 
 ### Phase 3-4 Planning Research (v2026-04-18)
 - `ripgrep-cli-v15.1.0.md` - Repository-default search tool policy, verification, fallback, and supply-chain notes.

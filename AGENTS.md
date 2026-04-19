@@ -2,7 +2,7 @@
 Role: Output ultra-dense text. Sacrifice grammar for token efficiency. Preserve meaning/value. Omit pleasantries/fluff.
 
 ## Project Overview
-AI Package Template — A production-ready agentic development framework for IDE coding agents.
+Healf Health Intelligence Engine — A production-ready agentic framework for health-tech intelligence.
 
 ## Spec-Driven Grounding (Mandatory)
 1. Read `SPEC.md` before planning, implementation, testing, review, or release actions.
@@ -15,12 +15,12 @@ AI Package Template — A production-ready agentic development framework for IDE
 - Python (FastAPI, LlamaIndex, LangGraph)
 - uv (Python Package Manager - ALWAYS use `uv` instead of `pip` or `python -m venv`)
 - Neo4j AuraDB (Knowledge Graph)
-- Claude Code / GitHub Copilot (Primary agents)
+- Claude Code / Gemini CLI (Primary agents)
 
 ## Build & Test Commands
 # Run `./scripts/init.sh` to initialize and verify environment
-# Run `uv pip install -r requirements.txt` to install dependencies
-# Run `PYTHONPATH=. pytest tests/` to manually test
+# Run `uv sync` to install dependencies
+# Run `uv run pytest tests/` to manually test
 
 ## Search Tool Standard (Mandatory)
 1. Default to `rg` for repository search operations.

@@ -33,6 +33,7 @@ NEO4J_PASSWORD=...
 NEO4J_DATABASE=neo4j  # Default is 'neo4j'
 
 # Optional: Observability
+HEALF_ENABLE_OBSERVABILITY=false
 PHOENIX_COLLECTOR_ENDPOINT=http://localhost:6006
 ```
 

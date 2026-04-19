@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import instructor
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -27,8 +28,30 @@ def save_output_products(filepath: str, products: list):
         json.dump(serialized, f, indent=2)
     logger.info(f"Saved {len(products)} enriched products to {filepath}")
 
+def process_single_url(url: str, client: EnrichmentClient, patch_client) -> tuple:
+    """Helper to process a single URL: Scrape + Initial LLM Extraction."""
+    logger.info(f"Processing URL: {url}")
+    try:
+        # 1. Fetch raw markdown
+        logger.info(f"   [{url}] Scraping markup via Firecrawl...")
+        markdown = client.fetch_product_page(url)
+        
+        # 2. Map and Extract Schema
+        logger.info(f"   [{url}] Extracting structured data via LLM...")
+        product = client.extract_product_data(markdown, url=url, instructor_client=patch_client)
+        
+        return product, None
+    except Exception as e:
+        logger.error(f"Failed processing {url} - {str(e)}")
+        return None, url
+
 def run_enrichment_pipeline():
-    """Component 1 Orchestrator: Scrapes Web -> NIH Facts -> Model Extract -> Save."""
+    """
+    Optimized Component 1 Orchestrator:
+    1. Parallel URL Scraping & Extraction
+    2. De-duplicated Ingredient Grounding (NIH + PubMed)
+    3. Save results
+    """
     input_file = "data/raw_product_urls.json"
     output_file = "data/enriched_products.json"
     
@@ -37,68 +60,68 @@ def run_enrichment_pipeline():
         logger.error("No input URLs to process. Exiting.")
         return
 
-    # Fail fast when credentials are missing so runs cannot silently degrade.
+    # API Key check
     fc_api_key = os.getenv("FIRECRAWL_API_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
-
     if not fc_api_key or not openai_key:
-        missing = []
-        if not fc_api_key:
-            missing.append("FIRECRAWL_API_KEY")
-        if not openai_key:
-            missing.append("OPENAI_API_KEY")
-        raise RuntimeError(f"Missing required API keys: {', '.join(missing)}")
+        raise RuntimeError("Missing required API keys: FIRECRAWL_API_KEY or OPENAI_API_KEY")
     
     client = EnrichmentClient(api_key=fc_api_key)
-    
-    # Let instructor wrap openai
     oai_client = OpenAI(api_key=openai_key)
     patch_client = instructor.from_openai(oai_client)
 
     enriched_results = []
     failed_urls = []
-    for url in urls:
-        logger.info(f"Processing URL: {url}")
+
+    # --- Phase 1: Parallel Extraction ---
+    logger.info(f"Starting parallel extraction for {len(urls)} URLs...")
+    with ThreadPoolExecutor(max_workers=int(os.getenv("MAX_WORKERS", 5))) as executor:
+        futures = {executor.submit(process_single_url, url, client, patch_client): url for url in urls}
+        for future in as_completed(futures):
+            product, error_url = future.result()
+            if product:
+                enriched_results.append(product)
+            if error_url:
+                failed_urls.append(error_url)
+
+    if not enriched_results:
+        logger.error("No products were successfully extracted.")
+        if failed_urls:
+            raise RuntimeError(f"All extractions failed: {failed_urls}")
+        return
+
+    # --- Phase 2: De-duplicated Grounding ---
+    unique_ingredients = {ing for prod in enriched_results for ing in prod.active_ingredients}
+    logger.info(f"Starting grounding for {len(unique_ingredients)} unique ingredients...")
+    
+    ingredient_warnings = {}
+    
+    # Ground each unique ingredient once
+    for ingredient in unique_ingredients:
+        logger.info(f"   -> Grounding: {ingredient}")
         
-        try:
-            # 1. Fetch raw markdown
-            logger.info("   -> Scraping markup via Firecrawl...")
-            markdown = client.fetch_product_page(url)
-            logger.info(f"   -> Markdown fetched. Length: {len(markdown)}. Preview: {markdown[:50].strip()}...")
+        # 2a. NIH Grounding for warnings
+        nih_data = client.fetch_nih_dsld_data(ingredient)
+        if "warnings" in nih_data and nih_data["warnings"]:
+            ingredient_warnings[ingredient] = nih_data["warnings"]
+        
+        # 2b. PubMed Research Fetching (saves to data/research/)
+        client.fetch_pubmed_research(ingredient, limit=1)
 
-            # 2. Map and Extract Schema (pass URL for deterministic SKU extraction)
-            logger.info("   -> Extracting structured data via LLM...")
-            product = client.extract_product_data(markdown, url=url, instructor_client=patch_client)
-
-            # 3. Grounding against NIH RxTerms 
-            logger.info(f"   -> Grounding active ingredients for {product.canonical_name}...")
-            # For each active ingredient, verify safety gaps
-            for ingredient in product.active_ingredients:
-                nih_data = client.fetch_nih_dsld_data(ingredient)
-                # Overwrite contraindications based on NIH authoritative results
-                if "warnings" in nih_data and nih_data["warnings"]:
-                    # Ensure no duplicates
-                    for warning in nih_data["warnings"]:
-                        if warning not in product.contraindications:
-                            product.contraindications.append(warning)
-
-            enriched_results.append(product)
-            logger.info(f"   -> EnrichedProduct ready for {product.canonical_name}")
-
-        except Exception as e:
-            logger.error(f"Failed processing {url} - {str(e)}")
-            failed_urls.append(url)
+    # --- Phase 3: Map Grounding back to Products ---
+    for product in enriched_results:
+        for ingredient in product.active_ingredients:
+            if ingredient in ingredient_warnings:
+                for warning in ingredient_warnings[ingredient]:
+                    if warning not in product.contraindications:
+                        product.contraindications.append(warning)
+        logger.info(f"   -> EnrichedProduct finalized: {product.canonical_name}")
 
     if failed_urls:
-        raise RuntimeError(
-            f"Enrichment failed for {len(failed_urls)} URL(s): {', '.join(failed_urls)}"
-        )
+        logger.warning(f"Enrichment partial success. Failed URLs: {', '.join(failed_urls)}")
 
-    # 4. Save Final State
-    if enriched_results:
-        save_output_products(output_file, enriched_results)
-    else:
-        raise RuntimeError("No products were successfully extracted.")
+    # --- Phase 4: Save Final State ---
+    save_output_products(output_file, enriched_results)
 
 if __name__ == "__main__":
     run_enrichment_pipeline()

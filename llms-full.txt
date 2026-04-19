@@ -1,4 +1,4 @@
-# AI Package Template - Full Context Bundle
+# Healf Health Intelligence Engine - Full Context Bundle
 
 This file provides a single-entry overview for agent context loading.
 
@@ -38,13 +38,11 @@ This file provides a single-entry overview for agent context loading.
 - [.claude/mcp.json](.claude/mcp.json)
 - [.claude/hooks.json](.claude/hooks.json)
 - [scripts/init.sh](scripts/init.sh)
-- [feature_list.json](feature_list.json)
 - [PROGRESS.md](PROGRESS.md)
 
 ## Documentation
 - [README.md](README.md)
 - [docs/QUICK-REFERENCE.md](docs/QUICK-REFERENCE.md)
-- [docs/MASTER-CHECKLIST.md](docs/MASTER-CHECKLIST.md)
 - [docs/adr/template.md](docs/adr/template.md)
 - [docs/research/README.md](docs/research/README.md)
 - [docs/research/RESEARCH-TEMPLATE.md](docs/research/RESEARCH-TEMPLATE.md)

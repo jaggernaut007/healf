@@ -1,4 +1,3 @@
-import re
 from pathlib import Path
 
 content = Path('src/agent/adapters.py').read_text()
