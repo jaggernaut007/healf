@@ -57,10 +57,9 @@ def test_harm_of_omission_ssri_contraindication():
     
     result = orchestrator.run(request)
     
-    assert result.status == "failed"
+    assert result.status == "ok"
+    assert "Blocked recommendation" in result.response_text
     assert any(f.code == "MEDICATION_CAUTION" for f in result.validation_errors)
-    # The default error message for fail-closed in orchestrator.py
-    assert "Critic rejected" in result.error
 
 def test_critic_node_trajectory_invocation():
     pass

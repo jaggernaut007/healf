@@ -68,6 +68,24 @@ Acceptance criteria:
 - Eval-Driven Development (EDD) suite is scaffolded in `evals/` with a golden dataset covering: positive, dangerous (diagnosis/interaction), edge cases (misspellings), and persona-based queries (athlete vs. illiterate).
 - Industrial performance patterns (TTL L1 Caching) implemented in the enrichment pipeline.
 
+### Phase 6: Consultative Discovery
+
+Acceptance criteria:
+- `IntakeRouter` identifies ambiguous queries requiring clarification.
+- `Discovery` node in LangGraph generates conversational clarification questions when `requires_clarification` is True.
+- Multi-turn intent resolution is supported via `chat_history`.
+- Product retrieval is blocked until the user intent is sufficiently clarified.
+
+### Phase 7: Advanced Enrichment
+
+Acceptance criteria:
+- Scientific research papers are integrated into the knowledge base (`data/research/`).
+- Structured research summaries (PMID, study type, sample size, dosage, findings) are extracted and persisted.
+- `GraphBuilder` synchronizes the Neo4j Knowledge Graph with both product USPs/Usage and research metadata.
+- `EnrichmentClient` extracts premium product details including USPs and usage instructions.
+- `Retriever` adapter supports dual-stream retrieval from both product data and scientific research papers.
+- `Pharmacovigilance Critic` is hardened to handle high-risk intents (medication, pregnancy, allergies) with conversational refusals.
+
 ## Wave Contract
 
 All work must follow this wave sequence unless explicitly waived in this file:

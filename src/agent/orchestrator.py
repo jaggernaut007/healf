@@ -31,7 +31,7 @@ class OrchestrationConfig(BaseModel):
     evaluation_threshold: float = 0.7
     enable_observability: bool = True
     max_critic_retries: int = 3
-    main_model: str = Field(default_factory=lambda: os.getenv("ORCHESTRATOR_MAIN_MODEL", "gpt-5.4"))
+    main_model: str = Field(default_factory=lambda: os.getenv("ORCHESTRATOR_MAIN_MODEL", "gpt-5.4-mini"))
     lite_model: str = Field(default_factory=lambda: os.getenv("ORCHESTRATOR_LITE_MODEL", "gpt-5.4-mini"))
 
 
@@ -90,6 +90,8 @@ class AgentOrchestrator:
         config: OrchestrationConfig | None = None,
         guardrails_config_path: Path = Path("config/wellness_guard.co"),
         products_path: Path = Path("data/enriched_products.json"),
+        research_path: Path = Path("data/research"),
+        rules_path: Path = Path("data/research/graph_inference_rules.json"),
     ) -> "AgentOrchestrator":
         from src.agent.adapters import (
             build_default_critic,
@@ -111,7 +113,7 @@ class AgentOrchestrator:
             rewrite=build_default_prompt_rewriter(model=config.lite_model),
             route=build_default_intake_router(model=config.lite_model),
             specialize=build_default_specialist(model=config.lite_model),
-            retrieve=build_default_retriever(products_path=products_path),
+            retrieve=build_default_retriever(products_path=products_path, research_path=research_path, rules_path=rules_path),
             critic=build_default_critic(model=config.lite_model),
             generate_payload=build_default_payload_generator(model=config.main_model),
             evaluate=build_default_evaluator(model=config.main_model),
@@ -325,6 +327,9 @@ class AgentOrchestrator:
 
     def _payload_node(self, state: OrchestrationState) -> OrchestrationState:
         request = state["request"]
+        decision = state.get("critic_decision")
+        safety_findings = decision.findings if decision and not decision.passed else []
+        
         payload = PayloadDraft.model_validate(
             self._safe_call(
                 self.generate_payload,
@@ -332,6 +337,7 @@ class AgentOrchestrator:
                 state.get("retrieved_chunks", []),
                 profile=request.user_profile,
                 chat_history=request.chat_history,
+                safety_findings=safety_findings,
             )
         )
         return {"payload": payload}
@@ -410,9 +416,14 @@ class AgentOrchestrator:
         decision = state.get("critic_decision") or CriticDecision(passed=True, findings=[])
         if decision.passed:
             return "payload"
-        if decision.retryable and state.get("retry_count", 0) <= self.config.max_critic_retries:
-            return "specialist"
-        return "finalize_fail_closed"
+        
+        if decision.retryable:
+            if state.get("retry_count", 0) <= self.config.max_critic_retries:
+                return "specialist"
+            return "finalize_fail_closed"
+        
+        # If not retryable, go to payload for conversational refusal
+        return "payload"
 
     def _route_after_evaluation(self, state: OrchestrationState) -> str:
         return "finalize_success" if state["evaluation"].passed else "finalize_failed_gate"

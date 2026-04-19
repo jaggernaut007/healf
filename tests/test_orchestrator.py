@@ -92,6 +92,7 @@ def test_orchestrator_happy_path_runs_all_steps_in_order() -> None:
         "observability",
         "safety",
         "rewrite",
+        "route",
         "specialist",
         "retrieve",
         "critic",
@@ -287,6 +288,7 @@ def test_orchestrator_fails_closed_when_critic_exhausts_retries() -> None:
     assert calls == [
         "safety",
         "rewrite",
+        "route",
         "specialist",
         "retrieve",
         "critic:0",
@@ -482,6 +484,7 @@ def test_orchestrator_retries_once_then_succeeds() -> None:
     assert calls == [
         "safety",
         "rewrite",
+        "route",
         "specialist",
         "retrieve",
         "critic:0",

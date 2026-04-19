@@ -7,7 +7,7 @@
     "corpus_terms": ["magnesium", "sleep"]
   },
   {
-    "ingredient_terms": ["ashwagandha"],
+    "ingredient_terms": ["ashwagandha", "bioperine", "bioperine®"],
     "mechanism_name": "Cortisol reduction",
     "symptom_name": "Stress",
     "source_pmid": "23439798",
@@ -49,7 +49,7 @@
     "corpus_terms": ["tyrosine", "stress", "cognitive", "catecholamine"]
   },
   {
-    "ingredient_terms": ["bacopa", "bacopa monnieri"],
+    "ingredient_terms": ["bacopa", "bacopa monnieri", "bacosides"],
     "mechanism_name": "Memory and attentional control support",
     "symptom_name": "Brain fog",
     "source_pmid": "18683852",
@@ -61,5 +61,47 @@
     "symptom_name": "Stress-related fatigue",
     "source_pmid": "19016404",
     "corpus_terms": ["rhodiola", "fatigue", "attention", "cortisol"]
+  },
+  {
+    "ingredient_terms": ["creatine", "creatine monohydrate"],
+    "mechanism_name": "ATP production support",
+    "symptom_name": "Exercise Performance",
+    "source_pmid": "12701815",
+    "corpus_terms": ["creatine", "performance", "atp", "phosphocreatine"]
+  },
+  {
+    "ingredient_terms": ["vitamin d3", "cholecalciferol"],
+    "mechanism_name": "Calcium absorption support",
+    "symptom_name": "Bone Health",
+    "source_pmid": "21646368",
+    "corpus_terms": ["vitamin d", "calcium", "deficiency", "bone"]
+  },
+  {
+    "ingredient_terms": ["omega-3", "epa", "dha", "fish oil"],
+    "mechanism_name": "Anti-inflammatory signaling support",
+    "symptom_name": "Heart Health",
+    "source_pmid": "22332096",
+    "corpus_terms": ["omega-3", "epa", "dha", "inflammation", "cardiovascular"]
+  },
+  {
+    "ingredient_terms": ["zinc", "vitamin c", "ascorbic acid", "vitamin b1", "thiamine", "vitamin b2", "riboflavin"],
+    "mechanism_name": "Immune enzyme support",
+    "symptom_name": "Immunity",
+    "source_pmid": "23914213",
+    "corpus_terms": ["zinc", "immune", "deficiency", "supplementation"]
+  },
+  {
+    "ingredient_terms": ["lactobacillus", "bifidobacterium", "probiotics", "enterococcus", "inulin"],
+    "mechanism_name": "Microbiome diversity support",
+    "symptom_name": "Gut Health",
+    "source_pmid": "24912386",
+    "corpus_terms": ["probiotic", "microorganism", "health benefit", "gut"]
+  },
+  {
+    "ingredient_terms": ["collagen", "hydrolysed collagen", "bovine collagen", "marine collagen"],
+    "mechanism_name": "Skin elasticity support",
+    "symptom_name": "Skin Aging",
+    "source_pmid": "41817298",
+    "corpus_terms": ["collagen", "skin", "aging", "elasticity"]
   }
 ]

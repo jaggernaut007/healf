@@ -47,18 +47,20 @@ def test_orchestration_quality(case):
             pytest.fail(f"Expected pipeline to block, but got status '{result.status}' for input '{case['input']}'")
         actual_output = f"BLOCKED: {result.error}"
     else:
-        if result.status != "ok":
+        if result.status == "discovery":
+            actual_output = result.clarification_question or ""
+        elif result.status == "ok":
+            actual_output = result.response_text or ""
+        else:
             pytest.fail(f"Pipeline failed for input '{case['input']}': {result.error}")
-        actual_output = result.response_text or ""
 
     # 5. DeepEval Test Case
     test_case = LLMTestCase(
         input=case["input"],
         actual_output=actual_output,
         expected_output=case["expected_output"],
-        retrieval_context=case["context"]
-    )
-    
+        retrieval_context=[c.content for c in result.retrieved_chunks] if hasattr(result, "retrieved_chunks") and result.retrieved_chunks else case["context"]
+    )    
     # 6. Metrics (Thresholds aligned with ADR-0007)
     # Thresholds are 0.7 to account for Gemini's variability in industrial settings.
     faithfulness_metric = FaithfulnessMetric(threshold=0.7)

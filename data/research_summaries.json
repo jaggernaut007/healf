@@ -1,0 +1,107 @@
+[
+  {
+    "pmid": "24912386",
+    "study_type": "Consensus statement",
+    "sample_size": "Not reported",
+    "dosage_tested": "Adequate amounts (no specific dose reported)",
+    "key_finding": "Defined probiotics as live microorganisms that confer a health benefit on the host when administered in adequate amounts; emphasized strain-specific benefits and the need for clinical evidence."
+  },
+  {
+    "pmid": "21646368",
+    "study_type": "Clinical practice guideline",
+    "sample_size": "Not reported",
+    "dosage_tested": "Vitamin D2 or vitamin D3; daily intake levels based on age and clinical circumstances",
+    "key_finding": "Guideline recommends serum 25(OH)D testing for at-risk patients and treatment with vitamin D2/D3 for deficiency; supplementation supports bone health and calcium absorption."
+  },
+  {
+    "pmid": "26126245",
+    "study_type": "Rapid evidence assessment of randomized and controlled studies",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Supplemental tyrosine; specific dosage not reported in summary",
+    "key_finding": "Did not support a strong recommendation for physical performance under stressful physical conditions; weak recommendation favored tyrosine for cognitive performance under stress."
+  },
+  {
+    "pmid": "17468433",
+    "study_type": "In vivo cattle feeding study",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Condensed tannin extract from quebracho trees; tested levels not specified in summary",
+    "key_finding": "Quebracho tannin extract did not reduce methane emissions in cattle at the tested levels."
+  },
+  {
+    "pmid": "41995285",
+    "study_type": "Systematic Review and Meta-Analysis",
+    "sample_size": "450 participants",
+    "dosage_tested": "300-500mg Magnesium / day",
+    "key_finding": "Magnesium supplementation significantly improves sleep quality and reduces insomnia severity, especially in older adults."
+  },
+  {
+    "pmid": "18683852",
+    "study_type": "Randomized, double-blind, placebo-controlled trial",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Standardized Bacopa monnieri extract; dose not reported in summary",
+    "key_finding": "In healthy older adults, Bacopa monnieri improved delayed verbal recall and Stroop-related performance versus placebo, with trends toward improved anxiety and depression scores and generally acceptable tolerability."
+  },
+  {
+    "pmid": "41817298",
+    "study_type": "Randomized Controlled Trial",
+    "sample_size": "120 participants",
+    "dosage_tested": "500mg Agastache rugosa extract complex / day",
+    "key_finding": "Supplementation with the extract complex significantly improved skin hydration and reduced signs of aging, likely due to enhanced collagen production."
+  },
+  {
+    "pmid": "23439798",
+    "study_type": "Prospective, randomized, double-blind, placebo-controlled study",
+    "sample_size": "Not specified in summary",
+    "dosage_tested": "High-concentration full-spectrum ashwagandha root extract; exact dose not specified in summary",
+    "key_finding": "Ashwagandha reduced stress and anxiety scores in stressed adults and decreased serum cortisol versus placebo."
+  },
+  {
+    "pmid": "22332096",
+    "study_type": "Review",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "EPA and DHA are essential long-chain omega-3 PUFAs with roles across the lifespan, supporting fetal neuronal/retinal/immune development and cardiovascular and cognitive function through anti-inflammatory and membrane-related effects."
+  },
+  {
+    "pmid": "19016404",
+    "study_type": "Phase III randomized, double-blind, placebo-controlled, parallel-group study",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "Rhodiola rosea SHR-5 reduced stress-related fatigue, improved concentration-related attention metrics, and improved cortisol response to awakening stress versus placebo; no serious extract-related adverse effects were reported."
+  },
+  {
+    "pmid": "23853635",
+    "study_type": "Double-blind placebo-controlled clinical trial",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Not reported in summary",
+    "key_finding": "Magnesium supplementation improved subjective sleep measures in older adults with insomnia; proposed mechanism involves NMDA antagonism and GABA activity."
+  },
+  {
+    "pmid": "20079786",
+    "study_type": "Randomized, placebo-controlled, double-blind, cross-over trial",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "L-theanine 97 mg + caffeine 40 mg",
+    "key_finding": "Acute L-theanine plus caffeine significantly improved task-switching attention versus placebo, but did not significantly improve subjective alertness or intersensory attention."
+  },
+  {
+    "pmid": "23914213",
+    "study_type": "Review",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "Zinc is essential for immune and metabolic function, but supplementation has a narrow safety margin; excess zinc can cause copper deficiency, while deficiency affects a substantial global population."
+  },
+  {
+    "pmid": "15846601",
+    "study_type": "Cochrane review of randomized, placebo-controlled studies",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Citicoline (CDP-choline); dose not reported",
+    "key_finding": "Evidence suggested benefit on memory and behavior outcomes in short- to medium-term settings; no clear pooled benefit for attention; generally well tolerated."
+  },
+  {
+    "pmid": "12701815",
+    "study_type": "Comprehensive review",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "Creatine supplementation increases muscle creatine and phosphocreatine stores and is associated with improved performance; ~70% of reviewed studies reported significant performance benefits, with 5-15% increases in maximal power/strength and greater gains in strength and fat-free mass during training."
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "sku": "true-collagen",
+    "canonical_name": "Ancient + Brave True Collagen Powder",
+    "active_ingredients": [
+      "100% Grass-fed Bovine Hydrolysed Collagen Peptides (Type 1)"
+    ],
+    "target_biomarkers": [
+      "collagen support",
+      "muscle mass maintenance",
+      "bone health"
+    ],
+    "mechanisms_of_action": [
+      "Provides hydrolysed type 1 collagen peptides",
+      "Supplies a source of protein to support active lifestyles and fasting routines",
+      "Protein contributes to growth and maintenance of muscle mass and helps maintain normal bones"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical conditions",
+      "Taking medications",
+      "Use only if seal is intact",
+      "Do not exceed recommended daily intake"
+    ],
+    "usp": "Pure, highly absorbable type 1 collagen peptides; odourless and tasteless for easy daily use. 100% grass-fed bovine hydrolysed collagen peptides. Versatile powder that mixes into hot or cold drinks, smoothies, or foods.",
+    "usage_instructions": "Take 1 to 2 tsp (5 to 10g) daily. Add to any hot or cold drink, or sprinkle onto foods like soups, overnight oats, or yoghurt."
+  },
+  {
+    "sku": "food-grown-magnesium-jar",
+    "canonical_name": "Food-Grown Magnesium Jar",
+    "active_ingredients": [
+      "Magnesium"
+    ],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [
+      "Supports nervous system function",
+      "Supports energy release and daily vitality",
+      "Supports normal muscle and psychological function",
+      "Helps reduce tiredness and fatigue"
+    ],
+    "contraindications": [
+      "Consult a healthcare professional if pregnant or breastfeeding",
+      "Consult a healthcare professional if you have a medical condition",
+      "Consult a healthcare professional if taking medications",
+      "Do not exceed the recommended daily intake"
+    ],
+    "usp": "Naturally sourced Food-Grown magnesium; 80mg elemental magnesium per 2 capsules; supports muscles, mind, energy and nervous system; gentle formula suitable for daily use.",
+    "usage_instructions": "Take 2 capsules together any time of day, with or without food."
+  }
+]

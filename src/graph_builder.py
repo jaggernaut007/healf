@@ -158,6 +158,15 @@ class GraphBuilder:
         products = self.load_enriched_products()
         research_documents = self.load_research_documents()
         inference_rules = self.load_inference_rules()
+        
+        # Load structured research summaries
+        research_summaries_path = Path("data/research_summaries.json")
+        research_summaries = {}
+        if research_summaries_path.exists():
+            with research_summaries_path.open("r", encoding="utf-8") as handle:
+                raw_summaries = json.load(handle)
+                research_summaries = {s["pmid"]: s for s in raw_summaries}
+
         if not products:
             raise RuntimeError(f"No enriched products found at {self.config.enriched_products_path}")
         if not research_documents:
@@ -168,7 +177,8 @@ class GraphBuilder:
         triples = self.infer_triples(products, research_documents, inference_rules=inference_rules)
         if not triples:
             raise RuntimeError("No graph triples inferred from current corpus and rules")
-        self.write_triples(triples)
+            
+        self.write_triples(triples, products, research_summaries)
         return GraphBuildResult(
             products_loaded=len(products),
             research_documents_loaded=len(research_documents),
@@ -204,17 +214,30 @@ class GraphBuilder:
             triples_preview=triples[:max(preview_limit, 0)],
         )
 
-    def write_triples(self, triples: Sequence[GraphTriple]) -> None:
+    def write_triples(
+        self, 
+        triples: Sequence[GraphTriple], 
+        products: Sequence[EnrichedProduct],
+        research_summaries: dict[str, dict]
+    ) -> None:
         if not triples:
             return
+
+        # Map SKUs to products for quick lookup of USPs and Usage
+        product_map = {p.sku: p for p in products}
 
         store = self._ensure_graph_store()
         with store.client.session(database=self.config.neo4j_database) as session:
             for triple in triples:
+                product_data = product_map.get(triple.product_sku)
+                research_data = research_summaries.get(triple.source_pmid, {}) if triple.source_pmid else {}
+
                 session.run(
                     """
                     MERGE (product:Product {sku: $product_sku})
                     SET product.name = $product_name,
+                        product.usp = $product_usp,
+                        product.usage = $product_usage,
                         product.embedding = coalesce($product_embedding, product.embedding)
                     MERGE (ingredient:Ingredient {name: $ingredient_name})
                     MERGE (mechanism:Mechanism {name: $mechanism_name})
@@ -225,15 +248,25 @@ class GraphBuilder:
                     MERGE (mechanism)-[:ALLEVIATES]->(symptom)
                     FOREACH (_ IN CASE WHEN $source_pmid IS NULL THEN [] ELSE [1] END |
                         MERGE (study:Study {pmid: $source_pmid})
+                        SET study.study_type = $study_type,
+                            study.sample_size = $sample_size,
+                            study.dosage_tested = $dosage_tested,
+                            study.key_finding = $key_finding
                         MERGE (mechanism)-[:SUPPORTED_BY]->(study)
                     )
                     """,
                     product_sku=triple.product_sku,
                     product_name=triple.product_name,
+                    product_usp=getattr(product_data, "usp", ""),
+                    product_usage=getattr(product_data, "usage_instructions", ""),
                     ingredient_name=triple.ingredient_name,
                     mechanism_name=triple.mechanism_name,
                     symptom_name=triple.symptom_name,
                     source_pmid=triple.source_pmid,
+                    study_type=research_data.get("study_type", ""),
+                    sample_size=research_data.get("sample_size", ""),
+                    dosage_tested=research_data.get("dosage_tested", ""),
+                    key_finding=research_data.get("key_finding", ""),
                     product_embedding=self._embed_text(f"{triple.product_name} {triple.ingredient_name}"),
                     mechanism_embedding=self._embed_text(triple.mechanism_name),
                 )

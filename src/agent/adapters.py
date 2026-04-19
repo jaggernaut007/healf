@@ -82,7 +82,7 @@ def build_default_safety_check(
                     is_clinical_diagnosis_request=True,
                     primary_domain="general",
                     requires_discovery=False,
-                    reasoning=f"Blocked: sensitive pattern '{pattern}' detected"
+                    reasoning=f"The query involves a potential medical concern ('{pattern}') which requires clinical attention rather than supplement advice."
                 )
         
         # 2. Custom phrase block (Phase 2)
@@ -92,7 +92,7 @@ def build_default_safety_check(
                     is_clinical_diagnosis_request=True,
                     primary_domain="general",
                     requires_discovery=False,
-                    reasoning=f"Blocked: policy phrase '{phrase}' detected"
+                    reasoning=f"The query contains a blocked policy phrase ('{phrase}') related to sensitive medical conditions."
                 )
 
         try:
@@ -124,6 +124,7 @@ def build_default_safety_check(
                     }
                 ],
                 response_model=IntentClassification,
+                temperature=0.0,
             )
             return classification
             
@@ -154,7 +155,7 @@ def build_default_prompt_rewriter(model: str = "gpt-5.4-mini") -> Callable[[str,
                 messages=[
                     {
                         "role": "system",
-                        "content": "Rewrite the user query for better retrieval. Normalize terms and preserve key intent. If profile context is provided, subtly align the rewrite with user goals."
+                        "content": "Rewrite the user query for better retrieval. Normalize terms and preserve key intent. Include clinical or scientific synonyms (e.g. 'focus' -> 'cognitive', 'tired' -> 'fatigue'). If profile context is provided, subtly align the rewrite with user goals."
                     },
                     {
                         "role": "user",
@@ -162,6 +163,7 @@ def build_default_prompt_rewriter(model: str = "gpt-5.4-mini") -> Callable[[str,
                     }
                 ],
                 response_format=RewrittenQuery,
+                temperature=0.0,
             )
             return response.choices[0].message.parsed
         except Exception as e:
@@ -196,7 +198,7 @@ def build_default_intake_router(model: str = "gpt-5.4-mini") -> Callable[[Rewrit
                             "A) Broad/Conceptual (e.g., 'wellness', 'longevity', 'performance') "
                             "B) Goal-oriented but lacking constraints (e.g., 'help me sleep', 'reduce stress') "
                             "C) Lacking a specific target (e.g., 'what should I take?', 'how to optimize?'). "
-                            "In these cases, set requires_clarification=True. If the query is specific (e.g., 'Magnesium glycinate'), set False."
+                            "In these cases, set requires_clarification=True. If the query mentions a specific symptom, goal (e.g. 'brain focus', 'fatigue'), or ingredient (e.g., 'Magnesium glycinate'), set requires_clarification=False."
                         )
                     },
                     {
@@ -205,6 +207,7 @@ def build_default_intake_router(model: str = "gpt-5.4-mini") -> Callable[[Rewrit
                     }
                 ],
                 response_format=RoutingIntent,
+                temperature=0.0,
             )
             return response.choices[0].message.parsed
         except Exception as e:
@@ -261,6 +264,7 @@ def build_default_specialist(model: str = "gpt-5.4-mini") -> Callable[..., Graph
                     }
                 ],
                 response_format=GraphQueryPlan,
+                temperature=0.0,
             )
             plan = response.choices[0].message.parsed
             plan.operation = "product_search"
@@ -388,8 +392,12 @@ def build_default_discovery(
 
 def build_default_retriever(
     products_path: Path = Path("data/enriched_products.json"),
+    research_path: Path = Path("data/research"),
+    rules_path: Path = Path("data/research/graph_inference_rules.json"),
 ) -> Callable[[GraphQueryPlan], list[RetrievalChunk]]:
     products = _load_products(products_path)
+    research_docs = _load_research(research_path)
+    inference_rules = _load_inference_rules(rules_path)
 
     def _retrieve(plan: GraphQueryPlan) -> list[RetrievalChunk]:
         _validate_read_only_plan(plan)
@@ -403,13 +411,37 @@ def build_default_retriever(
         eligible_products = [
             product for product in products if _product_matches_plan_filters(product, filters)
         ]
-        ranked = sorted(
+        
+        eligible_research = []
+        for doc in research_docs:
+            score = _score_research_for_terms(query_terms, doc)
+            if score > 0:
+                eligible_research.append((score, doc))
+        
+        # Apply inference rules to boost research relevance
+        boosted_research = []
+        for score, doc in eligible_research:
+            boost = 0
+            doc_summary = doc.get("summary", "").lower()
+            for rule in inference_rules:
+                mechanism = rule.get("mechanism_name", "").lower()
+                if mechanism and mechanism in doc_summary:
+                    # If the query terms match terms related to this mechanism's rule, boost the score
+                    corpus_terms = [t.lower() for t in rule.get("corpus_terms", [])]
+                    if any(term.lower() in corpus_terms for term in query_terms):
+                        boost += 2
+            boosted_research.append((score + boost, doc))
+
+        ranked_products = sorted(
             eligible_products,
             key=lambda product: _score_product_for_terms(query_terms, product),
             reverse=True,
         )
+        ranked_research = sorted(boosted_research, key=lambda x: x[0], reverse=True)
+        
         chunks: list[RetrievalChunk] = []
-        for product in ranked[: plan.limit]:
+        
+        for product in ranked_products[: plan.limit]:
             score = _score_product_for_terms(query_terms, product)
             if score <= 0:
                 continue
@@ -419,6 +451,15 @@ def build_default_retriever(
                     content=_render_product_chunk(product),
                 )
             )
+            
+        for score, doc in ranked_research[: plan.limit]:
+            chunks.append(
+                RetrievalChunk(
+                    source_id=f"PMID:{doc.get('pmid', 'unknown')}",
+                    content=_render_research_chunk(doc),
+                )
+            )
+
         return chunks
 
     return _retrieve
@@ -446,12 +487,12 @@ def build_default_critic(model: str = "gpt-5.4-mini") -> Callable[[str, RoutingI
                         "role": "system",
                         "content": (
                             "You are a strict pharmacovigilance critic. Critique the retrieved product evidence against the user query and profile. "
-                            "Flag findings ONLY if: "
+                            "Flag findings if: "
                             "1. There is a DIRECT conflict between product contraindications and the user's conditions/history. "
-                            "2. The evidence is completely irrelevant to the query (e.g. searching for Magnesium but getting Iron). "
-                            "3. The query is high-risk and critical safety warnings are present in the evidence. "
-                            "IMPORTANT: DO NOT flag general warnings like pregnancy, breastfeeding, or 'medical conditions' if the user profile is empty and the query is low-risk. Assume the user is a healthy adult unless stated otherwise. "
-                            "Set retryable=True if the issue can be fixed by searching with more specific terms."
+                            "2. The evidence is completely irrelevant to the query. "
+                            "3. The query is high-risk (medication, pregnancy, allergies, diagnostic intent) and critical safety warnings are present in the evidence. "
+                            "CRITICAL: If the query mentions 'medication', 'pregnant', 'allergy', or 'diagnose', you MUST flag it if there is ANY relevant warning in the evidence, even if the user profile is empty. "
+                            "Set retryable=True ONLY if the issue can be fixed by searching with more specific terms. If the user asks about a specific product and it is unsafe, set retryable=False."
                         )
                     },
                     {
@@ -460,6 +501,7 @@ def build_default_critic(model: str = "gpt-5.4-mini") -> Callable[[str, RoutingI
                     }
                 ],
                 response_format=CriticDecision,
+                temperature=0.0,
             )
             decision = response.choices[0].message.parsed
             # Ensure required fields are set for safety
@@ -512,10 +554,18 @@ def build_default_payload_generator(model: str = "gpt-5.4") -> Callable[[str, li
     from openai import OpenAI
     client = OpenAI()
 
-    def _generate(query: str, chunks: list[RetrievalChunk], profile: dict[str, Any] | None = None, chat_history: list[dict[str, str]] | None = None) -> PayloadDraft:
+    def _generate(
+        query: str,
+        chunks: list[RetrievalChunk],
+        profile: dict[str, Any] | None = None,
+        chat_history: list[dict[str, str]] | None = None,
+        safety_findings: list[str] | None = None,
+    ) -> PayloadDraft:
         profile = profile or {}
         chat_history = chat_history or []
-        if not chunks:
+        safety_findings = safety_findings or []
+        
+        if not chunks and not safety_findings:
             return PayloadDraft(
                 response_text=(
                     f"Hi {profile.get('name', 'there')}, I do not have enough retrieved evidence to make a confident recommendation "
@@ -529,8 +579,29 @@ def build_default_payload_generator(model: str = "gpt-5.4") -> Callable[[str, li
         # Context construction for the LLM
         context_lines = [f"- {chunk.source_id}: {chunk.content}" for chunk in chunks]
         context_blob = "\n".join(context_lines)
-        
         user_context_str = json.dumps(profile, indent=2)
+
+        system_prompt = (
+            "You are a Healf Health Intelligence Assistant. "
+            "Generate a helpful, conversational, and grounded response based ONLY on the provided evidence. "
+        )
+        
+        if safety_findings:
+            system_prompt += (
+                "\nSAFETY ALERT: The following safety concerns were identified in the product evidence:\n"
+                + "\n".join([f"- {f}" for f in safety_findings])
+                + "\nYou MUST respectfully refuse to recommend the product and explain these safety concerns clearly to the user. "
+                + "Do not suggest they take it anyway. Be firm but empathetic."
+            )
+        else:
+            system_prompt += (
+                "\nPERSONALIZATION: You MUST tailor the response to the user's specific profile (goals, health data, past orders). "
+                "Address the user by name if available. Mention how the recommendation aligns with their specific biomarkers or goals. "
+                "Do not make medical claims or diagnoses. Use the source IDs for citations. "
+                "Keep the response highly concise and directly answer the query without unnecessary conversational filler. "
+                "Include PMID citations if relevant research evidence is provided, and include the full product URL if a product is recommended. "
+                "If the evidence is insufficient, admit it and speak generally about wellness."
+            )
 
         try:
             response = client.chat.completions.create(
@@ -538,14 +609,7 @@ def build_default_payload_generator(model: str = "gpt-5.4") -> Callable[[str, li
                 messages=[
                     {
                         "role": "system",
-                        "content": (
-                            "You are a Healf Health Intelligence Assistant. "
-                            "Generate a helpful, conversational, and grounded response based ONLY on the provided evidence. "
-                            "PERSONALIZATION: You MUST tailor the response to the user's specific profile (goals, health data, past orders). "
-                            "Address the user by name if available. Mention how the recommendation aligns with their specific biomarkers or goals. "
-                            "Do not make medical claims or diagnoses. Use the source IDs for citations. "
-                            "If the evidence is insufficient, admit it and speak generally about wellness."
-                        ),
+                        "content": system_prompt,
                     },
                     *chat_history,
                     {
@@ -553,7 +617,7 @@ def build_default_payload_generator(model: str = "gpt-5.4") -> Callable[[str, li
                         "content": f"User Profile:\n{user_context_str}\n\nQuery: {query}\n\nEvidence:\n{context_blob}",
                     },
                 ],
-                temperature=0.3,
+                temperature=0.0,
             )
             text = response.choices[0].message.content or ""
             citations = [chunk.source_id for chunk in chunks[:3]]
@@ -564,9 +628,21 @@ def build_default_payload_generator(model: str = "gpt-5.4") -> Callable[[str, li
             )
         except Exception as e:
             logger.error(f"Payload generation failed: {e}")
+            # Heuristic fallback to include citations and URLs if present
             citation_list = ", ".join([chunk.source_id for chunk in chunks])
+            response_text = f"I encountered an error generating a detailed response, but found relevant products: {citation_list}"
+            
+            urls = []
+            for chunk in chunks:
+                match = re.search(r"URL: (https://\S+)\)", chunk.content)
+                if match:
+                    urls.append(match.group(1))
+            
+            if urls:
+                response_text += "\n\nLinks:\n" + "\n".join([f"- {url}" for url in urls])
+
             return PayloadDraft(
-                response_text=f"I encountered an error generating a detailed response, but found relevant products: {citation_list}",
+                response_text=response_text,
                 citations=[chunk.source_id for chunk in chunks],
                 uncertainty=not bool(chunks),
             )
@@ -583,7 +659,7 @@ def build_default_generator() -> Callable[[str, list[RetrievalChunk], dict[str, 
     return _generate
 
 
-def build_default_evaluator(model: str = "gpt-5.4") -> Callable[[str, str, list[RetrievalChunk], float], EvaluationGate]:
+def build_default_evaluator(model: str = "gpt-5.4-mini") -> Callable[[str, str, list[RetrievalChunk], float], EvaluationGate]:
     def _evaluate(
         query: str,
         draft: str,
@@ -657,8 +733,10 @@ def _render_product_chunk(product: dict) -> str:
     ingredients = ", ".join(product.get("active_ingredients", []))
     mechanisms = "; ".join(product.get("mechanisms_of_action", []))
     contraindications = ", ".join(product.get("contraindications", []))
+    sku = product.get("sku", "unknown")
+    url = f"https://healf.com/products/{sku}"
     return (
-        f"{name}. Ingredients: {ingredients}. Mechanisms: {mechanisms}. "
+        f"{name} (URL: {url}). Ingredients: {ingredients}. Mechanisms: {mechanisms}. "
         f"Contraindications: {contraindications}."
     )
 
@@ -713,7 +791,7 @@ def _heuristic_score(draft: str, chunks: list[RetrievalChunk]) -> float:
     return score
 
 
-def _try_deepeval_score(query: str, draft: str, chunks: list[RetrievalChunk], model: str = "gpt-5.4") -> float | None:
+def _try_deepeval_score(query: str, draft: str, chunks: list[RetrievalChunk], model: str = "gpt-5.4-mini") -> float | None:
     if not chunks or not os.getenv("OPENAI_API_KEY"):
         return None
     try:
@@ -738,3 +816,36 @@ def _try_deepeval_score(query: str, draft: str, chunks: list[RetrievalChunk], mo
         return round((faithfulness_score + relevance_score) / 2, 1)
     except Exception:
         return None
+
+
+def _load_research(research_path: Path) -> list[dict]:
+    if not research_path.exists() or not research_path.is_dir():
+        return []
+    docs = []
+    for file_path in research_path.glob("*.md"):
+        content = file_path.read_text(encoding="utf-8")
+        pmid = file_path.stem
+        lines = content.split('\n')
+        title = lines[0].replace('#', '').strip() if lines else "Unknown Title"
+        docs.append({"pmid": pmid, "title": title, "summary": content})
+    return docs
+
+def _load_inference_rules(rules_path: Path) -> list[dict]:
+    if not rules_path.exists():
+        return []
+    with rules_path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+def _score_research_for_terms(query_terms: set[str], doc: dict) -> int:
+    content = f"{doc.get('title', '')} {doc.get('summary', '')}".lower()
+    score = 0
+    for term in query_terms:
+        if term.lower() in content:
+            score += 1
+    return score
+
+def _render_research_chunk(doc: dict) -> str:
+    summary = doc.get('summary', '')
+    if len(summary) > 500:
+        summary = summary[:500] + '...'
+    return f"Research (PMID: {doc.get('pmid')}): {doc.get('title')}. Summary: {summary}"

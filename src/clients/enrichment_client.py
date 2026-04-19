@@ -96,7 +96,8 @@ class EnrichmentClient:
                             "CRITICAL: Only extract the product that is the MAIN SUBJECT of the page. "
                             "IGNORE 'Trending searches', 'Recommended products', or other sidebar/footer items. "
                             "Do NOT hallucinate names like 'Pure Encapsulations Magnesium Glycinate' unless it is the PRIMARY product on the page. "
-                            "If you are unsure of the canonical name, use the largest H1 or title in the text."
+                            "If you are unsure of the canonical name, use the largest H1 or title in the text. "
+                            "Also extract 2-3 Unique Selling Points (USPs) and any available Usage Instructions."
                         )
                     },
                     {
@@ -104,7 +105,7 @@ class EnrichmentClient:
                         "content": f"Extract the PRIMARY product details from this page:\n\n{markdown_content}"
                     }
                 ],
-                max_tokens=2048,
+                max_completion_tokens=2048,
                 temperature=0.0,
             )
 

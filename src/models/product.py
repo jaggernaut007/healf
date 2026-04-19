@@ -8,3 +8,5 @@ class EnrichedProduct(BaseModel):
     target_biomarkers: List[str]
     mechanisms_of_action: List[str]
     contraindications: List[str]  # Sourced from NIH RxTerms grounding
+    usp: str = ""  # Unique Selling Points (e.g. "Third-party tested", "Vegan")
+    usage_instructions: str = ""  # e.g. "Take 2 capsules daily with food"

@@ -1,7 +1,33 @@
+# Python
 __pycache__/
 *.py[cod]
+*$py.class
 .pytest_cache/
 .hypothesis/
 .coverage
 .coverage.*
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Tool Caches
+.deepeval/
+.ruff_cache/
+
+# Project Logs & Debug
+enrichment_log*.txt
+output.txt
+debug_orchestrator.py
+scripts/demo_personalization.py
+scratch/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Environment
 .env

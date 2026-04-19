@@ -94,8 +94,8 @@ def test_write_triples_uses_parameterized_merge() -> None:
         source_pmid="23853635",
     )
 
-    builder.write_triples([triple])
-    builder.write_triples([triple])
+    builder.write_triples([triple], [], {})
+    builder.write_triples([triple], [], {})
 
     assert len(session.queries) == 2
     assert all("MERGE" in query for query, _ in session.queries)
@@ -171,7 +171,7 @@ def test_write_triples_raises_on_connection_failure() -> None:
     )
 
     with pytest.raises(RuntimeError, match="Neo4j connection failed"):
-        builder.write_triples([triple])
+        builder.write_triples([triple], [], {})
 
 
 def test_build_raises_when_inference_rules_missing(tmp_path: Path) -> None:
