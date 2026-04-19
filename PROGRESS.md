@@ -17,7 +17,7 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 - **Model Consolidation**: Extracted graph and rule Pydantic models to `src/models/graph.py` for centralized ownership.
 - **Node Modularization**: Decomposed monolithic `adapters.py` into specialized package `src/agent/nodes/` (safety, routing, retrieval, etc.).
 - **Test Co-location**: Moved unit and integration tests from root `tests/` to live alongside source code in `src/`, adhering to `docs/CODE-HEALTH.md`.
-- **Triple Agent Audit**: Verified changes via `docs/audits/refactoring-audit.md` with 68 passing tests.
+- **Root Directory Cleanup**: Reorganized loose scripts into `scripts/maintenance/`, `scripts/`, and `scratch/`. Moved `tasks.py` and `test_tasks.py` to `scripts/`. Updated `pytest.ini` and documentation to use `invoke -r scripts`. Verified via `docs/audits/root-cleanup-audit.md`.
 
 ## Verified Working
 - **Orchestration**: Adapters correctly route through modularized node functions.
@@ -63,7 +63,7 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 - Critic retry-success flow and bounded retry fail-closed flow.
 
 - Phase 4 CLI entrypoint provides `enrich`, `sync-graph`, and `chat` subcommands with `rich` terminal formatting.
-- `invoke` tasks implemented for `test`, `lint`, `smoke`, and `check` workflows.
+- `invoke` tasks implemented for `test`, `lint`, `smoke`, and `check` workflows (run via `invoke -r scripts`).
 - CLI integration tests verify help output, subcommand execution with mocks, and safety block handling.
 - Task runner tests verify task logic and command composition.
 - Smoke test confirms CLI help availability across all namespaces.

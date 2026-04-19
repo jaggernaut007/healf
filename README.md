@@ -52,7 +52,7 @@ chmod +x scripts/init.sh
 
 1. **Verify CLI**: Run the smoke test to ensure the `healf` command is correctly installed and functional:
    ```bash
-   uv run invoke smoke
+   uv run invoke -r scripts smoke
    ```
 
 2. **Build Knowledge Base**: Run the full intelligence pipeline to scrape products, fetch research from PubMed, and build the Neo4j graph:
@@ -84,8 +84,8 @@ Healf implements an industrial-grade **KG-RAG (Knowledge Graph Retrieval-Augment
 
 We use `uv` and `invoke` for environment management and task automation.
 
-- **Test**: `uv run invoke test` (core unit & integration suite)
-- **Eval**: `uv run invoke eval` (DeepEval LLM-as-a-judge suite)
+- **Test**: `uv run invoke -r scripts test` (core unit & integration suite)
+- **Eval**: `uv run invoke -r scripts eval` (DeepEval LLM-as-a-judge suite)
 
 ---
 

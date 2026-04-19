@@ -20,7 +20,7 @@ Healf Health Intelligence Engine — A production-ready agentic framework for he
 ## Build & Test Commands
 # Run `./scripts/init.sh` to initialize and verify environment
 # Run `uv sync` to install dependencies
-# Run `uv run pytest tests/` to manually test
+# Run `uv run invoke -r scripts test` to manually test
 
 ## Search Tool Standard (Mandatory)
 1. Default to `rg` for repository search operations.

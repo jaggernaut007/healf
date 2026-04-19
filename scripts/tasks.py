@@ -3,7 +3,7 @@ from invoke import task
 @task(name="test")
 def run_tests(c):
     """Run core tests using pytest (skips evaluations)."""
-    c.run("PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest tests/ -q", in_stream=False)
+    c.run("PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run pytest src scripts -q", in_stream=False)
 
 @task(name="eval")
 def run_evals(c):

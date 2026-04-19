@@ -51,7 +51,7 @@ chmod +x scripts/init.sh
 Run the smoke test to ensure all CLI components are properly wired:
 
 ```bash
-uv run invoke smoke
+uv run invoke -r scripts smoke
 ```
 
 If you see the tests pass successfully, you are ready to go!

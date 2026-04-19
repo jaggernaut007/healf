@@ -72,10 +72,10 @@ We use `invoke` to simplify common developer tasks.
 
 | Command | Description |
 | :--- | :--- |
-| `uv run invoke test` | Run the full test suite. |
-| `uv run invoke lint` | Run the linter (ruff). |
-| `uv run invoke smoke` | Run a quick smoke test of the CLI. |
-| `uv run invoke check` | Combined lint and test pass. |
+| `uv run invoke -r scripts test` | Run the full test suite. |
+| `uv run invoke -r scripts lint` | Run the linter (ruff). |
+| `uv run invoke -r scripts smoke` | Run a quick smoke test of the CLI. |
+| `uv run invoke -r scripts check` | Combined lint and test pass. |
 
 ---
 
