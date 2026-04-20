@@ -1,107 +1,254 @@
 [
   {
-    "ingredient_terms": ["magnesium"],
+    "ingredient_terms": [
+      "magnesium"
+    ],
     "mechanism_name": "GABA signaling support",
     "symptom_name": "Sleep",
     "source_pmid": "23853635",
-    "corpus_terms": ["magnesium", "sleep"]
+    "corpus_terms": [
+      "magnesium",
+      "sleep"
+    ]
   },
   {
-    "ingredient_terms": ["ashwagandha", "bioperine", "bioperine®"],
+    "ingredient_terms": [
+      "ashwagandha",
+      "bioperine",
+      "bioperine\u00ae"
+    ],
     "mechanism_name": "Cortisol reduction",
     "symptom_name": "Stress",
     "source_pmid": "23439798",
-    "corpus_terms": ["ashwagandha", "cortisol", "stress"]
+    "corpus_terms": [
+      "ashwagandha",
+      "cortisol",
+      "stress"
+    ]
   },
   {
-    "ingredient_terms": ["quebracho", "tannin"],
+    "ingredient_terms": [
+      "quebracho",
+      "tannin"
+    ],
     "mechanism_name": "Methane reduction",
     "symptom_name": "Bloating",
     "source_pmid": "17468433",
-    "corpus_terms": ["quebracho", "methane"]
+    "corpus_terms": [
+      "quebracho",
+      "methane"
+    ]
   },
   {
-    "ingredient_terms": ["l-theanine", "theanine"],
+    "ingredient_terms": [
+      "l-theanine",
+      "theanine"
+    ],
     "mechanism_name": "Selective attention support",
     "symptom_name": "Focus",
     "source_pmid": "20079786",
-    "corpus_terms": ["l-theanine", "caffeine", "task switching", "attention"]
+    "corpus_terms": [
+      "l-theanine",
+      "caffeine",
+      "task switching",
+      "attention"
+    ]
   },
   {
-    "ingredient_terms": ["caffeine"],
+    "ingredient_terms": [
+      "caffeine"
+    ],
     "mechanism_name": "Selective attention support",
     "symptom_name": "Focus",
     "source_pmid": "20079786",
-    "corpus_terms": ["l-theanine", "caffeine", "task switching", "attention"]
+    "corpus_terms": [
+      "l-theanine",
+      "caffeine",
+      "task switching",
+      "attention"
+    ]
   },
   {
-    "ingredient_terms": ["citicoline", "cdp-choline", "cdp choline", "choline", "choline bitartrate"],
+    "ingredient_terms": [
+      "citicoline",
+      "cdp-choline",
+      "cdp choline",
+      "choline",
+      "choline bitartrate"
+    ],
     "mechanism_name": "Cholinergic membrane support",
     "symptom_name": "Cognitive performance",
     "source_pmid": "15846601",
-    "corpus_terms": ["cdp-choline", "citicoline", "choline", "memory", "behaviour"]
+    "corpus_terms": [
+      "cdp-choline",
+      "citicoline",
+      "choline",
+      "memory",
+      "behaviour"
+    ]
   },
   {
-    "ingredient_terms": ["l-tyrosine", "tyrosine"],
+    "ingredient_terms": [
+      "l-tyrosine",
+      "tyrosine"
+    ],
     "mechanism_name": "Catecholamine precursor support",
     "symptom_name": "Cognitive stress resilience",
     "source_pmid": "26126245",
-    "corpus_terms": ["tyrosine", "stress", "cognitive", "catecholamine"]
+    "corpus_terms": [
+      "tyrosine",
+      "stress",
+      "cognitive",
+      "catecholamine"
+    ]
   },
   {
-    "ingredient_terms": ["bacopa", "bacopa monnieri", "bacosides"],
+    "ingredient_terms": [
+      "bacopa",
+      "bacopa monnieri",
+      "bacosides"
+    ],
     "mechanism_name": "Memory and attentional control support",
     "symptom_name": "Brain fog",
     "source_pmid": "18683852",
-    "corpus_terms": ["bacopa", "memory", "stroop", "recall"]
+    "corpus_terms": [
+      "bacopa",
+      "memory",
+      "stroop",
+      "recall"
+    ]
   },
   {
-    "ingredient_terms": ["rhodiola", "rhodiola rosea"],
+    "ingredient_terms": [
+      "rhodiola",
+      "rhodiola rosea"
+    ],
     "mechanism_name": "Stress-adaptation and fatigue modulation",
     "symptom_name": "Stress-related fatigue",
     "source_pmid": "19016404",
-    "corpus_terms": ["rhodiola", "fatigue", "attention", "cortisol"]
+    "corpus_terms": [
+      "rhodiola",
+      "fatigue",
+      "attention",
+      "cortisol"
+    ]
   },
   {
-    "ingredient_terms": ["creatine", "creatine monohydrate"],
+    "ingredient_terms": [
+      "creatine",
+      "creatine monohydrate"
+    ],
     "mechanism_name": "ATP production support",
     "symptom_name": "Exercise Performance",
     "source_pmid": "12701815",
-    "corpus_terms": ["creatine", "performance", "atp", "phosphocreatine"]
+    "corpus_terms": [
+      "creatine",
+      "performance",
+      "atp",
+      "phosphocreatine"
+    ]
   },
   {
-    "ingredient_terms": ["vitamin d3", "cholecalciferol"],
+    "ingredient_terms": [
+      "vitamin d3",
+      "cholecalciferol"
+    ],
     "mechanism_name": "Calcium absorption support",
     "symptom_name": "Bone Health",
     "source_pmid": "21646368",
-    "corpus_terms": ["vitamin d", "calcium", "deficiency", "bone"]
+    "corpus_terms": [
+      "vitamin d",
+      "calcium",
+      "deficiency",
+      "bone"
+    ]
   },
   {
-    "ingredient_terms": ["omega-3", "epa", "dha", "fish oil"],
+    "ingredient_terms": [
+      "omega-3",
+      "epa",
+      "dha",
+      "fish oil"
+    ],
     "mechanism_name": "Anti-inflammatory signaling support",
     "symptom_name": "Heart Health",
     "source_pmid": "22332096",
-    "corpus_terms": ["omega-3", "epa", "dha", "inflammation", "cardiovascular"]
+    "corpus_terms": [
+      "omega-3",
+      "epa",
+      "dha",
+      "inflammation",
+      "cardiovascular"
+    ]
   },
   {
-    "ingredient_terms": ["zinc", "vitamin c", "ascorbic acid", "vitamin b1", "thiamine", "vitamin b2", "riboflavin"],
+    "ingredient_terms": [
+      "zinc",
+      "vitamin c",
+      "ascorbic acid",
+      "vitamin b1",
+      "thiamine",
+      "vitamin b2",
+      "riboflavin"
+    ],
     "mechanism_name": "Immune enzyme support",
     "symptom_name": "Immunity",
     "source_pmid": "23914213",
-    "corpus_terms": ["zinc", "immune", "deficiency", "supplementation"]
+    "corpus_terms": [
+      "zinc",
+      "immune",
+      "deficiency",
+      "supplementation"
+    ]
   },
   {
-    "ingredient_terms": ["lactobacillus", "bifidobacterium", "probiotics", "enterococcus", "inulin"],
+    "ingredient_terms": [
+      "lactobacillus",
+      "bifidobacterium",
+      "probiotics",
+      "enterococcus",
+      "inulin"
+    ],
     "mechanism_name": "Microbiome diversity support",
     "symptom_name": "Gut Health",
     "source_pmid": "24912386",
-    "corpus_terms": ["probiotic", "microorganism", "health benefit", "gut"]
+    "corpus_terms": [
+      "probiotic",
+      "microorganism",
+      "health benefit",
+      "gut"
+    ]
   },
   {
-    "ingredient_terms": ["collagen", "hydrolysed collagen", "bovine collagen", "marine collagen"],
+    "ingredient_terms": [
+      "collagen",
+      "hydrolysed collagen",
+      "bovine collagen",
+      "marine collagen"
+    ],
     "mechanism_name": "Skin elasticity support",
     "symptom_name": "Skin Aging",
     "source_pmid": "41817298",
-    "corpus_terms": ["collagen", "skin", "aging", "elasticity"]
+    "corpus_terms": [
+      "collagen",
+      "skin",
+      "aging",
+      "elasticity"
+    ]
+  },
+  {
+    "ingredient_terms": [
+      "hydroxy propyl methyl cellulose"
+    ],
+    "mechanism_name": "Digestive health support",
+    "symptom_name": "Digestion",
+    "source_pmid": null,
+    "corpus_terms": [
+      "fiber",
+      "viscosity",
+      "gastrointestinal",
+      "bulk",
+      "stool"
+    ]
   }
 ]

@@ -1,5 +1,33 @@
 [
   {
+    "pmid": "41871697",
+    "study_type": "Experimental metabolic engineering / fermentation study",
+    "sample_size": "Not reported",
+    "dosage_tested": "Controlled citrate supplementation; exact concentration not reported",
+    "key_finding": "Citrate supplementation enhanced Corynebacterium glutamicum bioproduction by reinforcing TCA-cycle-driven oxidative metabolism, increasing ATP availability and redox metabolism; it raised theanine titers by up to ~1.5-fold and improved carbon yields by ~10\u201330%, with similar benefits across other ATP/NADH-dependent products."
+  },
+  {
+    "pmid": "40871615",
+    "study_type": "In vitro study",
+    "sample_size": "THP-1 cells differentiated into macrophage-like cells",
+    "dosage_tested": "Multi-ingredient dietary supplement; specific dose not reported in the provided summary",
+    "key_finding": "The supplement modulated human macrophages toward a homeostatic, anti-inflammatory balance and promoted an M2-like polarization response."
+  },
+  {
+    "pmid": "41978177",
+    "study_type": "Not reported",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "No summary provided in the prompt; unable to extract study findings."
+  },
+  {
+    "pmid": "42007377",
+    "study_type": "Not specified",
+    "sample_size": "Not specified",
+    "dosage_tested": "Not specified",
+    "key_finding": "No summary content provided."
+  },
+  {
     "pmid": "24912386",
     "study_type": "Consensus statement",
     "sample_size": "Not reported",
@@ -35,11 +63,32 @@
     "key_finding": "Magnesium supplementation significantly improves sleep quality and reduces insomnia severity, especially in older adults."
   },
   {
+    "pmid": "37885445",
+    "study_type": "Randomized, placebo-controlled, parallel-groups trial",
+    "sample_size": "Not reported in provided summary",
+    "dosage_tested": "12 weeks (90 days) of multi-ingredient herbal supplement; exact dose not reported in provided summary",
+    "key_finding": "Chronic supplementation improved speed of cognitive task performance and rapid visual information processing false alarms, but was associated with memory deficits; effects coincided with increased urinary tyrosine metabolism and reduced abundance of some gut bacterial species."
+  },
+  {
     "pmid": "18683852",
     "study_type": "Randomized, double-blind, placebo-controlled trial",
     "sample_size": "Not reported in summary",
     "dosage_tested": "Standardized Bacopa monnieri extract; dose not reported in summary",
     "key_finding": "In healthy older adults, Bacopa monnieri improved delayed verbal recall and Stroop-related performance versus placebo, with trends toward improved anxiety and depression scores and generally acceptable tolerability."
+  },
+  {
+    "pmid": "32098378",
+    "study_type": "Not reported",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "Title indicates magnesium formulations were studied on intestinal cells for effects on myometrium cell relaxation; no further summary provided."
+  },
+  {
+    "pmid": "41994268",
+    "study_type": "Clinical study; randomized group comparison",
+    "sample_size": "79 neonates",
+    "dosage_tested": "M-16V, Bb-12, and combined M-16V+Bb-12 probiotics administered until 30 days post-discharge",
+    "key_finding": "Probiotic supplementation improved jaundice-related outcomes during phototherapy, including increased defecation frequency, faster bilirubin reduction, shorter hospital stay, and improved neurodevelopmental scores with Bb-12; combined probiotics improved gut microbiota diversity and reduced harmful intestinal bacteria."
   },
   {
     "pmid": "41817298",
@@ -56,6 +105,20 @@
     "key_finding": "Ashwagandha reduced stress and anxiety scores in stressed adults and decreased serum cortisol versus placebo."
   },
   {
+    "pmid": "41974524",
+    "study_type": "Animal study (Swiss mice with sarcoma 180 tumor-bearing mice)",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Cisplatin or 5-fluorouracil 5 mg/kg, with ascorbic acid 3.5 mg/kg or 17.5 mg/kg",
+    "key_finding": "Low-dose ascorbic acid reduced the antitumor efficacy of cisplatin/5-FU combinations in mice, while decreasing genotoxicity in bone marrow cells."
+  },
+  {
+    "pmid": "42001815",
+    "study_type": "Human observational study with supportive mouse model experiment",
+    "sample_size": "Not specified in summary",
+    "dosage_tested": "Choline-enriched diet; dimethyl-butanol (trimethylamine lyase inhibitor) in mice",
+    "key_finding": "TMAO was elevated in SLE, especially with hypertension, correlated with proteinuria, and promoted blood pressure elevation and vascular dysfunction via endothelial ROS/NLRP3 inflammasome pathways, largely independent of autoantibody-mediated mechanisms."
+  },
+  {
     "pmid": "22332096",
     "study_type": "Review",
     "sample_size": "Not reported",
@@ -70,11 +133,25 @@
     "key_finding": "Rhodiola rosea SHR-5 reduced stress-related fatigue, improved concentration-related attention metrics, and improved cortisol response to awakening stress versus placebo; no serious extract-related adverse effects were reported."
   },
   {
+    "pmid": "33322282",
+    "study_type": "Development and characterization study of an orodispersible film (ODF) for vitamin D3 supplementation",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Vitamin D3 2000 IU daily intake film",
+    "key_finding": "The 2000 IU vitamin D3 orodispersible film was stable (\u226590% assay after 3 months at 40 \u00b0C), disintegrated in <1 minute, and released \u226575% of vitamin D3 within 15 minutes, indicating suitability as an innovative supplement dosage form."
+  },
+  {
     "pmid": "23853635",
     "study_type": "Double-blind placebo-controlled clinical trial",
     "sample_size": "Not reported in summary",
     "dosage_tested": "Not reported in summary",
     "key_finding": "Magnesium supplementation improved subjective sleep measures in older adults with insomnia; proposed mechanism involves NMDA antagonism and GABA activity."
+  },
+  {
+    "pmid": "41995320",
+    "study_type": "Not specified in summary",
+    "sample_size": "Not specified in summary",
+    "dosage_tested": "Not specified in summary",
+    "key_finding": "The study describes modular metabolic engineering for hydroxytyrosol (HT) production, but the provided summary is truncated and does not report specific outcomes."
   },
   {
     "pmid": "20079786",
@@ -84,11 +161,39 @@
     "key_finding": "Acute L-theanine plus caffeine significantly improved task-switching attention versus placebo, but did not significantly improve subjective alertness or intersensory attention."
   },
   {
+    "pmid": "32599787",
+    "study_type": "Not stated in summary",
+    "sample_size": "Not stated in summary",
+    "dosage_tested": "Not stated in summary",
+    "key_finding": "Summary truncated; insufficient information provided to extract study details or findings."
+  },
+  {
+    "pmid": "42003076",
+    "study_type": "Hypothesis / proposed animal study",
+    "sample_size": "Not reported",
+    "dosage_tested": "Not reported",
+    "key_finding": "The summary is a hypothesis proposing that Lactobacillus plantarum may reduce neuroinflammation, modulate immune tolerance, and improve behavioral outcomes in substance use disorders via the gut-brain axis; no results are reported."
+  },
+  {
     "pmid": "23914213",
     "study_type": "Review",
     "sample_size": "Not reported",
     "dosage_tested": "Not reported",
     "key_finding": "Zinc is essential for immune and metabolic function, but supplementation has a narrow safety margin; excess zinc can cause copper deficiency, while deficiency affects a substantial global population."
+  },
+  {
+    "pmid": "41989194",
+    "study_type": "Interventional study (college students; treatment vs control)",
+    "sample_size": "14 subjects",
+    "dosage_tested": "4.9 g/day FOS inulin for 28 days",
+    "key_finding": "Statistically significant decrease in median GAD-7 scores in both the treatment and control groups; no clear treatment-specific anxiety benefit reported in the provided summary."
+  },
+  {
+    "pmid": "41988471",
+    "study_type": "Randomized, double-blind, placebo-controlled crossover study",
+    "sample_size": "Not reported in summary",
+    "dosage_tested": "Two weeks of AG1",
+    "key_finding": "The summary indicates AG1 was studied over two weeks, but the specific results are not provided in the excerpt."
   },
   {
     "pmid": "15846601",
@@ -103,5 +208,12 @@
     "sample_size": "Not reported",
     "dosage_tested": "Not reported",
     "key_finding": "Creatine supplementation increases muscle creatine and phosphocreatine stores and is associated with improved performance; ~70% of reviewed studies reported significant performance benefits, with 5-15% increases in maximal power/strength and greater gains in strength and fat-free mass during training."
+  },
+  {
+    "pmid": "42005324",
+    "study_type": "Comparative experimental study",
+    "sample_size": "Not reported in provided summary",
+    "dosage_tested": "Yogurts made from cow, goat, sheep, and buffalo milk, with and without probiotic cultures; specific probiotic dosage not reported",
+    "key_finding": "Yogurts differed in physicochemical, microbiological, textural, and sensory properties by milk source and probiotic supplementation; the study compared these properties across milk types."
   }
 ]

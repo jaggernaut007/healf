@@ -75,8 +75,20 @@ def run_enrichment_pipeline():
 
     # --- Phase 1: Parallel Extraction ---
     logger.info(f"Starting parallel extraction for {len(urls)} URLs...")
+    valid_urls = []
+    for url in urls:
+        if EnrichmentClient.is_valid_url(url):
+            valid_urls.append(url)
+        else:
+            logger.warning(f"Skipping invalid URL: {url}")
+            failed_urls.append(url)
+
+    if not valid_urls:
+        logger.error("No valid URLs to process.")
+        return
+
     with ThreadPoolExecutor(max_workers=int(os.getenv("MAX_WORKERS", 5))) as executor:
-        futures = {executor.submit(process_single_url, url, client, patch_client): url for url in urls}
+        futures = {executor.submit(process_single_url, url, client, patch_client): url for url in valid_urls}
         for future in as_completed(futures):
             product, error_url = future.result()
             if product:

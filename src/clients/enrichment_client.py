@@ -45,11 +45,23 @@ class EnrichmentClient:
         except Exception:
             return EnrichmentClient._fallback_sku(url)
 
+    @staticmethod
+    def is_valid_url(url: str) -> bool:
+        """Checks if a URL has a valid scheme and netloc."""
+        try:
+            parsed = urlparse(url)
+            return bool(parsed.scheme and parsed.netloc)
+        except Exception:
+            return False
+
     def fetch_product_page(self, url: str) -> str:
         """
         Fetches a product page from a URL and converts the core text content to Markdown.
         Uses Firecrawl if available and configured.
         """
+        if not self.is_valid_url(url):
+            raise ValueError(f"Invalid URL format: {url}")
+
         if not self.app:
             raise RuntimeError("FirecrawlApp is not configured or installed. Please set FIRECRAWL_API_KEY.")
             
@@ -57,15 +69,23 @@ class EnrichmentClient:
             if hasattr(self.app, "scrape"):
                 result = self.app.scrape(url, formats=["markdown"])
                 # New SDK returns a Document model; fallback handles dict-like responses.
+                markdown = ""
                 if hasattr(result, "markdown"):
-                    return result.markdown or ""
-                if isinstance(result, dict):
-                    return result.get("markdown", "")
-                raise RuntimeError("Firecrawl scrape response did not include markdown output.")
+                    markdown = result.markdown or ""
+                elif isinstance(result, dict):
+                    markdown = result.get("markdown", "")
+                
+                if not markdown or len(markdown.strip()) < 100:
+                    raise RuntimeError("Scrape result is empty or too short to be a valid product page.")
+                
+                return markdown
 
             if hasattr(self.app, "scrape_url"):
                 result = self.app.scrape_url(url, params={"formats": ["markdown"]})
-                return result.get("markdown", "")
+                markdown = result.get("markdown", "")
+                if not markdown or len(markdown.strip()) < 100:
+                    raise RuntimeError("Scrape result is empty or too short to be a valid product page.")
+                return markdown
 
             raise RuntimeError("Firecrawl client does not expose scrape or scrape_url methods.")
         except Exception as e:
@@ -235,12 +255,13 @@ class EnrichmentClient:
                     continue
 
                 title = article.find(".//ArticleTitle")
-                title_text = title.text if title is not None else "No Title"
+                title_text = "".join(title.itertext()) if title is not None else "No Title"
                 
                 abstract_parts = []
                 for abs_text in article.findall(".//AbstractText"):
                     label = abs_text.get("Label", "")
-                    text = abs_text.text if abs_text.text else ""
+                    # itertext() captures text within nested tags like <i>, <b>, etc.
+                    text = "".join(abs_text.itertext())
                     if label:
                         abstract_parts.append(f"**{label}**: {text}")
                     else:
