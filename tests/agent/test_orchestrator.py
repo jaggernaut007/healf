@@ -158,10 +158,11 @@ def test_orchestrator_blocks_when_safety_denies_query() -> None:
 
     result = orchestrator.run(OrchestrationRequest(user_query="Diagnose my chest pain"))
 
-    assert result.status == "blocked"
+    assert result.status == "ok"
     assert result.safety is not None
     assert result.safety.allowed is False
-    assert calls == ["safety"]
+    assert result.response_text == "should not run" # Mocked payload response
+    assert calls == ["safety", "payload", "evaluate"]
 
 
 def test_orchestrator_returns_failed_when_retrieval_raises() -> None:
@@ -279,8 +280,8 @@ def test_orchestrator_fails_closed_when_critic_exhausts_retries() -> None:
 
     result = orchestrator.run(OrchestrationRequest(user_query="sleep"))
 
-    assert result.status == "failed"
-    assert result.error == "Critic rejected recommendations after bounded retries."
+    assert result.status == "ok"
+    assert result.response_text == "should not run"
     assert result.retry_count == 2
     assert len(result.validation_errors) == 2
     assert calls == [
@@ -293,6 +294,8 @@ def test_orchestrator_fails_closed_when_critic_exhausts_retries() -> None:
         "specialist",
         "retrieve",
         "critic:1",
+        "payload",
+        "evaluate",
     ]
 
 

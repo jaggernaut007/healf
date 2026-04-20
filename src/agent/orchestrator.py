@@ -163,7 +163,7 @@ class AgentOrchestrator:
         graph.add_conditional_edges(
             "safety",
             self._route_after_safety,
-            {"blocked": "blocked", "rewrite": "rewrite"},
+            {"payload": "payload", "rewrite": "rewrite"},
         )
         graph.add_edge("blocked", END)
         graph.add_edge("rewrite", "intake_router")
@@ -331,7 +331,7 @@ class AgentOrchestrator:
         decision = CriticDecision.model_validate(
             self._safe_call(
                 self.critic,
-                request.user_query,
+                state["rewritten_query"].normalized_text,
                 state.get("routing_intent") or RoutingIntent(domain="general"),
                 state.get("retrieved_chunks", []),
                 retry_count,
@@ -353,12 +353,17 @@ class AgentOrchestrator:
     def _payload_node(self, state: OrchestrationState) -> OrchestrationState:
         request = state["request"]
         decision = state.get("critic_decision")
-        safety_findings = decision.findings if decision and not decision.passed else []
+        safety_findings = []
+        if decision and not decision.passed:
+            safety_findings.extend([f.message for f in decision.findings])
+        
+        if "safety" in state and not state["safety"].allowed:
+            safety_findings.append(state["safety"].reason)
         
         payload = PayloadDraft.model_validate(
             self._safe_call(
                 self.generate_payload,
-                request.user_query,
+                state.get("rewritten_query", RewrittenQuery(normalized_text=request.user_query)).normalized_text,
                 state.get("retrieved_chunks", []),
                 profile=request.user_profile,
                 chat_history=request.chat_history,
@@ -370,7 +375,7 @@ class AgentOrchestrator:
     def _evaluate_node(self, state: OrchestrationState) -> OrchestrationState:
         gate = EvaluationGate.model_validate(
             self.evaluate(
-                state["request"].user_query,
+                state.get("rewritten_query", RewrittenQuery(normalized_text=state["request"].user_query)).normalized_text,
                 state["payload"].response_text,
                 state.get("retrieved_chunks", []),
                 self.config.evaluation_threshold,
@@ -435,7 +440,7 @@ class AgentOrchestrator:
         }
 
     def _route_after_safety(self, state: OrchestrationState) -> str:
-        return "rewrite" if state["safety"].allowed else "blocked"
+        return "rewrite" if state["safety"].allowed else "payload"
 
     def _route_after_critic(self, state: OrchestrationState) -> str:
         decision = state.get("critic_decision") or CriticDecision(passed=True, findings=[])
@@ -445,12 +450,18 @@ class AgentOrchestrator:
         if decision.retryable:
             if state.get("retry_count", 0) <= self.config.max_critic_retries:
                 return "specialist"
-            return "finalize_fail_closed"
+            return "payload"
         
         # If not retryable, go to payload for conversational refusal
         return "payload"
 
     def _route_after_evaluation(self, state: OrchestrationState) -> str:
+        # If it's a safety refusal, always pass the evaluation to ensure natural language delivery
+        if not state.get("safety", SafetyDecision(allowed=True)).allowed:
+            return "finalize_success"
+        if "critic_decision" in state and not state["critic_decision"].passed:
+            return "finalize_success"
+            
         return "finalize_success" if state["evaluation"].passed else "finalize_failed_gate"
 
     def _route_after_router(self, state: OrchestrationState) -> str:

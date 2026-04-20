@@ -115,9 +115,9 @@ All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit 
 - Mandatory `intake_router` execution in orchestrator graph to ensure consistent intent classification.
 - Implemented conversational safety rejections via `PayloadGenerator` with `safety_findings`.
 - **Evaluation Separation**: Moved long-running DeepEval quality gates to `tests/evals/` and excluded from default `pytest` discovery.
-- **Orchestration Hardening**: Fixed routing logic for critic retries and fail-closed outcomes to ensure deterministic failure modes.
-- Resolved test regressions across orchestrator and adapter suites with non-deterministic LLM variance handling.
-- **Fixed Discovery Loop (History-Awareness)**: Resolved an endless loop in the discovery agent by ensuring that multiple-choice options provided by the assistant are included in the `chat_history` sent back to the orchestrator. This allows the `Rewriter` and `IntakeRouter` to correctly resolve short user answers (e.g., "A", "B") in subsequent turns.
+- **Conversational Safety & Refusals**: Eliminated hardcoded technical errors and 'Blocked' statuses. All safety blocks and critic rejections are now routed through the `PayloadGenerator` to provide polite, natural language explanations and emergency guidance (Status: `ok`).
+- **Context-Aware Critic**: Fixed a context loss bug where the `Critic` was evaluating raw user responses (e.g., "A") instead of the full intent. All downstream nodes now use the `rewritten_query` for evaluation and grounding.
+- **Emergency Pattern Expansion**: Hardened the heuristic safety layer by adding explicit patterns for chest pain, dizziness, fainting, and confusion.
 
 ## Product & Research Expansion [COMPLETE]
 - Expanded `data/raw_product_urls.json` to 13 total items with correct URL slugs for top supplements.

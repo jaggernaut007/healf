@@ -41,7 +41,9 @@ def build_default_critic(model: str = "gpt-5.4") -> Callable[[str, RoutingIntent
                             "- General wellness queries (sleep, stress, energy, gut health) are NOT high-risk unless medical conditions/medications are involved. "
                             "- Do NOT flag a safety risk just because a product has a generic 'consult a doctor' warning unless point 3 is met. "
                             "- STACK QUERIES: If the query asks for a 'stack' or 'combination', and you have evidence for the individual components that address the goals, set passed=True. You do NOT need evidence for the specific combination/synergy unless safety interactions are suspected. "
-                            "- If the evidence is relevant but unsafe for this specific user, set passed=False and retryable=False."
+                            "- If the evidence is relevant but unsafe for this specific user, set passed=False and retryable=False. "
+                            "- If the query is fundamentally a medical emergency or requires a diagnosis, set passed=False and retryable=False. "
+                            "- Only set retryable=True if you believe better search terms or a different specialist plan could find safer/more relevant evidence for a VALID wellness query."
                         )
                     },
                     {
