@@ -1,59 +1,29 @@
 [
   {
-    "sku": "bare-biology-ready-and-rested-magnesium-glycinate",
-    "canonical_name": "Ready and Rested Magnesium Glycinate",
+    "sku": "designs-for-health-l-tyrosine",
+    "canonical_name": "Designs For Health L-Tyrosine",
     "active_ingredients": [
-      "Magnesium Bisglycinate Chelate Buffered"
+      "L-Tyrosine",
+      "Vitamin C (as Ascorbic Acid)"
     ],
     "target_biomarkers": [
-      "magnesium status",
-      "tiredness and fatigue",
-      "muscle function",
-      "nervous system function",
-      "bone health",
-      "teeth health"
+      "dopamine",
+      "neurotransmitter pathways",
+      "immune function",
+      "tiredness and fatigue"
     ],
     "mechanisms_of_action": [
-      "Provides magnesium in a gentle, easy-to-absorb bisglycinate chelated form",
-      "Supports normal energy production and helps reduce tiredness and fatigue",
-      "Supports normal muscle and nervous system function"
+      "Provides L-tyrosine, a conditionally essential amino acid involved in neurotransmitter synthesis",
+      "Vitamin C acts as a cofactor in neurotransmitter pathways and supports immune function",
+      "May help support motivation and focus"
     ],
     "contraindications": [
-      "If pregnant or breastfeeding, consult a healthcare professional before use",
-      "If you have a medical condition, consult a healthcare professional before use",
-      "If taking medications, consult a healthcare professional before use",
-      "Do not exceed the recommended daily intake",
-      "Use only if seal is intact"
+      "Consult a healthcare professional if pregnant or breastfeeding",
+      "Consult a healthcare professional if you have a medical condition or are taking medications",
+      "Do not exceed the recommended daily intake"
     ],
-    "usp": "Gentle, easy-to-absorb magnesium bisglycinate formula that supports energy, calm, and muscle/nervous system function; stomach-friendly; suitable daily use.",
-    "usage_instructions": "Take with food for gentler stomach tolerance and easier absorption. Suggested use: Ages 4-9: 1 capsule per day (if child can safely swallow capsules); Ages 9-14: up to 2 capsules per day; Ages 14+: up to 3 capsules per day. Ideally spread the dose with meals throughout the day."
-  },
-  {
-    "sku": "love-life-supplements-organic-ksm-66-r-ashwagandha",
-    "canonical_name": "Organic KSM-66\u00ae Ashwagandha",
-    "active_ingredients": [
-      "Organic KSM-66\u00ae Ashwagandha",
-      "BioPerine\u00ae",
-      "Hydroxy Propyl Methyl Cellulose (vegetable capsule)"
-    ],
-    "target_biomarkers": [
-      "stress",
-      "sleep quality",
-      "calmness",
-      "overall wellbeing"
-    ],
-    "mechanisms_of_action": [
-      "high-strength root extract providing 600mg ashwagandha root per serving",
-      "BioPerine\u00ae black pepper extract to enhance absorption"
-    ],
-    "contraindications": [
-      "pregnancy",
-      "breastfeeding",
-      "medical conditions",
-      "taking medications without consulting a healthcare professional"
-    ],
-    "usp": "High-strength organic KSM-66\u00ae ashwagandha root extract with BioPerine\u00ae for enhanced absorption; vegan-friendly, filler-free, GMO-free formula; 600mg per serving.",
-    "usage_instructions": "Take 1 capsule daily with food. Do not exceed the recommended amount unless directed by a physician."
+    "usp": "1. Contains 1.2 g free-form L-tyrosine plus 100 mg vitamin C per 2-capsule serving. 2. Supports focus, motivation, and mental performance via neurotransmitter pathways. 3. Gluten-free, dairy-free, soy-free, vegetarian, and non-GMO.",
+    "usage_instructions": "Take 2 capsules per day on an empty stomach or as directed by your health-care practitioner."
   },
   {
     "sku": "momentous-l-theanine",
@@ -61,23 +31,99 @@
     "active_ingredients": [
       "L-Theanine"
     ],
-    "target_biomarkers": [
-      "calm",
-      "relaxation",
-      "sleep quality",
-      "anxiety support"
-    ],
+    "target_biomarkers": [],
     "mechanisms_of_action": [
-      "Provides 200mg of L-Theanine per capsule",
-      "Plant-derived from green tea leaves",
-      "Caffeine-free, designed to support a calm state"
+      "Supports relaxation and calm",
+      "Caffeine-free amino acid supplement",
+      "Plant-derived from green tea leaves"
     ],
     "contraindications": [
       "Consult a healthcare professional if pregnant, breastfeeding, have a medical condition, or are taking medications",
       "Do not exceed the recommended daily intake"
     ],
-    "usp": "Pure 200mg L-Theanine per capsule; plant-based from green tea leaves; caffeine-free and free from artificial additives; suggested for calm and sleep support",
+    "usp": "Features 200mg of pure L-Theanine per capsule; plant-based and derived from green tea leaves; caffeine-free and free from artificial additives.",
     "usage_instructions": "Take 1 capsule 30-60 minutes prior to sleep."
+  },
+  {
+    "sku": "love-life-supplements-organic-ksm-66-r-ashwagandha",
+    "canonical_name": "Organic KSM-66\u00ae Ashwagandha",
+    "active_ingredients": [
+      "Organic KSM-66\u00ae Ashwagandha",
+      "BioPerine\u00ae",
+      "Hydroxy Propyl Methyl Cellulose"
+    ],
+    "target_biomarkers": [
+      "stress",
+      "calmness",
+      "sleep quality"
+    ],
+    "mechanisms_of_action": [
+      "High-strength ashwagandha root extract to support daily balance",
+      "BioPerine\u00ae black pepper extract to enhance absorption",
+      "Vegan capsule formulation with no fillers or GMOs"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical conditions",
+      "Taking medications without consulting a healthcare professional"
+    ],
+    "usp": "High-strength 600mg organic KSM-66\u00ae ashwagandha root extract with BioPerine\u00ae for enhanced absorption; vegan-friendly, filler-free, GMO-free formula; 60 capsules for daily wellbeing support.",
+    "usage_instructions": "Take 1 capsule daily with food. Do not exceed the recommended amount unless directed by a physician."
+  },
+  {
+    "sku": "bare-biology-ready-and-rested-magnesium-glycinate",
+    "canonical_name": "Ready and Rested Magnesium Glycinate",
+    "active_ingredients": [
+      "Magnesium Bisglycinate Chelate Buffered"
+    ],
+    "target_biomarkers": [
+      "Magnesium status",
+      "Tiredness and fatigue",
+      "Muscle function",
+      "Nervous system function",
+      "Bone health",
+      "Teeth health"
+    ],
+    "mechanisms_of_action": [
+      "Provides magnesium in a gentle, easy-to-absorb bisglycinate form",
+      "Supports normal muscle and nervous system function",
+      "Contributes to reduction of tiredness and fatigue",
+      "Helps maintain normal bones and teeth"
+    ],
+    "contraindications": [
+      "Consult a healthcare professional if pregnant or breastfeeding",
+      "Consult a healthcare professional if you have a medical condition or are taking medications",
+      "Do not exceed the recommended daily intake"
+    ],
+    "usp": "Gentle, easy-to-absorb magnesium bisglycinate formula; helps reduce tiredness and fatigue; supports muscle, nervous system, bone and teeth health; kind to the stomach.",
+    "usage_instructions": "Take with food for gentler digestion and better absorption. Ages 4-9: 1 capsule per day (if the child can safely swallow capsules). Ages 9-14: up to 2 capsules per day. Ages 14+: up to 3 capsules per day. Ideally spread the dose with meals throughout the day."
+  },
+  {
+    "sku": "pure-encapsulations-choline-bitartrate",
+    "canonical_name": "Pure Encapsulations Choline (bitartrate)",
+    "active_ingredients": [
+      "Choline (as Choline Bitartrate)",
+      "Tri-Magnesium Citrate"
+    ],
+    "target_biomarkers": [
+      "Liver function",
+      "Lipid metabolism",
+      "Homocysteine metabolism"
+    ],
+    "mechanisms_of_action": [
+      "Provides bioavailable choline to support normal liver function",
+      "Supports healthy lipid metabolism",
+      "Contributes to homocysteine metabolism and cell membrane function"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical conditions",
+      "Taking medications"
+    ],
+    "usp": "Helps maintain normal liver function, lipid metabolism, and homocysteine metabolism; delivers 275 mg of bioavailable choline per capsule; vegetarian capsules; 100 caps.",
+    "usage_instructions": "As a food supplement, take 1 capsule, 1-2 times daily, with meals, or as recommended by a health professional."
   },
   {
     "sku": "pure-encapsulations-rhodiola-rosea",
@@ -89,99 +135,67 @@
       "stress response",
       "energy levels",
       "mental fatigue",
-      "focus",
       "mood balance",
-      "exercise performance/endurance"
+      "exercise endurance"
     ],
     "mechanisms_of_action": [
       "adaptogenic support",
-      "standardized rhodiola extract delivering rosavins and salidroside",
+      "standardized rosavins and salidroside extract",
       "may help reduce perceived effort and support endurance"
     ],
     "contraindications": [
       "May not be suitable for those taking adrenergic-blocking medications",
       "May not be suitable for those taking anti-arrhythmic medications",
-      "Consult a healthcare professional before use if pregnant, breastfeeding, have a medical condition, or are taking medications"
+      "Consult a healthcare professional if pregnant or breastfeeding, have a medical condition, or are taking medications"
     ],
-    "usp": "Expertly standardised to 3% total rosavins and 1% salidroside; vegan-friendly and hypoallergenic; crafted for quality and clarity.",
+    "usp": "Expertly standardised to 3% total rosavins and 1% salidroside; vegan-friendly; hypoallergenic and gentle on most diets; crafted for quality and clarity.",
     "usage_instructions": "As a dietary supplement, take 1 capsule, 1-2 times daily, between meals."
-  },
-  {
-    "sku": "designs-for-health-l-tyrosine",
-    "canonical_name": "Designs For Health L-Tyrosine",
-    "active_ingredients": [
-      "L-Tyrosine",
-      "Vitamin C"
-    ],
-    "target_biomarkers": [
-      "dopamine",
-      "neurotransmitter support",
-      "tiredness and fatigue",
-      "immune function"
-    ],
-    "mechanisms_of_action": [
-      "Provides L-tyrosine, an amino acid involved in neurotransmitter pathways and used by the body to make key neurotransmitters associated with motivation and focus",
-      "Includes vitamin C as a required cofactor in these pathways and to support immune function and help reduce tiredness and fatigue"
-    ],
-    "contraindications": [
-      "Consult a healthcare professional if pregnant or breastfeeding",
-      "Consult a healthcare professional if you have a medical condition or are taking medications"
-    ],
-    "usp": "1. Contains 1.2 g free-form L-tyrosine plus 100 mg vitamin C per 2-capsule serving. 2. Supports focus, motivation, and vitality through neurotransmitter pathways. 3. Gluten-free, dairy-free, soy-free, vegetarian, and non-GMO.",
-    "usage_instructions": "Take 2 capsules per day on an empty stomach or as directed by your health-care practitioner."
   },
   {
     "sku": "double-wood-supplements-bacopa-monnieri-extract",
     "canonical_name": "Bacopa Monnieri Extract",
     "active_ingredients": [
-      "Bacopa monnieri leaf extract (standardised to 20% bacosides)"
+      "Bacopa monnieri leaf extract",
+      "Bacosides"
     ],
     "target_biomarkers": [
       "Cognitive function"
     ],
     "mechanisms_of_action": [
-      "Provides standardized Bacopa monnieri extract with bacosides to support general cognitive function"
+      "Standardised botanical extract",
+      "Supports general cognitive function"
     ],
     "contraindications": [
-      "Pregnancy",
-      "Breastfeeding",
-      "Medical conditions requiring clinician advice",
-      "Use with medications without healthcare professional consultation",
-      "May cause gastrointestinal side effects if taken on an empty stomach"
+      "Consult a healthcare professional if pregnant or breastfeeding",
+      "Consult a healthcare professional if you have a medical condition",
+      "Consult a healthcare professional if taking medications"
     ],
-    "usp": "Single-ingredient Bacopa monnieri formula; standardized to 20% bacosides; free from soy, gluten, and GM ingredients.",
-    "usage_instructions": "Take one 450 mg capsule daily with food."
+    "usp": "Contains Bacopa monnieri leaf extract; standardised to 20% bacosides; free from soy and gluten. Each capsule delivers 450 mg of extract in a simple single-ingredient formula.",
+    "usage_instructions": "Take one 450 mg capsule daily with food for general cognitive function. Avoid taking on an empty stomach."
   },
   {
-    "sku": "pure-encapsulations-choline-bitartrate",
-    "canonical_name": "Pure Encapsulations Choline (bitartrate)",
-    "active_ingredients": [
-      "Choline (as Choline Bitartrate)",
-      "Tri-Magnesium Citrate"
-    ],
-    "target_biomarkers": [
-      "liver function",
-      "lipid metabolism",
-      "homocysteine metabolism"
-    ],
-    "mechanisms_of_action": [
-      "Provides bioavailable choline to support normal liver function",
-      "Supports healthy lipid metabolism",
-      "Contributes to homocysteine metabolism",
-      "Supports cell membrane structure and function"
-    ],
-    "contraindications": [
-      "Pregnancy",
-      "Breastfeeding",
-      "Medical conditions",
-      "Taking medications"
-    ],
-    "usp": "Provides 275 mg of bioavailable choline per capsule; supports liver, lipid, and homocysteine metabolism; vegetarian capsules with no unnecessary additives highlighted by the brand.",
-    "usage_instructions": "As a food supplement, take 1 capsule, 1-2 times daily, with meals, or as recommended by a health professional."
+    "sku": "vivo-life-creatine-monohydrate",
+    "canonical_name": "Healf Zone",
+    "active_ingredients": [],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [],
+    "usp": "Personalised wellbeing plan based on your body's data; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usage_instructions": "Add to cart. \u00a329 per month."
+  },
+  {
+    "sku": "bare-biology-life-soul-omega-3-fish-oil-capsules",
+    "canonical_name": "Healf Zone",
+    "active_ingredients": [],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [],
+    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usage_instructions": "Add to cart. \u00a329 per month."
   },
   {
     "sku": "anatome-daily-biotic-gut-support",
-    "canonical_name": "anatome Daily Biotic + Gut Support",
+    "canonical_name": "Daily Biotic + Gut Support",
     "active_ingredients": [
       "Inulin",
       "Bifidobacterium longum",
@@ -194,70 +208,21 @@
     ],
     "target_biomarkers": [
       "Gut microbiome balance",
-      "Digestive wellbeing"
+      "Digestive wellbeing",
+      "Daily gut support"
     ],
     "mechanisms_of_action": [
-      "Provides seven strains of live cultures to support daily gut health",
-      "Supplies inulin, a plant-based soluble fibre, to support digestion and gut flora",
-      "Uses vegetarian capsule shell (hydroxypropyl methylcellulose) for easy daily intake"
+      "Provides seven strains of live cultures (probiotics) to support gut flora",
+      "Supplies inulin, a plant-based soluble fibre, to support digestive balance and prebiotic nourishment"
     ],
     "contraindications": [
-      "If pregnant, breastfeeding, or with known medical conditions, consult a healthcare professional before taking supplements",
-      "Do not exceed the recommended daily intake",
+      "Consult a healthcare professional if pregnant or breastfeeding",
+      "Consult a healthcare professional if you have a medical condition",
+      "Consult a healthcare professional if taking medications",
       "Do not use if the safety seal is damaged"
     ],
-    "usp": "",
-    "usage_instructions": ""
-  },
-  {
-    "sku": "vivo-life-creatine-monohydrate",
-    "canonical_name": "Page not found",
-    "active_ingredients": [],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [],
-    "usp": "The page appears to be a 404/not found page rather than a product page; the visible content includes site promotions and recommended products, not a primary product.",
-    "usage_instructions": ""
-  },
-  {
-    "sku": "pure-encapsulations-vitamin-d3-125-mcg-5-000-iu-60-capsules",
-    "canonical_name": "Unknown / Page not found",
-    "active_ingredients": [],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [],
-    "usp": "The page is a 404 page rather than a valid product page; no primary product details are available from the main page content.",
-    "usage_instructions": ""
-  },
-  {
-    "sku": "bare-biology-life-soul-omega-3-fish-oil-capsules",
-    "canonical_name": "Page not found",
-    "active_ingredients": [],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [],
-    "usp": "This page is a 404/error page, not a product page. No primary product details are available.",
-    "usage_instructions": ""
-  },
-  {
-    "sku": "wild-nutrition-food-grown-zinc-plus",
-    "canonical_name": "Page not found",
-    "active_ingredients": [],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [],
-    "usp": "Primary page content indicates a missing/unavailable page rather than a product; no product-specific USPs available.",
-    "usage_instructions": ""
-  },
-  {
-    "sku": "symprove-daily-essential-4-week-pack",
-    "canonical_name": "Page not found",
-    "active_ingredients": [],
-    "target_biomarkers": [],
-    "mechanisms_of_action": [],
-    "contraindications": [],
-    "usp": "Page indicates a missing/unavailable product page; no primary product details are present. Visible page highlights include free UK delivery over \u00a350, 365-day returns, and buy 3 get 1 free site promotion.",
-    "usage_instructions": ""
+    "usp": "Combines seven strains of live cultures with inulin for everyday gut support; easy-to-take capsules; suitable for a range of dietary preferences.",
+    "usage_instructions": "Take 2 capsules daily after any meal with a glass of water. Do not exceed the recommended intake. Store in a cool, dry place out of reach of children and animals."
   },
   {
     "sku": "true-collagen",
@@ -265,44 +230,54 @@
     "active_ingredients": [
       "100% Grass-fed Bovine Hydrolysed Collagen Peptides (Type 1)"
     ],
-    "target_biomarkers": [],
+    "target_biomarkers": [
+      "Muscle mass",
+      "Bone health",
+      "Joint health",
+      "Tissue health"
+    ],
     "mechanisms_of_action": [
-      "Provides type 1 collagen peptides",
-      "Supplies protein to support muscle mass and bone maintenance"
+      "Provides type 1 collagen peptides as a source of protein",
+      "Supports growth and maintenance of muscle mass",
+      "Helps maintain normal bones"
     ],
     "contraindications": [
-      "If pregnant or breastfeeding, consult a healthcare professional before use",
-      "If you have a medical condition or are taking medications, consult a healthcare professional before use",
-      "Do not exceed the recommended daily intake"
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical conditions",
+      "Use with medications without consulting a healthcare professional"
     ],
-    "usp": "Pure, grass-fed type 1 collagen peptides that are odourless, tasteless, and easy to mix into hot or cold drinks or foods; supports protein intake for active lifestyles and fasting routines.",
+    "usp": "Pure, highly absorbable type 1 collagen peptides; odourless and tasteless for easy daily use. Provides a quality source of protein to support active lifestyles and fasting routines. Versatile powder that mixes into hot or cold drinks and foods.",
     "usage_instructions": "Take 1 to 2 tsp (5 to 10g) daily. Add to any hot or cold drink, or sprinkle onto foods like soups, overnight oats, or yoghurt."
   },
   {
-    "sku": "food-grown-magnesium-jar",
-    "canonical_name": "Wild Nutrition Food-Grown Magnesium Jar",
-    "active_ingredients": [
-      "Magnesium"
-    ],
-    "target_biomarkers": [
-      "Magnesium status",
-      "Energy levels",
-      "Nervous system function",
-      "Sleep quality",
-      "Muscle function",
-      "Bone health"
-    ],
-    "mechanisms_of_action": [
-      "Provides elemental magnesium in a food-grown form",
-      "Supports normal nervous system and psychological function",
-      "Contributes to energy release and helps reduce tiredness and fatigue"
-    ],
-    "contraindications": [
-      "Consult a healthcare professional if pregnant or breastfeeding",
-      "Consult a healthcare professional if you have a medical condition or are taking medications",
-      "Do not exceed the recommended daily intake"
-    ],
-    "usp": "Food-grown magnesium delivering 80mg elemental magnesium in 2 capsules; supports nervous system, energy, bones, and helps reduce tiredness and fatigue. Gentle formula suitable any time of day, with or without food.",
-    "usage_instructions": "Take 2 capsules together any time of day, with or without food."
+    "sku": "wild-nutrition-food-grown-zinc-plus",
+    "canonical_name": "Healf Zone",
+    "active_ingredients": [],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [],
+    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usage_instructions": "Add to cart. \u00a329 per month."
+  },
+  {
+    "sku": "pure-encapsulations-vitamin-d3-125-mcg-5-000-iu-60-capsules",
+    "canonical_name": "Healf",
+    "active_ingredients": [],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [],
+    "usp": "Free UK delivery over \u00a350; 365 day returns; buy 3, get 1 free; curated wellbeing products across EAT, MOVE, MIND, and SLEEP.",
+    "usage_instructions": "Browse the relevant collection or use the site search to shop wellbeing products; no product-specific usage instructions are provided on this page."
+  },
+  {
+    "sku": "symprove-daily-essential-4-week-pack",
+    "canonical_name": "Healf Zone",
+    "active_ingredients": [],
+    "target_biomarkers": [],
+    "mechanisms_of_action": [],
+    "contraindications": [],
+    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usage_instructions": "Add to cart for \u00a329 per month."
   }
 ]

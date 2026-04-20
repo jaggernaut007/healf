@@ -91,6 +91,7 @@
     "category": "discovery_mcq",
     "input": "I just want to feel more dialed in during the day.",
     "expected_output": "I understand you're looking to optimize your performance. To recommend the right support, are you primarily looking for physical energy, or mental focus and stress reduction?",
+    "options": ["A: Physical Energy", "B: Mental Focus & Stress Reduction"],
     "context": []
   },
   {
