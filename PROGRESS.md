@@ -1,7 +1,7 @@
 # Project Progress
 
 ## Current Status
-All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit passed. **Documentation Refinement (2026-04-20)**: Setup and Usage guides verified; Architecture documentation consolidated; `NIH_DATA_API_KEY` added to `.env.example`. **Key Verification & Integration**: Verified `NIH_DATA_API_KEY` as a valid credential for **NIH DSLD v9** (`api.ods.od.nih.gov`); integrated DSLD v9 as the primary grounding source for supplements with a fallback to RxTerms.
+All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit passed. **Documentation Refinement (2026-04-20)**: Setup and Usage guides verified; Architecture documentation consolidated; `NIH_DATA_API_KEY` and its registration link (https://dsld.od.nih.gov/api-guide) added to `.env.example` and `docs/SETUP.md`. **Key Verification & Integration**: Verified `NIH_DATA_API_KEY` as a valid credential for **NIH DSLD v9** (`api.ods.od.nih.gov`); integrated DSLD v9 as the primary grounding source for supplements with a fallback to RxTerms.
 
 ## Triple Agent Audit — 2026-04-20 [COMPLETE]
 - **3 test isolation regressions fixed**: `test_safety.py` tests failed because `build_default_safety_check()` eagerly constructs `Neo4jPropertyGraphStore` at factory call time, requiring a live URI even in unit-test scope. Fixed by adding an `autouse` fixture that patches the store class before factory construction.
