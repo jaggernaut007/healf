@@ -1,18 +1,22 @@
 # Usage Guide
 
-The Healf Health Intelligence Engine is operated through a multi-phase pipeline. This guide covers how to run each phase using the CLI and task runner.
+The Healf Health Intelligence Engine is operated through the `healf` CLI. You can run individual components or the entire end-to-end pipeline.
 
-## Core Pipeline Overview
+## 0. Full Intelligence Pipeline (Recommended)
 
-1.  **Enrichment**: Scrapes product web pages and grounds active ingredients against the NIH database.
-2.  **Graph Build**: Infers relationships between products, ingredients, mechanisms, and symptoms to build a Knowledge Graph.
-3.  **Orchestration**: A 5-agent conversational flow that answers user queries using the Knowledge Graph.
+To build the entire system from scratch—including product enrichment, research fetching, and knowledge graph construction—run the unified pipeline command:
+
+```bash
+uv run healf run
+```
+
+This command executes `enrich`, `research`, and `sync-graph` in sequence, providing a fully grounded knowledge base ready for chat.
 
 ---
 
-## 1. Enrichment Pipeline
+## 1. Data Enrichment Pipeline
 
-Run the enrichment pipeline to process raw product URLs and generate structured product data.
+If you only need to process new products, run the enrichment command. This scrapes raw product URLs and generates structured data.
 
 ```bash
 uv run healf enrich
@@ -36,9 +40,9 @@ uv run healf sync-graph --products-path custom/path/enriched.json
 
 - **Dependencies**: Requires `data/enriched_products.json` and documents in `data/research/`.
 
-## 3. Agentic Orchestration (Discovery REPL)
+## 3. Conversational Chat (REPL)
 
-Interact with the system using the stateful Consultative Discovery REPL. This mode supports multi-turn conversations and asks clarifying questions for ambiguous intents.
+Interact with the system using the Consultative Discovery REPL. This mode supports multi-turn conversations, personalization via user profiles, and safety-first responses grounded in the Knowledge Graph.
 
 ```bash
 # Start an interactive session (no user profile by default)
