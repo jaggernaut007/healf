@@ -4,9 +4,19 @@ Healf is a production-ready agentic framework for health-tech intelligence. It t
 
 > **Note to Reviewers:** The **[ARCHITECTURE.md](ARCHITECTURE.md)** file is the primary artifact for evaluation, covering system design, safety models, and founding engineer decisions as requested in the task.
 
-## 🚀 Quick Start & Setup
+## 📖 Documentation & Guides
 
-These setup instructions will get the system running on a clean machine in under 10 minutes.
+For detailed instructions on setting up and operating the system, please refer to our dedicated guides:
+
+- **[Setup Guide](docs/SETUP.md)**: Detailed environment configuration, prerequisites, and initialization.
+- **[Usage Guide](docs/USAGE.md)**: Comprehensive CLI reference, pipeline execution, and interactive chat details.
+- **[Architecture Overview](ARCHITECTURE.md)**: Deep dive into system design, safety models, and KG-RAG topology.
+
+---
+
+## 🚀 Quick Start
+
+These setup instructions will get the system running on a clean machine in under 10 minutes. For more detailed guidance, see the [Setup Guide](docs/SETUP.md).
 
 ### Prerequisites
 - **Python 3.12+**: The core logic uses modern Python features.

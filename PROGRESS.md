@@ -1,7 +1,7 @@
 # Project Progress
 
 ## Current Status
-All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit passed: 68/68 tests green, 0 lint violations.
+All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit passed. **Documentation Refinement (2026-04-20)**: Setup and Usage guides verified; Architecture documentation consolidated into root `ARCHITECTURE.md` to satisfy evaluation requirements; README.md and Index links updated.
 
 ## Triple Agent Audit — 2026-04-20 [COMPLETE]
 - **3 test isolation regressions fixed**: `test_safety.py` tests failed because `build_default_safety_check()` eagerly constructs `Neo4jPropertyGraphStore` at factory call time, requiring a live URI even in unit-test scope. Fixed by adding an `autouse` fixture that patches the store class before factory construction.

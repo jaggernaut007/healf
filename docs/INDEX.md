@@ -3,7 +3,7 @@
 Welcome to the documentation for the Healf Health Intelligence Engine. This index provides quick access to all active documentation files.
 
 ## Core Architecture & Design
-- [Architecture Overview](../my_Architecture.md) - The primary artifact for system design, safety models, and founding engineer decisions.
+- [Architecture Overview](../ARCHITECTURE.md) - The primary artifact for system design, safety models, and founding engineer decisions.
 - [Technical Specification](../SPEC.md) - Detailed technical specifications for the system.
 - [Spec-Driven Development](SPEC-DRIVEN.md) - Guidelines for spec-driven workflows.
 - [Architecture Decision Records (ADRs)](adr/) - Historical records of key technical decisions.
