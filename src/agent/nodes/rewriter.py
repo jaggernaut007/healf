@@ -15,9 +15,10 @@ logger = logging.getLogger(__name__)
 def build_default_prompt_rewriter(model: str = "gpt-5.4-mini") -> Callable[[str, dict[str, Any]], RewrittenQuery]:
     client = OpenAI()
 
-    def _rewrite(query: str, profile: dict[str, Any] | None = None) -> RewrittenQuery:
+    def _rewrite(query: str, profile: dict[str, Any] | None = None, chat_history: list[dict[str, str]] | None = None) -> RewrittenQuery:
         normalized = re.sub(r"\s+", " ", query.strip())
         profile = profile or {}
+        chat_history = chat_history or []
         
         try:
             response = client.beta.chat.completions.parse(
@@ -28,12 +29,14 @@ def build_default_prompt_rewriter(model: str = "gpt-5.4-mini") -> Callable[[str,
                         "content": (
                             "You are a search query optimizer for a health supplement engine. "
                             "Rewrite the user query for maximum retrieval precision. "
-                            "1. Correct misspellings (e.g., 'Ashwaganda' -> 'Ashwagandha'). "
-                            "2. Map slang/informal terms to clinical or scientific synonyms (e.g., 'pill for brain focus' -> 'cognitive enhancement', 'tired' -> 'fatigue'). "
-                            "3. Preserve the core intent and any specific ingredients or products mentioned. "
-                            "4. If profile context is provided, align the rewrite with user goals (e.g., if user wants 'recovery', mention 'muscle recovery' or 'nervous system recovery')."
+                            "CONTEXT AWARENESS: Use the provided chat history to resolve pronouns and short answers (e.g., 'A', 'yes', 'that one'). "
+                            "1. Correct misspellings. "
+                            "2. Map slang/informal terms to clinical synonyms. "
+                            "3. Preserve core intent and specific ingredients. "
+                            "4. If profile context is provided, align the rewrite with user goals."
                         )
                     },
+                    *chat_history,
                     {
                         "role": "user",
                         "content": f"Query: {query}\nProfile: {json.dumps(profile)}"

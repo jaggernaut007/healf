@@ -56,9 +56,10 @@ def build_default_safety_check(
             )
             return [record["name"] for record in result]
 
-    def _check(query: str, profile: dict[str, Any] | None = None) -> IntentClassification:
+    def _check(query: str, profile: dict[str, Any] | None = None, chat_history: list[dict[str, str]] | None = None) -> IntentClassification:
         lowered_query = query.lower()
         profile = profile or {}
+        chat_history = chat_history or []
         
         # 1. Heuristic medical block (Phase 1)
         for pattern in _BLOCKED_MEDICAL_PATTERNS:
@@ -97,6 +98,7 @@ def build_default_safety_check(
                             "Use the provided user profile to ground your reasoning."
                         )
                     },
+                    *chat_history,
                     {
                         "role": "user",
                         "content": f"Query: {query}\nProfile: {json.dumps(profile)}"

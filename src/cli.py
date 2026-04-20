@@ -130,6 +130,14 @@ def chat(
             
         if result.status == "ok":
             console.print(Markdown(result.response_text or "No response"))
+            
+            if result.options:
+                table = Table(show_header=False, box=None)
+                table.add_column("Option", style="bold cyan")
+                for opt in result.options:
+                    table.add_row(opt)
+                console.print(Panel(table, title="[bold blue]Recommended Options[/bold blue]", border_style="blue"))
+                
             chat_history.append({"role": "user", "content": query})
             chat_history.append({"role": "assistant", "content": result.response_text or ""})
         elif result.status == "blocked":

@@ -16,8 +16,9 @@ logger = logging.getLogger(__name__)
 def build_default_intake_router(model: str = "gpt-5.4-mini") -> Callable[[RewrittenQuery, dict[str, Any]], RoutingIntent]:
     client = OpenAI()
 
-    def _route(rewritten: RewrittenQuery, profile: dict[str, Any] | None = None) -> RoutingIntent:
+    def _route(rewritten: RewrittenQuery, profile: dict[str, Any] | None = None, chat_history: list[dict[str, str]] | None = None) -> RoutingIntent:
         profile = profile or {}
+        chat_history = chat_history or []
         
         try:
             response = client.beta.chat.completions.parse(
@@ -28,17 +29,15 @@ def build_default_intake_router(model: str = "gpt-5.4-mini") -> Callable[[Rewrit
                         "content": (
                             "Classify the query domain (sleep, stress, gut, energy, or general) and risk_level (low or high). "
                             "High risk includes medication interactions, pregnancy, breastfeeding, allergies, or diagnostic intent. "
-                            "AMBIGUITY DETECTION: A query requires clarification if it is: "
-                            "A) Broad/Conceptual (e.g., 'wellness', 'longevity', 'performance') "
-                            "B) Goal-oriented but lacking constraints (e.g., 'help me sleep', 'reduce stress') "
-                            "C) Lacking a specific target (e.g., 'what should I take?', 'how to optimize?'). "
-                            "In these cases, set requires_clarification=True. "
-                            "If the query mentions a specific symptom, goal (e.g. 'brain focus', 'fatigue'), or ingredient (e.g., 'Magnesium glycinate'), set requires_clarification=False."
+                            "AMBIGUITY DETECTION: A query requires clarification if it is broad, conceptual, or lacking constraints. "
+                            "Use the provided chat history to determine if the user has already provided enough detail to skip discovery. "
+                            "If the user is answering a discovery question, and the combination of history + current answer provides a specific goal and constraint, set requires_clarification=False."
                         )
                     },
+                    *chat_history,
                     {
                         "role": "user",
-                        "content": f"Query: {rewritten.normalized_text}\nProfile: {json.dumps(profile)}"
+                        "content": f"Rewritten Query: {rewritten.normalized_text}\nProfile: {json.dumps(profile)}"
                     }
                 ],
                 response_format=RoutingIntent,
@@ -85,9 +84,17 @@ def build_default_discovery(
         database=neo4j_database,
     )
 
-    def _get_kg_context(query_text: str):
+    def _get_kg_context(query_text: str, chat_history: list[dict[str, str]] | None = None):
+        # Combine chat history and current query for better context in short responses
+        context_parts = []
+        if chat_history:
+            for msg in chat_history[-3:]:  # Last 3 messages for context
+                context_parts.append(f"{msg['role']}: {msg['content']}")
+        context_parts.append(f"user: {query_text}")
+        embedding_input = "\n".join(context_parts)
+
         # Semantic search for relevant mechanisms and symptoms
-        embedding_response = client.embeddings.create(model="text-embedding-3-small", input=query_text)
+        embedding_response = client.embeddings.create(model="text-embedding-3-small", input=embedding_input)
         query_embedding = embedding_response.data[0].embedding
         
         with store.client.session(database=neo4j_database) as session:
@@ -115,7 +122,7 @@ def build_default_discovery(
         profile = profile or {}
         chat_history = chat_history or []
         
-        mechanisms, symptoms = _get_kg_context(query)
+        mechanisms, symptoms = _get_kg_context(query, chat_history)
         kg_context = f"\n\nRelevant Health Goals: {', '.join(symptoms)}.\nRelevant Biological Pathways: {', '.join(mechanisms)}."
 
         try:
@@ -130,7 +137,8 @@ def build_default_discovery(
                             "You are an elite sports dietitian and sales consultant at Healf. The user has an ambiguous intent. "
                             "You must not recommend a product yet. "
                             "1. Briefly validate their goal and educate them on the 2 or 3 biological pathways that support this. "
-                            "2. Ask a single, highly targeted multiple-choice question to uncover their specific constraint so we can recommend the exact right ingredient. "
+                            "2. Ask a single, highly targeted multiple-choice question to uncover their specific constraint. Provide these as a structured list of 'options'. "
+                            "3. If the user has already provided enough detail in the history + current query to make a recommendation, set requires_clarification=False and provide a 'resolved_query' that captures the full user intent for search (e.g. 'Magnesium glycinate for afternoon energy crash'). "
                             "Keep it professional, consultative, and concise. "
                             f"{kg_context}"
                         )

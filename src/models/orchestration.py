@@ -82,7 +82,9 @@ class EvaluationGate(BaseModel):
 class DiscoveryDecision(BaseModel):
     requires_clarification: bool
     clarification_question: str | None = None
+    options: list[str] = Field(default_factory=list, description="A list of specific options for the user to choose from (e.g. ['A: Physical Energy', 'B: Mental Focus']).")
     reasoning: str | None = None
+    resolved_query: RewrittenQuery | None = None
 
 
 class OrchestrationResult(BaseModel):
@@ -100,6 +102,7 @@ class OrchestrationResult(BaseModel):
     error: str | None = None
     requires_clarification: bool = False
     clarification_question: str | None = None
+    options: list[str] = Field(default_factory=list)
     intent_classification: IntentClassification | None = None
     trace_enabled: bool = False
 

@@ -55,6 +55,7 @@ class OrchestrationState(TypedDict, total=False):
     result: OrchestrationResult
     requires_clarification: bool
     clarification_question: str | None
+    options: list[str]
     trace_enabled: bool
 
 
@@ -71,7 +72,7 @@ class AgentOrchestrator:
         critic: Callable[[str, RoutingIntent, list[RetrievalChunk], int, dict[str, Any]], CriticDecision],
         generate_payload: Callable[[str, list[RetrievalChunk], dict[str, Any], list[dict[str, str]]], PayloadDraft],
         evaluate: Callable[[str, str, list[RetrievalChunk], float], EvaluationGate],
-        discover: Callable[[str, list[dict[str, str]], dict[str, Any]], str] | None = None,
+        discover: Callable[..., DiscoveryDecision] | None = None,
         activate_observability: Callable[[], None] | None = None,
     ) -> None:
         self.config = config
@@ -171,7 +172,11 @@ class AgentOrchestrator:
             self._route_after_router,
             {"specialist": "specialist", "discovery": "discovery"},
         )
-        graph.add_edge("discovery", "finalize_discovery")
+        graph.add_conditional_edges(
+            "discovery",
+            self._route_after_discovery,
+            {"finalize_discovery": "finalize_discovery", "specialist": "specialist"},
+        )
         graph.add_edge("specialist", "retrieve")
         graph.add_edge("retrieve", "critic")
         graph.add_conditional_edges(
@@ -255,7 +260,7 @@ class AgentOrchestrator:
     def _safety_node(self, state: OrchestrationState) -> OrchestrationState:
         request = state["request"]
         classification = IntentClassification.model_validate(
-            self._safe_call(self.safety_check, request.user_query, profile=request.user_profile)
+            self._safe_call(self.safety_check, request.user_query, profile=request.user_profile, chat_history=request.chat_history)
         )
         
         # Derive safety decision
@@ -274,7 +279,7 @@ class AgentOrchestrator:
     def _rewrite_node(self, state: OrchestrationState) -> OrchestrationState:
         request = state["request"]
         rewritten = RewrittenQuery.model_validate(
-            self._safe_call(self.rewrite, request.user_query, profile=request.user_profile)
+            self._safe_call(self.rewrite, request.user_query, profile=request.user_profile, chat_history=request.chat_history)
         )
         return {"rewritten_query": rewritten}
 
@@ -285,7 +290,7 @@ class AgentOrchestrator:
         )
         
         intent = RoutingIntent.model_validate(
-            self._safe_call(self.route, rewritten, profile=request.user_profile)
+            self._safe_call(self.route, rewritten, profile=request.user_profile, chat_history=request.chat_history)
         )
         return {"routing_intent": intent}
 
@@ -454,12 +459,18 @@ class AgentOrchestrator:
             return "discovery"
         return "specialist"
 
+    def _route_after_discovery(self, state: OrchestrationState) -> str:
+        if state.get("requires_clarification", True):
+            return "finalize_discovery"
+        return "specialist"
+
     def _discovery_node(self, state: OrchestrationState) -> OrchestrationState:
         request = state["request"]
         if not self.discover:
             return {
                 "requires_clarification": False,
                 "clarification_question": None,
+                "options": [],
             }
 
         discovery = DiscoveryDecision.model_validate(
@@ -472,10 +483,17 @@ class AgentOrchestrator:
                 chat_history=request.chat_history,
             )
         )
-        return {
+
+        updates: dict[str, Any] = {
             "requires_clarification": discovery.requires_clarification,
             "clarification_question": discovery.clarification_question,
+            "options": discovery.options,
         }
+
+        if not discovery.requires_clarification and discovery.resolved_query:
+            updates["rewritten_query"] = discovery.resolved_query
+
+        return updates
 
     def _finalize_discovery_node(self, state: OrchestrationState) -> OrchestrationState:
         question = state.get("clarification_question")
@@ -487,8 +505,9 @@ class AgentOrchestrator:
                 intent_classification=state.get("intent_classification"),
                 rewritten_query=state.get("rewritten_query"),
                 routing_intent=state.get("routing_intent"),
-                requires_clarification=True,
+                requires_clarification=state.get("requires_clarification", True),
                 clarification_question=question,
+                options=state.get("options", []),
                 retry_count=state.get("retry_count", 0),
                 trace_enabled=state.get("trace_enabled", False),
             )
