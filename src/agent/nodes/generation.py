@@ -62,7 +62,7 @@ def build_default_payload_generator(model: str = "gpt-5.4") -> Callable[[str, li
                 model=model,
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    *chat_history,
+                    *chat_history[-20:],
                     {
                         "role": "user",
                         "content": f"User Profile:\n{user_context_str}\n\nQuery: {query}\n\nEvidence:\n{context_blob}",

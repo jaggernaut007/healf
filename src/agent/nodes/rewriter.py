@@ -36,7 +36,7 @@ def build_default_prompt_rewriter(model: str = "gpt-5.4-mini") -> Callable[[str,
                             "4. If profile context is provided, align the rewrite with user goals."
                         )
                     },
-                    *chat_history,
+                    *chat_history[-20:],
                     {
                         "role": "user",
                         "content": f"Query: {query}\nProfile: {json.dumps(profile)}"

@@ -109,6 +109,7 @@ All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit 
 - **Contextual Grounding**: Enhanced `_get_kg_context` to embed conversation history, ensuring Neo4j retrieval remains relevant even with short user responses.
 - **Optimized Turn Transitions**: Refactored orchestration graph to support same-turn recommendations by allowing the `Discovery` node to signal completion and route directly to the `Specialist` with the `resolved_query`.
 - Added **Logging Suppression** for clean, user-facing conversational sessions.
+- **History Management**: Implemented a sliding window for chat history across all orchestration nodes (`Rewriter`, `IntakeRouter`, `Discovery`, `PayloadGenerator`), limiting context to the last 10 turns (20 messages) to maintain focus and efficiency.
 - Enhanced retrieval ranker with multi-word term splitting and inclusive ingredient matching.
 - Hardened Pydantic models with default values for fail-safe LLM output parsing.
 - Mandatory `intake_router` execution in orchestrator graph to ensure consistent intent classification.
@@ -116,6 +117,7 @@ All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit 
 - **Evaluation Separation**: Moved long-running DeepEval quality gates to `tests/evals/` and excluded from default `pytest` discovery.
 - **Orchestration Hardening**: Fixed routing logic for critic retries and fail-closed outcomes to ensure deterministic failure modes.
 - Resolved test regressions across orchestrator and adapter suites with non-deterministic LLM variance handling.
+- **Fixed Discovery Loop (History-Awareness)**: Resolved an endless loop in the discovery agent by ensuring that multiple-choice options provided by the assistant are included in the `chat_history` sent back to the orchestrator. This allows the `Rewriter` and `IntakeRouter` to correctly resolve short user answers (e.g., "A", "B") in subsequent turns.
 
 ## Product & Research Expansion [COMPLETE]
 - Expanded `data/raw_product_urls.json` to 13 total items with correct URL slugs for top supplements.
@@ -125,7 +127,7 @@ All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit 
     - Captured structured clinical metadata (`study_type`, `sample_size`, `dosage_tested`, `key_finding`) for all research papers in `data/research_summaries.json`.
     - Captured premium product details (`usp`, `usage_instructions`) for all enriched products.
     - Synchronized the Neo4j Knowledge Graph with 13 products and 13 research papers, generating 24 semantic triples with rich metadata properties.
-- Verified 100% stability with 75 passing tests in the core suite.
+- Verified 100% stability with 78 passing tests (including new CLI history verification).
 
 ## Maintenance & Governance
 - Updated `.gitignore` with comprehensive project-specific and industrial-standard ignores (logs, debug scripts, build artifacts, IDE configs).

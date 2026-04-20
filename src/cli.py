@@ -138,8 +138,13 @@ def chat(
                     table.add_row(opt)
                 console.print(Panel(table, title="[bold blue]Recommended Options[/bold blue]", border_style="blue"))
                 
+            assistant_content = result.response_text or ""
+            if result.options:
+                options_str = "\n".join([f"- {opt}" for opt in result.options])
+                assistant_content += f"\n\nOptions:\n{options_str}"
+                
             chat_history.append({"role": "user", "content": query})
-            chat_history.append({"role": "assistant", "content": result.response_text or ""})
+            chat_history.append({"role": "assistant", "content": assistant_content})
         elif result.status == "blocked":
             console.print(f"[bold yellow]Blocked:[/bold yellow] {result.safety.reason if result.safety else 'Safety violation'}")
         else:

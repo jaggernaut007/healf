@@ -88,6 +88,7 @@ What it misses:
 - What I wouldn't change: the baseline enrichment, agentic and graph architecture, and the Pydantic models.
 -Ensure a robust system is setup for multi api providers to be used.
 - Robust Security, like PII, Ratelimiting, prompt injeciton filter, guardrailing etc.
+_ improve speed of queries 
 
 8. **Founding engineer decisions** — if you were starting day one at Healf, what are the two or three AI infrastructure decisions you would make in the first two weeks that would be hardest to reverse?
 

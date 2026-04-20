@@ -34,7 +34,7 @@ def build_default_intake_router(model: str = "gpt-5.4-mini") -> Callable[[Rewrit
                             "If the user is answering a discovery question, and the combination of history + current answer provides a specific goal and constraint, set requires_clarification=False."
                         )
                     },
-                    *chat_history,
+                    *chat_history[-20:],
                     {
                         "role": "user",
                         "content": f"Rewritten Query: {rewritten.normalized_text}\nProfile: {json.dumps(profile)}"
@@ -88,7 +88,7 @@ def build_default_discovery(
         # Combine chat history and current query for better context in short responses
         context_parts = []
         if chat_history:
-            for msg in chat_history[-3:]:  # Last 3 messages for context
+            for msg in chat_history[-20:]:  # Last 10 turns for context
                 context_parts.append(f"{msg['role']}: {msg['content']}")
         context_parts.append(f"user: {query_text}")
         embedding_input = "\n".join(context_parts)
@@ -143,7 +143,7 @@ def build_default_discovery(
                             f"{kg_context}"
                         )
                     },
-                    *chat_history,
+                    *chat_history[-20:],
                     {
                         "role": "user",
                         "content": f"User Query: {query}\nUser Profile: {json.dumps(profile, default=str)}"
