@@ -74,7 +74,10 @@ Acceptance criteria:
 
 Acceptance criteria:
 - `IntakeRouter` identifies ambiguous queries requiring clarification.
-- `Discovery` node in LangGraph generates conversational clarification questions when `requires_clarification` is True.
+- `Discovery` node in LangGraph generates conversational clarification questions and **structured multiple-choice options** when `requires_clarification` is True.
+- **Structured Output**: `DiscoveryDecision` includes `options: list[str]` for rich CLI rendering.
+- **Robust Grounding**: `Discovery` node uses `chat_history` for history-aware Neo4j context retrieval (resolving short answers like "A" or "Yes").
+- **State Transition**: `Discovery` node updates `rewritten_query` with `resolved_query` upon resolution to ensure seamless transition to `Specialist`.
 - Multi-turn intent resolution is supported via `chat_history`.
 - Product retrieval is blocked until the user intent is sufficiently clarified.
 

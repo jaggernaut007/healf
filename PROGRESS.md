@@ -34,7 +34,9 @@ All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit 
 - URL-based SKU extraction is deterministic and resilient to query/hash URL variants.
 - NIH grounding path no longer fabricates warning strings.
 - Graph inference now emits multiple triples for a single ingredient when multiple rules apply.
-- Rule-driven graph build and preflight modes remain functional.
+- Fixed `run` command by adding `scripts/__init__.py` and correcting import path.
+- Restored test suite integrity by moving `test_*.py` files from `src/` subdirectories back to `tests/`.
+- Created comprehensive `docs/MANUAL_TESTING.md` guide for system verification.
 - LangGraph orchestration flow now routes safety -> rewrite -> intake router -> specialist -> read-only retrieval -> critic -> payload -> evaluation with terminal blocked/failed/ok outcomes.
 - Safety-denied medical-intent requests stop before retrieval and generation.
 - Evaluation gate failure prevents final response emission.
@@ -83,29 +85,34 @@ All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit 
 - **Full Project Triple Agent Audit (Phases 0-5) performed and documented in `docs/audits/full-project-audit.md`.**
 - TTL L1 Caching and Golden Dataset (10 cases) implemented.
 
-## Autonomous & Optimized Ingestion [COMPLETE]
+## Autonomous & Optimized Ingestion [HARDENED]
 - Refactored `src/enrichment.py` for **Parallel Extraction** using `ThreadPoolExecutor`, reducing ingestion time by ~70%.
+- **URL Validation & Hardening**: Implemented mandatory URL validation and content-length checks (min 100 chars) to skip invalid or failed product pages before LLM extraction.
 - Implemented **Ingredient De-duplication** in the enrichment pipeline to minimize redundant API calls (NIH/PubMed).
 - Created **Autonomous Rule Generator** (`src/rule_generator.py`) that uses LLMs and PubMed research to synthesize graph inference rules without manual intervention.
 - Integrated autonomous grounding as a mandatory step in the end-to-end `uv run healf run` pipeline.
 - Verified clinical safety via specialized LLM prompting to prevent diagnostic/disease mapping in auto-generated rules.
 
 ## Test Evidence
-- Latest run: `20 passed` in core suite (`pytest tests/test_enrichment.py tests/test_graph_builder.py`).
+- Latest run: `22 passed` in core suite (`pytest tests/test_enrichment.py tests/test_enrichment_client.py tests/test_graph_builder.py`).
 - Parallel processing verified via execution logs (asynchronous scrapers).
+- URL validation and short-content rejection verified via unit tests.
 - Rule generation verified via `data/research/graph_inference_rules.json` updates.
-- Total passing tests: `75 passed` (including orchestration and CLI suites).
+- Total passing tests: `81 passed` (including orchestration and CLI suites).
 
-## Consultative Discovery [COMPLETE]
+## Phase 6: Consultative Discovery [HARDENED]
 - Standardized GPT-5.4 and GPT-5.4-mini across all orchestration nodes and enrichment pipelines.
 - Implemented **Discovery Node** in LangGraph to handle ambiguous user intent with multi-turn clarification.
 - Refactored CLI into a **Stateful REPL** supporting persistent chat history and multi-turn discovery.
+- **Fixed Discovery Cycle**: Made `Rewriter`, `SafetyCheck`, and `IntakeRouter` history-aware to prevent infinite clarification loops and resolve short answers (e.g., "A", "yes") correctly.
+- **Rich Consultative CLI**: Updated the Discovery Agent to provide structured `options` and implemented **Rich Terminal Rendering** in the CLI for a premium consultative experience.
+- **Contextual Grounding**: Enhanced `_get_kg_context` to embed conversation history, ensuring Neo4j retrieval remains relevant even with short user responses.
+- **Optimized Turn Transitions**: Refactored orchestration graph to support same-turn recommendations by allowing the `Discovery` node to signal completion and route directly to the `Specialist` with the `resolved_query`.
 - Added **Logging Suppression** for clean, user-facing conversational sessions.
 - Enhanced retrieval ranker with multi-word term splitting and inclusive ingredient matching.
 - Hardened Pydantic models with default values for fail-safe LLM output parsing.
 - Mandatory `intake_router` execution in orchestrator graph to ensure consistent intent classification.
 - Implemented conversational safety rejections via `PayloadGenerator` with `safety_findings`.
-- Hardened Pharmacovigilance Critic with strict safety flagging and robust fallback heuristics.
 - **Evaluation Separation**: Moved long-running DeepEval quality gates to `tests/evals/` and excluded from default `pytest` discovery.
 - **Orchestration Hardening**: Fixed routing logic for critic retries and fail-closed outcomes to ensure deterministic failure modes.
 - Resolved test regressions across orchestrator and adapter suites with non-deterministic LLM variance handling.

@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import MagicMock
 from pydantic import ValidationError
 from hypothesis import given, strategies as st
 from src.models.product import EnrichedProduct
@@ -48,6 +49,12 @@ def test_run_enrichment_pipeline_fails_when_all_urls_fail(monkeypatch: pytest.Mo
     monkeypatch.setattr(enrichment_module, "load_input_urls", lambda *_: ["https://healf.com/products/test"])
 
     class FailingClient:
+        def __init__(self, api_key=None):
+            pass
+        @staticmethod
+        def is_valid_url(url: str) -> bool:
+            return True
+
         def fetch_product_page(self, url: str) -> str:
             raise RuntimeError("scrape failure")
 
@@ -57,7 +64,7 @@ def test_run_enrichment_pipeline_fails_when_all_urls_fail(monkeypatch: pytest.Mo
         def fetch_nih_dsld_data(self, product_name: str):
             return {}
 
-    monkeypatch.setattr(enrichment_module, "EnrichmentClient", lambda api_key=None: FailingClient())
+    monkeypatch.setattr(enrichment_module, "EnrichmentClient", FailingClient)
 
     class FakeOpenAI:
         def __init__(self, api_key: str):
@@ -80,6 +87,12 @@ def test_run_enrichment_pipeline_fails_on_partial_url_failures(monkeypatch: pyte
     )
 
     class MixedClient:
+        def __init__(self, api_key=None):
+            pass
+        @staticmethod
+        def is_valid_url(url: str) -> bool:
+            return True
+
         def fetch_product_page(self, url: str) -> str:
             if url.endswith("bad"):
                 raise RuntimeError("scrape failure")
@@ -101,7 +114,7 @@ def test_run_enrichment_pipeline_fails_on_partial_url_failures(monkeypatch: pyte
         def fetch_pubmed_research(self, ingredient: str, limit: int = 1):
             return None
 
-    monkeypatch.setattr(enrichment_module, "EnrichmentClient", lambda api_key=None: MixedClient())
+    monkeypatch.setattr(enrichment_module, "EnrichmentClient", MixedClient)
 
     class FakeOpenAI:
         def __init__(self, api_key: str):
@@ -118,3 +131,50 @@ def test_run_enrichment_pipeline_fails_on_partial_url_failures(monkeypatch: pyte
     enrichment_module.run_enrichment_pipeline()
     assert len(captured_products) == 1
     assert captured_products[0].sku == "sku-1"
+
+
+def test_run_enrichment_pipeline_skips_invalid_urls(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("FIRECRAWL_API_KEY", "fake-key")
+    monkeypatch.setenv("OPENAI_API_KEY", "fake-openai-key")
+    monkeypatch.setattr(
+        enrichment_module,
+        "load_input_urls",
+        lambda *_: ["https://healf.com/products/good", "not-a-url"],
+    )
+
+    class MockClient:
+        def __init__(self, api_key=None):
+            pass
+        @staticmethod
+        def is_valid_url(url: str) -> bool:
+            return url.startswith("http")
+
+        def fetch_product_page(self, url: str) -> str:
+            return "# markdown " * 20
+
+        def extract_product_data(self, markdown_content: str, url: str, instructor_client=None):
+            return EnrichedProduct(
+                sku="good-sku",
+                canonical_name="Good Product",
+                active_ingredients=[],
+                target_biomarkers=[],
+                mechanisms_of_action=[],
+                contraindications=[],
+            )
+
+        def fetch_nih_dsld_data(self, product_name: str):
+            return {}
+
+        def fetch_pubmed_research(self, ingredient: str, limit: int = 1):
+            return None
+
+    monkeypatch.setattr(enrichment_module, "EnrichmentClient", MockClient)
+    monkeypatch.setattr(enrichment_module, "OpenAI", MagicMock())
+    monkeypatch.setattr(enrichment_module.instructor, "from_openai", lambda *_: object())
+
+    captured_products = []
+    monkeypatch.setattr(enrichment_module, "save_output_products", lambda path, prods: captured_products.extend(prods))
+
+    enrichment_module.run_enrichment_pipeline()
+    assert len(captured_products) == 1
+    assert captured_products[0].sku == "good-sku"

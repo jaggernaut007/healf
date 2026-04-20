@@ -78,7 +78,9 @@ What it misses:
 
 - Build a more robust eval pipeline and enable tracing and observability to see the tools being called, the products being retrieved, and the user feedback to ensure the best version of the software is present.
 
-- I want to build a reinforcement learning-based prompt recommendation engine to ensure real-time user queries are addressed more appropriately.
+- I want to build a reinforcement learning-based prompt recommendation engine to ensure real-time user queries are addressed more appropriately, and the prompts are optimised for the task.
+
+- Make the responses more refined (product placement,research findings delivery etc.) while also making they cli Richer
 
 - While going to production, architecting a modification to the graph such that retrieval of large products is easier/faster.
 - The enrichment process to be more dynamic.

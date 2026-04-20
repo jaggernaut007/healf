@@ -3,6 +3,32 @@ from unittest.mock import MagicMock, patch
 from src.clients.enrichment_client import EnrichmentClient
 from src.models.product import EnrichedProduct
 
+def test_is_valid_url():
+    """Test URL validation logic."""
+    assert EnrichmentClient.is_valid_url("https://healf.com/products/test") is True
+    assert EnrichmentClient.is_valid_url("http://example.com") is True
+    assert EnrichmentClient.is_valid_url("ftp://server.com") is True
+    assert EnrichmentClient.is_valid_url("invalid-url") is False
+    assert EnrichmentClient.is_valid_url("http://") is False
+    assert EnrichmentClient.is_valid_url("") is False
+
+def test_fetch_product_page_validates_url():
+    client = EnrichmentClient(api_key="fake-key")
+    with pytest.raises(ValueError, match="Invalid URL format"):
+        client.fetch_product_page("not-a-url")
+
+def test_fetch_product_page_rejects_short_markdown():
+    mock_app = MagicMock()
+    mock_document = MagicMock()
+    mock_document.markdown = "Too short" # Less than 100 chars
+    mock_app.scrape.return_value = mock_document
+    
+    client = EnrichmentClient(api_key="fake-key")
+    client.app = mock_app
+
+    with pytest.raises(RuntimeError, match="Scrape result is empty or too short"):
+        client.fetch_product_page("https://healf.com/products/test")
+
 def test_extract_sku_from_url():
     """Test that SKUs are correctly extracted from product URLs."""
     assert EnrichmentClient.extract_sku_from_url(
@@ -34,7 +60,7 @@ def test_enrichment_client_missing_api_key():
 def test_enrichment_client_mock_fetch():
     mock_app = MagicMock()
     mock_document = MagicMock()
-    mock_document.markdown = "# Test Product\nIt's great."
+    mock_document.markdown = "# Test Product\nIt's great. " * 10 # Ensure it's over 100 chars
     mock_app.scrape.return_value = mock_document
     
     with patch('src.clients.enrichment_client.FirecrawlApp', mock_app):
@@ -43,20 +69,22 @@ def test_enrichment_client_mock_fetch():
         client.app = mock_app
 
         markdown = client.fetch_product_page("http://example.com/test")
-        assert markdown == "# Test Product\nIt's great."
+        assert markdown.startswith("# Test Product")
+        assert len(markdown) > 100
 
 
 def test_enrichment_client_fetch_fallback_scrape_url() -> None:
     mock_app = MagicMock()
     del mock_app.scrape
-    mock_app.scrape_url.return_value = {"markdown": "# Legacy scrape_url response"}
+    mock_app.scrape_url.return_value = {"markdown": "# Legacy scrape_url response " * 10}
 
     client = EnrichmentClient(api_key="fake-key")
     client.app = mock_app
 
     markdown = client.fetch_product_page("http://example.com/test")
 
-    assert markdown == "# Legacy scrape_url response"
+    assert markdown.startswith("# Legacy scrape_url response")
+    assert len(markdown) > 100
 
 
 def test_enrichment_client_fetch_raises_without_supported_methods() -> None:

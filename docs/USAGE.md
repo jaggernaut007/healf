@@ -29,6 +29,7 @@ uv run healf enrich
 
 - **Input**: `data/raw_product_urls.json`
 - **Output**: `data/enriched_products.json`
+- **Hardening**: The pipeline automatically validates URLs and skips malformed links. It also enforces a minimum content length (100 characters) to ensure scrapers haven't been blocked by bot walls; failed pages are skipped and excluded from the knowledge graph.
 - **Authentication**: Grounding against NIH DSLD is free (1,000 req/hr). For higher volume, obtain a key at [https://dsld.od.nih.gov/api-guide](https://dsld.od.nih.gov/api-guide) and set `NIH_DATA_API_KEY` in `.env`.
 
 ## 2. Knowledge Graph Build
