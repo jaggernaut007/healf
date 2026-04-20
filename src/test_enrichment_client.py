@@ -133,3 +133,16 @@ def test_fetch_nih_dsld_data_handles_malformed_payload() -> None:
 
     assert data["grounding_status"] == "Failed"
     assert "invalid json" in data["error"]
+
+def test_fetch_nih_dsld_v9_success() -> None:
+    """Test successful DSLD v9 lookup without fallback."""
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {"hits": [{"id": "dsld-123", "name": "Magnesium"}]}
+    
+    with patch("requests.get", return_value=mock_response):
+        data = EnrichmentClient(api_key="fake-key").fetch_nih_dsld_data("magnesium")
+
+    assert data["source"] == "NIH_DSLD"
+    assert data["grounding_status"] == "Success"
+    assert data["dsld_matches"][0]["id"] == "dsld-123"

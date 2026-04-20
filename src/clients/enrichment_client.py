@@ -123,24 +123,49 @@ class EnrichmentClient:
     @cached(cache=TTLCache(maxsize=100, ttl=3600))
     def fetch_nih_dsld_data(self, product_name: str) -> Dict[str, Any]:
         """
-        Fetches grounding data from the NIH Dietary Supplement Label Database via their public REST API.
-        This provides contraindications, interactions, and safety alerts.
+        Fetches grounding data from the NIH Dietary Supplement Label Database (DSLD) v9 API.
+        Falls back to NIH RxTerms (Clinical Tables) if DSLD returns no hits.
         """
         import requests
         
-        # NOTE: This endpoint is the NIH RxTerms search API.
-        base_url = "https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search"
+        api_key = os.getenv("NIH_DATA_API_KEY")
+        dsld_base = "https://api.ods.od.nih.gov/dsld/v9"
         
+        params = {"query": product_name}
+        if api_key:
+            params["api_key"] = api_key
+            
+        try:
+            dsld_res = requests.get(
+                f"{dsld_base}/search-filter",
+                params=params,
+                timeout=10
+            )
+            if dsld_res.status_code == 200:
+                data = dsld_res.json()
+                hits = data.get("hits", [])
+                if hits:
+                    return {
+                        "source": "NIH_DSLD",
+                        "grounding_status": "Success",
+                        "query": product_name,
+                        "dsld_matches": hits,
+                        "warnings": [], # Warnings are extracted from label details if needed
+                    }
+        except Exception:
+            pass
+
+        # 2. Fallback to RxTerms (Broad Clinical Coverage)
+        rx_url = "https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search"
         try:
             response = requests.get(
-                base_url, 
+                rx_url, 
                 params={"terms": product_name, "maxList": 5},
                 timeout=10
             )
             response.raise_for_status()
             data = response.json()
             
-            # Keep warnings source-backed only; do not synthesize clinical warnings.
             return {
                 "source": "NIH_RXTERMS",
                 "grounding_status": "Success",
@@ -150,7 +175,7 @@ class EnrichmentClient:
             }
         except (requests.RequestException, ValueError, TypeError, IndexError) as e:
             return {
-                "source": "NIH_RXTERMS",
+                "source": "NIH_FALLBACK_FAILED",
                 "grounding_status": "Failed",
                 "query": product_name,
                 "error": str(e)
