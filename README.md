@@ -21,6 +21,7 @@ These setup instructions will get the system running on a clean machine in under
 ### Prerequisites
 - **Python 3.12+**: The core logic uses modern Python features.
 - **uv**: The project uses `uv` for lightning-fast package management. [Install uv](https://github.com/astral-sh/uv).
+
 - **Neo4j**: A Neo4j instance is required for the Knowledge Graph. We recommend [Neo4j AuraDB](https://neo4j.com/cloud/aura/) for a managed cloud instance, or you can run it locally via Docker.
 
 ### 1. Environment Configuration
@@ -33,6 +34,8 @@ OPENAI_API_KEY=sk-...
 
 # Required: Web Scraping
 FIRECRAWL_API_KEY=fc-...
+# Optional: NIH DSLD Key (obtain at https://dsld.od.nih.gov/api-guide)
+NIH_DATA_API_KEY=...
 
 # Required: Knowledge Graph (Neo4j)
 NEO4J_URI=neo4j+s://...
