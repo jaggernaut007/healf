@@ -13,11 +13,11 @@ Once stored, the agentic system utilizes the graph to provide grounded responses
 
 what entities and relationships does the graph encode, why, and how does the chatbot query it at inference time?
 
-Products -CONTAINS-> Ingredient
-Ingredient -TRIGGERS-> Mechanism
-Mechanism -ALLEVIATES-> Symptom
-Mechanism -SUPPORTED_BY-> Study
-Ingredient -EVALUATED_IN-> Study
+    Products -CONTAINS-> Ingredient
+    Ingredient -TRIGGERS-> Mechanism
+    Mechanism -ALLEVIATES-> Symptom
+    Mechanism -SUPPORTED_BY-> Study
+    Ingredient -EVALUATED_IN-> Study
 
 The graph also has the complete study and description of the product (USP, usage, and contraindications) to enable robust semantic matching. 
 
