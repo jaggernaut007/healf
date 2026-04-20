@@ -36,7 +36,7 @@ def load_user_profile(user_id: str | None) -> dict:
 @app.command()
 def run():
     """Execute the FULL Intelligence Pipeline (Enrich -> Research -> Graph)."""
-    from run_full_pipeline import run_full_pipeline
+    from scripts.run_full_pipeline import run_full_pipeline
     console.print(Panel("[bold green]Starting Healf Full Intelligence Pipeline[/bold green]"))
     try:
         run_full_pipeline()

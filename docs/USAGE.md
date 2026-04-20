@@ -1,6 +1,11 @@
 # Usage Guide
 
-The Healf Health Intelligence Engine is operated through the `healf` CLI. You can run individual components or the entire end-to-end pipeline.
+The Healf Health Intelligence Engine is operated through the `healf` CLI. 
+
+> [!IMPORTANT]
+> **Prerequisite**: Ensure you have run `./scripts/init.sh` to initialize the environment and install dependencies before running any commands.
+
+You can run individual components or the entire end-to-end pipeline.
 
 ## 0. Full Intelligence Pipeline (Recommended)
 
