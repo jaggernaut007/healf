@@ -1,5 +1,7 @@
 # Healf — Founding AI Engineer Take-Home Task
 
+**[🎥 Completed Task Video Walkthrough](https://youtu.be/CFmVON-Xw0k)**
+
 **Role:** Founding AI Engineer (Sr. Staff)
 
 > [!IMPORTANT]

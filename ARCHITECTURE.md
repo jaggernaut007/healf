@@ -1,5 +1,9 @@
 # Architecture and Decisions Log
 
+## 🎥 Video Walkthrough
+
+A comprehensive walkthrough of the architecture and system capabilities is available here: **[Healf Architecture Walkthrough](https://youtu.be/CFmVON-Xw0k)**
+
 1. **System design**
 
 how do the three components connect, what are their contracts with each other, and what is the failure mode if any one is unavailable or returns low-quality output?

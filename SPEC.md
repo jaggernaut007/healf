@@ -1,5 +1,7 @@
 # Healf Spec-Driven Development Contract
 
+**[🎥 Video Walkthrough](https://youtu.be/CFmVON-Xw0k)**
+
 Status: Active
 Last Updated: 2026-04-18
 

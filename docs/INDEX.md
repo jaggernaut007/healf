@@ -2,6 +2,9 @@
 
 Welcome to the documentation for the Healf Health Intelligence Engine. This index provides quick access to all active documentation files.
 
+### 🎥 Video Walkthrough
+- **[Healf Full Walkthrough (YouTube)](https://youtu.be/CFmVON-Xw0k)**
+
 ## Core Architecture & Design
 - [Architecture Overview](../ARCHITECTURE.md) - The primary artifact for system design, safety models, and founding engineer decisions.
 - [Technical Specification](../SPEC.md) - Detailed technical specifications for the system.

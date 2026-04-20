@@ -1,13 +1,40 @@
 [
   {
+    "sku": "love-life-supplements-organic-ksm-66-r-ashwagandha",
+    "canonical_name": "Organic KSM-66\u00ae Ashwagandha",
+    "active_ingredients": [
+      "Organic KSM-66\u00ae Ashwagandha",
+      "BioPerine\u00ae",
+      "Hydroxy Propyl Methyl Cellulose (vegetable capsule)"
+    ],
+    "target_biomarkers": [
+      "stress",
+      "calmness",
+      "sleep quality"
+    ],
+    "mechanisms_of_action": [
+      "high-strength root extract providing ashwagandha root compounds",
+      "BioPerine\u00ae may enhance absorption",
+      "plant-based capsule delivery"
+    ],
+    "contraindications": [
+      "pregnancy",
+      "breastfeeding",
+      "medical conditions requiring clinician guidance",
+      "use with medications without healthcare professional advice"
+    ],
+    "usp": "High-strength 600mg organic ashwagandha root extract with BioPerine\u00ae for enhanced absorption; vegan-friendly, filler-free, GMO-free formula; suitable for vegetarians and vegans.",
+    "usage_instructions": "Take 1 capsule daily with food. Do not exceed the recommended amount unless directed by a physician."
+  },
+  {
     "sku": "momentous-l-theanine",
     "canonical_name": "Momentous L-Theanine",
     "active_ingredients": [
       "L-Theanine"
     ],
     "target_biomarkers": [
-      "stress",
-      "calmness",
+      "calm",
+      "relaxation",
       "sleep quality"
     ],
     "mechanisms_of_action": [
@@ -17,63 +44,65 @@
     ],
     "contraindications": [
       "Consult a healthcare professional if pregnant, breastfeeding, have a medical condition, or are taking medications",
-      "Do not exceed the recommended daily intake"
+      "Do not exceed recommended daily intake",
+      "Use only if seal is intact"
     ],
-    "usp": "200mg pure L-Theanine per capsule; plant-based from green tea leaves; caffeine-free and free from artificial additives",
+    "usp": "200mg pure L-Theanine per capsule; plant-based and derived from green tea leaves; caffeine-free with no artificial additives. Suggested use: take 1 capsule 30-60 minutes prior to sleep.",
     "usage_instructions": "Take 1 capsule 30-60 minutes prior to sleep."
   },
   {
-    "sku": "love-life-supplements-organic-ksm-66-r-ashwagandha",
-    "canonical_name": "Organic KSM-66\u00ae Ashwagandha",
+    "sku": "pure-encapsulations-rhodiola-rosea",
+    "canonical_name": "Rhodiola Rosea",
     "active_ingredients": [
-      "Organic KSM-66\u00ae Ashwagandha",
-      "BioPerine\u00ae"
+      "Rhodiola (Rhodiola rosea) Extract (Root) (Standardized to Contain 3% Total Rosavins and 1% Salidroside)"
     ],
     "target_biomarkers": [
-      "stress",
-      "sleep quality",
-      "calmness"
+      "stress response",
+      "energy levels",
+      "mental fatigue",
+      "mood balance",
+      "exercise endurance"
     ],
     "mechanisms_of_action": [
-      "High-strength root extract providing 600mg ashwagandha per serving",
-      "BioPerine\u00ae black pepper extract to enhance absorption",
-      "Plant-based formula with no fillers or GMOs"
+      "adaptogenic support",
+      "standardized rosavins and salidroside extract",
+      "supports perceived effort reduction and endurance"
     ],
     "contraindications": [
-      "Pregnant or breastfeeding individuals should consult a healthcare professional before use",
-      "People with a medical condition should consult a healthcare professional before use",
-      "People taking medications should consult a healthcare professional before use"
+      "May not be suitable for those taking adrenergic-blocking medications",
+      "May not be suitable for those taking anti-arrhythmic medications",
+      "Consult a healthcare professional if pregnant, breastfeeding, have a medical condition, or are taking medications"
     ],
-    "usp": "High-strength 600mg organic KSM-66\u00ae root extract with BioPerine\u00ae for enhanced absorption; vegan-friendly, filler-free, GMO-free; suitable for vegetarians and vegans.",
-    "usage_instructions": "Take 1 capsule daily with food. Do not exceed the recommended amount unless directed by a physician."
+    "usp": "Expertly standardised to 3% total rosavins and 1% salidroside; vegan-friendly and hypoallergenic; crafted for quality and clarity.",
+    "usage_instructions": "As a dietary supplement, take 1 capsule, 1-2 times daily, between meals."
   },
   {
     "sku": "bare-biology-ready-and-rested-magnesium-glycinate",
-    "canonical_name": "Bare Biology Ready and Rested Magnesium Glycinate",
+    "canonical_name": "Ready and Rested Magnesium Glycinate",
     "active_ingredients": [
       "Magnesium Bisglycinate Chelate Buffered"
     ],
     "target_biomarkers": [
-      "tiredness",
-      "fatigue",
-      "muscle function",
-      "nervous system function",
-      "bone health",
-      "teeth health"
+      "Magnesium status",
+      "Tiredness and fatigue",
+      "Muscle function",
+      "Nervous system function",
+      "Bone health",
+      "Teeth health"
     ],
     "mechanisms_of_action": [
       "Provides magnesium in a gentle, easy-to-absorb bisglycinate form",
+      "Helps reduce tiredness and fatigue",
       "Supports normal muscle and nervous system function",
-      "Contributes to reduction of tiredness and fatigue"
+      "Contributes to maintenance of normal bones and teeth"
     ],
     "contraindications": [
-      "If pregnant or breastfeeding, consult a healthcare professional before use",
-      "If you have a medical condition or are taking medications, consult a healthcare professional before use",
+      "If pregnant, breastfeeding, have a medical condition, or are taking medications, consult a healthcare professional before use",
       "Do not exceed the recommended daily intake",
       "Use only if seal is intact"
     ],
-    "usp": "Gentle, easy-to-absorb magnesium bisglycinate formula; supports energy, balance, and calm; kind to the stomach",
-    "usage_instructions": "Taking magnesium with food is gentler on your stomach and easier for your body to absorb. Ideally, spread your dose with meals throughout the day. Ages 4-9: 1 capsule per day (if the child can safely swallow capsules). Ages 9-14: up to 2 capsules per day. Ages 14+: up to 3 capsules per day."
+    "usp": "Gentle, easy-to-absorb magnesium bisglycinate formula; supports energy, calm, and balance; kind to the stomach",
+    "usage_instructions": "Take with food for gentler digestion and better absorption. Ages 4-9: 1 capsule per day (if child can safely swallow capsules). Ages 9-14: up to 2 capsules per day. Ages 14+: up to 3 capsules per day. Ideally spread the dose with meals throughout the day."
   },
   {
     "sku": "designs-for-health-l-tyrosine",
@@ -89,9 +118,9 @@
       "tiredness and fatigue"
     ],
     "mechanisms_of_action": [
-      "Provides L-tyrosine, a conditionally essential amino acid involved in neurotransmitter synthesis",
-      "Includes vitamin C as a cofactor in neurotransmitter pathways",
-      "Supports normal immune system function and helps reduce tiredness and fatigue"
+      "Provides free-form L-tyrosine, a conditionally essential amino acid involved in neurotransmitter synthesis",
+      "Includes vitamin C as a cofactor supporting neurotransmitter pathways",
+      "Vitamin C contributes to normal immune system function and helps reduce tiredness and fatigue"
     ],
     "contraindications": [
       "Pregnancy",
@@ -99,67 +128,17 @@
       "Medical conditions",
       "Taking medications"
     ],
-    "usp": "1.2 g free-form L-tyrosine plus 100 mg vitamin C per two-capsule serving; supports focus and motivation. Gluten-free, dairy-free, soy-free, vegetarian, and non-GMO. Designed for everyday mental performance and vitality.",
+    "usp": "1.2 g free-form L-tyrosine plus 100 mg vitamin C per two-capsule serving; supports focus and motivation; gluten-free, dairy-free, soy-free, vegetarian, and non-GMO.",
     "usage_instructions": "Take 2 capsules per day on an empty stomach or as directed by your health-care practitioner."
   },
   {
-    "sku": "pure-encapsulations-rhodiola-rosea",
-    "canonical_name": "Rhodiola Rosea",
-    "active_ingredients": [
-      "Rhodiola (Rhodiola rosea) Extract (Root) (Standardized to Contain 3% Total Rosavins and 1% Salidroside)"
-    ],
-    "target_biomarkers": [
-      "stress",
-      "energy levels",
-      "mood",
-      "mental fatigue",
-      "physical performance",
-      "endurance"
-    ],
-    "mechanisms_of_action": [
-      "adaptogenic support",
-      "may help reduce perceived effort",
-      "supports endurance and vigor",
-      "standardized rosavins and salidroside extract"
-    ],
-    "contraindications": [
-      "May not be suitable for those taking adrenergic-blocking medications",
-      "May not be suitable for those taking anti-arrhythmic medications",
-      "Consult a healthcare professional if pregnant, breastfeeding, have a medical condition, or are taking medications"
-    ],
-    "usp": "Expertly standardised to 3% total rosavins and 1% salidroside; vegan-friendly; hypoallergenic and gentle on most diets; crafted for quality and clarity.",
-    "usage_instructions": "As a dietary supplement, take 1 capsule, 1-2 times daily, between meals."
-  },
-  {
-    "sku": "double-wood-supplements-bacopa-monnieri-extract",
-    "canonical_name": "Bacopa Monnieri Extract",
-    "active_ingredients": [
-      "Bacopa monnieri leaf extract"
-    ],
-    "target_biomarkers": [
-      "cognitive function"
-    ],
-    "mechanisms_of_action": [
-      "standardised botanical extract",
-      "bacosides-containing Bacopa monnieri supplementation"
-    ],
-    "contraindications": [
-      "pregnancy",
-      "breastfeeding",
-      "medical conditions",
-      "taking medications"
-    ],
-    "usp": "Contains Bacopa monnieri leaf extract; standardised to 20% bacosides; free from soy and gluten.",
-    "usage_instructions": "Take one 450 mg capsule daily with food. Do not exceed the recommended daily intake."
-  },
-  {
-    "sku": "pure-encapsulations-vitamin-d3-125-mcg-5-000-iu-60-capsules",
+    "sku": "vivo-life-creatine-monohydrate",
     "canonical_name": "Healf Zone",
     "active_ingredients": [],
     "target_biomarkers": [],
     "mechanisms_of_action": [],
     "contraindications": [],
-    "usp": "Personalised wellbeing plan based on body data; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders. Also promoted with 365-day free returns and free UK delivery over \u00a350.",
+    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
     "usage_instructions": "Add to cart for \u00a329 per month."
   },
   {
@@ -177,7 +156,8 @@
     "mechanisms_of_action": [
       "Provides bioavailable choline to support normal liver function",
       "Supports healthy lipid metabolism",
-      "Contributes to homocysteine metabolism and cell membrane function"
+      "Contributes to homocysteine metabolism",
+      "Supports cell membrane structure and function"
     ],
     "contraindications": [
       "Pregnancy",
@@ -185,17 +165,41 @@
       "Medical conditions",
       "Taking medications"
     ],
-    "usp": "Helps maintain normal liver function, lipid metabolism, and homocysteine metabolism; delivers 275 mg of bioavailable choline per capsule; vegetarian capsules; 100 caps.",
+    "usp": "Helps maintain normal liver function, lipid metabolism, and homocysteine metabolism; delivers 275 mg of bioavailable choline per capsule; vegetarian capsules with a highly bioavailable form of choline.",
     "usage_instructions": "As a food supplement, take 1 capsule, 1-2 times daily, with meals, or as recommended by a health professional."
   },
   {
-    "sku": "vivo-life-creatine-monohydrate",
+    "sku": "double-wood-supplements-bacopa-monnieri-extract",
+    "canonical_name": "Bacopa Monnieri Extract",
+    "active_ingredients": [
+      "Bacopa monnieri leaf extract"
+    ],
+    "target_biomarkers": [
+      "Cognitive function",
+      "Mental clarity"
+    ],
+    "mechanisms_of_action": [
+      "Standardised botanical extract providing bacosides",
+      "Supports general cognitive function"
+    ],
+    "contraindications": [
+      "Pregnancy",
+      "Breastfeeding",
+      "Medical conditions",
+      "Use with medications without consulting a healthcare professional",
+      "May cause gastrointestinal side effects if taken on an empty stomach"
+    ],
+    "usp": "Contains Bacopa monnieri leaf extract; standardised to 20% bacosides; free from soy and gluten. Single-ingredient, clean formulation with 450 mg per capsule.",
+    "usage_instructions": "Take one 450 mg capsule daily with food. Do not exceed the recommended daily intake."
+  },
+  {
+    "sku": "pure-encapsulations-vitamin-d3-125-mcg-5-000-iu-60-capsules",
     "canonical_name": "Healf Zone",
     "active_ingredients": [],
     "target_biomarkers": [],
     "mechanisms_of_action": [],
     "contraindications": [],
-    "usp": "Personalised wellbeing plan based on body data; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usp": "2 comprehensive blood biomarker tests; 1:1 consultations with nutritionists; free next day delivery on all orders",
     "usage_instructions": "Add to cart for \u00a329 per month."
   },
   {
@@ -214,21 +218,21 @@
     "target_biomarkers": [
       "Gut microbiome balance",
       "Digestive wellbeing",
-      "Daily digestive support"
+      "Daily gut support"
     ],
     "mechanisms_of_action": [
       "Provides seven strains of live cultures (probiotics) to support gut flora",
-      "Includes inulin as a soluble prebiotic fibre to nourish beneficial bacteria",
-      "Supports a balanced approach to daily gut care"
+      "Supplies inulin, a soluble prebiotic fibre, to nourish beneficial bacteria",
+      "Supports a balanced daily digestive routine"
     ],
     "contraindications": [
-      "Consult a healthcare professional if pregnant or breastfeeding",
-      "Consult a healthcare professional if you have a medical condition or are taking medications",
-      "Do not use if the safety seal is damaged",
-      "Do not exceed the recommended daily intake"
+      "If pregnant or breastfeeding, consult a healthcare professional before use",
+      "If you have a medical condition or are taking medications, consult a healthcare professional before use",
+      "Do not exceed the recommended daily intake",
+      "Do not use if the safety seal is damaged"
     ],
-    "usp": "Combines seven strains of live cultures with inulin for everyday gut support; easy-to-take capsules; suitable for a range of dietary preferences.",
-    "usage_instructions": "Take 2 capsules daily after any meal with a glass of water. Store in a cool, dry place out of reach of children and animals."
+    "usp": "Seven strains of live cultures plus inulin for daily gut support; easy-to-take capsules; suitable for a range of dietary preferences.",
+    "usage_instructions": "Take 2 capsules daily after any meal with a glass of water. Store in a cool, dry place out of reach of children and animals. Do not exceed the recommended intake."
   },
   {
     "sku": "bare-biology-life-soul-omega-3-fish-oil-capsules",
@@ -237,8 +241,8 @@
     "target_biomarkers": [],
     "mechanisms_of_action": [],
     "contraindications": [],
-    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
-    "usage_instructions": "Add to cart. \u00a329 per month."
+    "usp": "Personalised wellbeing plan based on comprehensive blood biomarker testing; includes 2 biomarker tests, 1:1 nutritionist consultations, and free next-day delivery on all orders.",
+    "usage_instructions": "Add to cart for \u00a329 per month."
   },
   {
     "sku": "wild-nutrition-food-grown-zinc-plus",
@@ -247,7 +251,7 @@
     "target_biomarkers": [],
     "mechanisms_of_action": [],
     "contraindications": [],
-    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests and 1:1 consultations with nutritionists; free next day delivery on all orders.",
     "usage_instructions": "Add to cart for \u00a329 per month."
   },
   {
@@ -257,7 +261,7 @@
     "target_biomarkers": [],
     "mechanisms_of_action": [],
     "contraindications": [],
-    "usp": "Translate your body's data into a personalised wellbeing plan; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
+    "usp": "Personalised wellbeing plan based on your body's data; includes 2 comprehensive blood biomarker tests, 1:1 consultations with nutritionists, and free next day delivery on all orders.",
     "usage_instructions": "Add to cart for \u00a329 per month."
   },
   {
@@ -267,27 +271,23 @@
       "100% Grass-fed Bovine Hydrolysed Collagen Peptides (Type 1)"
     ],
     "target_biomarkers": [
-      "Muscle mass",
-      "Bone health",
-      "Hair",
-      "Skin",
-      "Nails",
-      "Joint health",
-      "Tissue health"
+      "collagen intake",
+      "protein intake",
+      "muscle mass support",
+      "bone health support"
     ],
     "mechanisms_of_action": [
-      "Provides type 1 collagen peptides as a source of protein",
-      "Supports growth and maintenance of muscle mass",
-      "Helps maintain normal bones",
-      "Offers highly absorbable hydrolysed collagen peptides"
+      "Provides hydrolysed type 1 collagen peptides for easy absorption",
+      "Supplies protein that contributes to the growth and maintenance of muscle mass",
+      "Supports maintenance of normal bones"
     ],
     "contraindications": [
       "Pregnancy",
       "Breastfeeding",
       "Medical conditions",
-      "Use with medications without consulting a healthcare professional"
+      "Taking medications"
     ],
-    "usp": "Pure, highly absorbable type 1 collagen peptides; odourless and tasteless for easy daily use. Provides a quality source of protein to support active lifestyles and fasting routines. 100% grass-fed bovine hydrolysed collagen peptides that blend seamlessly into hot or cold drinks and foods.",
+    "usp": "Pure, odourless and tasteless type 1 collagen peptides; 100% grass-fed bovine source; easy to mix into hot or cold drinks and foods.",
     "usage_instructions": "Take 1 to 2 tsp (5 to 10g) daily. Add to any hot or cold drink, or sprinkle onto foods like soups, overnight oats, or yoghurt."
   },
   {
@@ -300,19 +300,17 @@
       "Magnesium levels"
     ],
     "mechanisms_of_action": [
-      "Provides 80mg elemental magnesium per 2 capsules",
-      "Supports normal muscle function",
-      "Supports normal psychological function",
-      "Supports energy release",
-      "Supports nervous system function"
+      "Provides food-grown magnesium to support normal muscle function",
+      "Supports nervous system function",
+      "Supports energy release and helps reduce tiredness and fatigue"
     ],
     "contraindications": [
       "Consult a healthcare professional if pregnant or breastfeeding",
-      "Consult a healthcare professional if you have a medical condition",
-      "Consult a healthcare professional if taking medications",
-      "Do not exceed the recommended daily intake"
+      "Consult a healthcare professional if you have a medical condition or are taking medications",
+      "Do not exceed the recommended daily intake",
+      "Use only if seal is intact"
     ],
-    "usp": "Naturally sourced Food-Grown magnesium; supports muscles, mind, energy, nervous system, bones and teeth; gentle formula with 80mg elemental magnesium per 2 capsules.",
+    "usp": "Food-grown magnesium delivering 80mg elemental magnesium in 2 capsules; supports nervous system, energy release, bones and teeth; gentle formula suitable any time of day.",
     "usage_instructions": "Take 2 capsules together, any time of day, with or without food."
   }
 ]

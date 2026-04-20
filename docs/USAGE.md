@@ -2,6 +2,9 @@
 
 The Healf Health Intelligence Engine is operated through the `healf` CLI. 
 
+### 🎥 Video Walkthrough
+Watch the system in action: **[Healf Operations Walkthrough (YouTube)](https://youtu.be/CFmVON-Xw0k)**
+
 > [!IMPORTANT]
 > **Prerequisite**: Ensure you have run `./scripts/init.sh` to initialize the environment and install dependencies before running any commands.
 
