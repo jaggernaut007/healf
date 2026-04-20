@@ -23,6 +23,8 @@ Acceptance criteria:
 - Project structure, environment, and test scaffolding are in place.
 - Research notes are indexed in `docs/research/INDEX.md`.
 - ADR baseline exists in `docs/adr/`.
+- All project documentation is formatted as standard GitHub Flavored Markdown (GFM).
+
 
 ### Phase 1: Enrichment Pipeline
 

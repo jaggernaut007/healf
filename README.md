@@ -1,6 +1,6 @@
 # Healf Health Intelligence Engine
 
-Healf is a production-ready agentic framework for health-tech intelligence. It transforms raw product data and medical research into an actionable Knowledge Graph, orchestrated by a 5-agent conversational pipeline.
+Healf is a production-ready agentic framework for health-tech intelligence. It transforms raw product data and medical research into an actionable Knowledge Graph, orchestrated by a 9-node conversational pipeline.
 
 > **Note to Reviewers:** The **[ARCHITECTURE.md](ARCHITECTURE.md)** file is the primary artifact for evaluation, covering system design, safety models, and founding engineer decisions as requested in the task.
 
@@ -90,3 +90,4 @@ We use `uv` and `invoke` for environment management and task automation.
 ---
 
 *For detailed technical specifications, see [SPEC.md](SPEC.md).*
+*For a comprehensive list of all documentation files, see the [Documentation Index](docs/INDEX.md).*

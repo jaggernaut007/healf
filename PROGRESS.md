@@ -1,7 +1,13 @@
 # Project Progress
 
 ## Current Status
-Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workflow now active in orchestration.
+All phases (0–7) complete. Post-architecture-documentation Triple Agent Audit passed: 68/68 tests green, 0 lint violations.
+
+## Triple Agent Audit — 2026-04-20 [COMPLETE]
+- **3 test isolation regressions fixed**: `test_safety.py` tests failed because `build_default_safety_check()` eagerly constructs `Neo4jPropertyGraphStore` at factory call time, requiring a live URI even in unit-test scope. Fixed by adding an `autouse` fixture that patches the store class before factory construction.
+- **5 lint violations cleared**: Removed stale unused imports from `evaluation.py`, `orchestrator.py`, `test_adapters.py`, and `rule_generator.py` (×2).
+- **ARCHITECTURE.md finalised**: Production-quality engineering narrative documenting system design, KG schema, context assembly strategy, evaluation framework, safety model, and founding-engineer decisions.
+- **Audit doc**: `docs/audits/triple-agent-audit-2026-04-20.md`
 
 ## Phase Completion Snapshot
 - Phase 0: Complete.
@@ -126,3 +132,4 @@ Phase 3 is implemented and verified with the 5-agent KG-RAG conversational workf
 1. Finalize production deployment configuration.
 2. Prepare for Phase 7 or production transition if requested.
 - Added additional products and PMIDs to Neo4j Graph
+- Standardized `docs/task.md` as GFM and updated `SPEC.md` with documentation quality criteria.

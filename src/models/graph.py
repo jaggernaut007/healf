@@ -22,6 +22,7 @@ class GraphInferenceRule(BaseModel):
 
 class GraphBuildResult(BaseModel):
     products_loaded: int
+    active_products_loaded: int = 0  # products with at least one active ingredient
     research_documents_loaded: int
     triples_written: int
 

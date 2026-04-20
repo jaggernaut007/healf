@@ -82,6 +82,7 @@ class EvaluationGate(BaseModel):
 class DiscoveryDecision(BaseModel):
     requires_clarification: bool
     clarification_question: str | None = None
+    reasoning: str | None = None
 
 
 class OrchestrationResult(BaseModel):

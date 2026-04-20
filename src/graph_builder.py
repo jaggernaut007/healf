@@ -150,8 +150,10 @@ class GraphBuilder:
             raise RuntimeError("No graph triples inferred from current corpus and rules")
             
         self.write_triples(triples, products, research_summaries)
+        active_products = [p for p in products if p.active_ingredients]
         return GraphBuildResult(
             products_loaded=len(products),
+            active_products_loaded=len(active_products),
             research_documents_loaded=len(research_documents),
             triples_written=len(triples),
         )

@@ -2,13 +2,11 @@ import os
 import json
 import logging
 from pathlib import Path
-from typing import List
 import instructor
 from openai import OpenAI
 from dotenv import load_dotenv
 from src.graph_builder import GraphBuilder, GraphBuilderConfig
 from src.models.graph import GraphInferenceRule
-from src.models.research import ResearchSummary
 
 load_dotenv()
 

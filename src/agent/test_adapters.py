@@ -6,7 +6,6 @@ from types import ModuleType
 
 import pytest
 
-import src.agent.nodes.observability as observability_module
 from src.agent.nodes import (
     build_default_critic,
     build_default_evaluator,
