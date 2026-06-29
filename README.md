@@ -1,12 +1,6 @@
-# Healf Health Intelligence Engine
+# Health Intelligence Engine
 
-Healf is a production-ready agentic framework for health-tech intelligence. It transforms raw product data and medical research into an actionable Knowledge Graph, orchestrated by a 9-node conversational pipeline.
-
-## 🎥 Video Walkthrough
-
-Watch the full system walkthrough and task demonstration: **[Healf Walkthrough (YouTube)](https://youtu.be/CFmVON-Xw0k)**
-
-> **Note to Reviewers:** The **[ARCHITECTURE.md](ARCHITECTURE.md)** file is the primary artifact for evaluation, covering system design, safety models, and founding engineer decisions as requested in the task.
+HIE is a production-ready agentic framework for health-tech intelligence. It transforms raw product data and medical research into an actionable Knowledge Graph, orchestrated by a 9-node conversational pipeline.
 
 ## 📖 Documentation & Guides
 
